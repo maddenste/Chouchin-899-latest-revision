@@ -1,0 +1,553 @@
+<!-- Copyright (C) 2026 Steve Madden | SPDX-License-Identifier: GPL-3.0-or-later -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WiFi-Clock Setup</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%95%92%3C/text%3E%3C/svg%3E">
+  <style>
+    .firmwareVersion a:link,.firmwareVersion a:visited,.firmwareVersion a:hover,.firmwareVersion a:focus,.firmwareVersion a:active{color:inherit;font-weight:inherit;text-decoration:none}
+    :root{color-scheme:light;--ink:#253044;--muted:#596579;--line:#65758d24;--blue:#345487;--blue-dark:#274371;--red:#963747;--red-dark:#7c2938;--ok:#276b50}
+    *{box-sizing:border-box}html{min-height:100%;background:radial-gradient(ellipse at 5% 0%,#e7e5f8 0,transparent 52%),radial-gradient(ellipse at 100% 35%,#f7e8e5 0,transparent 48%),radial-gradient(ellipse at 0% 100%,#dfefea 0,transparent 50%),#f2f5fa}body{max-width:680px;margin:auto;padding:24px 20px;color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+    header{padding:8px 4px 18px}h1{margin:0;font-size:1.9rem;font-weight:650;letter-spacing:-.035em}h2{margin:0;font-size:1.05rem;font-weight:650;letter-spacing:-.015em}p{margin:8px 0;color:var(--muted)}
+    .card{margin:10px 0;padding:24px;border:1px solid #ffffffd9;border-radius:22px;background:#ffffffb8;-webkit-backdrop-filter:blur(18px) saturate(115%);backdrop-filter:blur(18px) saturate(115%);box-shadow:0 16px 48px #3543640b,0 2px 8px #35436406,inset 0 1px 0 #ffffffed}
+    header.card{margin:0 0 16px;padding:22px 24px}
+    .settingsGroup{padding:0 0 22px;margin-bottom:22px;border-bottom:1px solid var(--line)}.sectionHeading{display:flex;align-items:center;justify-content:space-between;gap:12px}.sectionHeading .small{margin:0}.sectionHeading button{width:auto;margin:0;font-size:.85rem;min-height:36px;padding:6px 10px}.help{margin:8px 0 0}.resetOptions{margin-top:20px;border-top:1px solid var(--line);padding-top:15px}.resetOptions summary{cursor:pointer;color:var(--muted);font-size:.88rem}.resetOptions button{width:auto;font-size:.9rem;padding:8px 14px}
+    .status{display:inline-flex;align-items:center;gap:9px;margin-top:12px;padding:7px 12px;border:1px solid #ffffffc4;border-radius:100px;background:#ffffff85;font-size:.88rem;font-weight:550;box-shadow:0 2px 8px #35436405}.dot{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:#8793a5}.dot.online{background:#408767;box-shadow:0 0 0 3px #40876716}.dot.portal{background:#bb883b;box-shadow:0 0 0 3px #bb883b16}.hidden{display:none}.small{font-size:.86rem}.firmwareVersion{margin-top:18px;text-align:center;color:#657084;font-size:.78rem}a{color:var(--blue);font-weight:600}
+    label{display:block;margin-top:15px;font-size:.9rem;font-weight:550}input,select,button{width:100%;min-height:44px;margin-top:6px;border:1px solid #75839b38;border-radius:12px;padding:10px 12px;background:#ffffffab;color:inherit;font:inherit;font-weight:400;box-shadow:inset 0 1px 0 #ffffffc9,0 2px 5px #35436404}input::placeholder{color:#657084;opacity:1}input:focus,select:focus{outline:3px solid #557ab847;border-color:#557ab8}button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #557ab86b;outline-offset:3px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}button{cursor:pointer;background:linear-gradient(180deg,#e6edff,#dbe5fa);color:var(--blue-dark);font-weight:650;border-color:#c4d3ed;box-shadow:0 3px 10px #45679c0c,inset 0 1px 0 #ffffffcf;transition:background-color .15s,border-color .15s}button:hover{background:#d6e1f7;border-color:#adc2e3}button:disabled{opacity:.6;cursor:wait}button.secondary{background:#ffffff94;color:var(--blue);border-color:#75839b30;font-weight:550}button.secondary:hover{background:#eaf0fc}button.danger{margin-top:10px;border-color:#d9abb448;background:#f6e6e9;color:var(--red);box-shadow:none}button.danger:hover{background:#efd6dc;color:var(--red-dark)}.notice{min-height:1.4em;margin-top:14px;font-size:.9rem}.notice.ok{color:var(--ok)}.notice.bad{color:var(--red)}
+    @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.card{background:#f9fafdf5}}
+    @media(prefers-reduced-transparency:reduce){.card{background:#f9fafd;-webkit-backdrop-filter:none;backdrop-filter:none}.status,input,select{background:#fff}}
+    @media(prefers-reduced-motion:reduce){button{transition:none}}
+    .notice:empty{display:none}
+    input,select{background:#ffffffed;border-color:#a7b3c8;box-shadow:inset 0 1px 2px #35436406,0 1px 2px #35436405}
+    input:hover,select:hover{border-color:#899bb8}
+    input:focus,select:focus{background:#fff;border-color:#557ab8}
+    .updateTime{border:0;padding:0;margin:18px 0 0;min-width:0}.updateTime legend{font-size:.9rem;font-weight:550;padding:0}.timeFields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.timeFields label{margin-top:7px;color:var(--muted);font-size:.82rem}.settingsGroup:last-of-type{padding-bottom:0;border-bottom:0}.help{line-height:1.5}
+    @media(max-width:480px){body{padding:16px 14px}.row{grid-template-columns:1fr}.card{padding:19px 17px;border-radius:18px}header.card{padding:19px 17px}h1{font-size:1.8rem}}
+  </style>
+</head>
+<body>
+  <header class="card">
+    <h1 id="mainTitle">WiFi-Clock Setup</h1>
+    <div class="status"><span id="dot" class="dot"></span><span id="state">Checking clock status…</span></div>
+    <p id="localAddress" class="small hidden"></p>
+  </header>
+
+  <section class="card">
+    <section class="settingsGroup" aria-labelledby="wifiHeading">
+    <div class="sectionHeading"><h2 id="wifiHeading">Wi-Fi <span class="small">· 2.4 GHz</span></h2><button class="secondary" id="scan">Re-scan</button></div>
+    <label for="networks">Available Wi-Fi networks</label>
+    <select id="networks"><option value="">Select a network</option><option value="manual">Enter manually / hidden SSID</option></select>
+    <div id="ssidRow" class="hidden"><label for="ssid">Manually enter Network name (SSID)</label><input id="ssid" maxlength="32" autocomplete="off" placeholder="Enter a Wi-Fi network name"></div>
+    <label for="password">Wi-Fi password</label>
+    <input id="password" type="password" maxlength="63" autocomplete="current-password" placeholder="Leave blank for open Wi-Fi">
+    </section>
+    <section class="settingsGroup" aria-labelledby="timeHeading">
+    <h2 id="timeHeading">Time</h2>
+    <label for="timezonePreset">Timezone<select id="timezonePreset"></select></label>
+    <label for="dstMode">Daylight saving<select id="dstMode"><option value="automatic">Automatic</option><option value="disabled">Disabled</option><option value="custom">Custom rule</option></select></label>
+    <div id="customTimezoneRow" class="hidden"><label for="customTimezone">Custom POSIX rule</label><input id="customTimezone" maxlength="64" autocomplete="off" placeholder="GMT0BST,M3.5.0/1,M10.5.0/2"></div>
+    <p id="nextDst" class="small help hidden" aria-live="polite"></p>
+    <fieldset class="updateTime" aria-describedby="updateHelp"><legend>Daily update time</legend><div class="timeFields">
+      <label for="syncHour">Hour<select id="syncHour"></select></label>
+      <label for="syncMinute">Minute<select id="syncMinute"><option value="00">00</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option></select></label>
+    </div></fieldset>
+    <p id="updateHelp" class="small help">Clock local time, in 10-minute steps.</p>
+    </section>
+    <section class="settingsGroup" aria-labelledby="serversHeading">
+    <h2 id="serversHeading">Time servers</h2>
+    <div class="row">
+      <label for="ntpHost">Primary NTP server<input id="ntpHost" maxlength="127" autocomplete="off" placeholder="pool.ntp.org"></label>
+      <label for="ntpBackupHost">Secondary NTP server<input id="ntpBackupHost" maxlength="127" autocomplete="off" placeholder="time.cloudflare.com"></label>
+    </div>
+    <p class="small help">The secondary is tried after 5 seconds; the first valid reply wins. Leave blank to use the defaults shown.</p>
+    </section>
+    <section class="settingsGroup" aria-labelledby="handsHeading">
+    <h2 id="handsHeading">Hand movement</h2>
+    <label for="handMovement">Movement style</label>
+    <select id="handMovement" aria-describedby="movementHelp"><option value="sweep">Sweep</option><option value="burst">Burst</option><option value="hold_start">Hold&amp;Start</option></select>
+    <p id="movementHelp" class="small help">Seconds sweep continuously; the minute hand advances gradually.</p>
+    <label for="nightParking">Second hand battery saver<select id="nightParking" aria-describedby="parkingHelp"><option value="off">Off</option><option value="night">Night parking</option><option value="on">On</option></select></label>
+    <p id="parkingHelp" class="small help">Night parking: parks at 12 from 00:00 to 06:00. On: parks at 12 continuously. Use On if no second hand is fitted to prolong battery life.</p>
+    </section>
+    <button id="sendTime">Save settings</button>
+    <p id="notice" class="notice" role="status" aria-live="polite"></p>
+    <details class="resetOptions" id="resetOptions"><summary>Reset settings</summary><p class="small">Erase saved settings and return to Wi-Fi setup.</p><button class="danger" id="factoryReset">Erase settings</button></details>
+  </section>
+  <p class="small firmwareVersion"><a id="projectLink" href="https://github.com/maddenste/Chouchin-899-latest-revision" target="_blank" rel="noopener noreferrer"><span id="firmwareVersion">WiFi Clock · v2.0</span> — Modified by Steve Madden · 2026</a></p>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const DEFAULT_NTP = 'pool.ntp.org';
+    const DEFAULT_NTP_BACKUP = 'time.cloudflare.com';
+    const DEFAULT_TZ = 'GMT0BST,M3.5.0/1,M10.5.0/2';
+    // [id, label, fixed-standard-time rule, automatic rule]. Automatic rules
+    // were checked against current IANA data from 2026-09-10 through 2035.
+    const TIMEZONE_PRESETS = [
+      ['baker','(UTC-12:00) Baker Island','<-12>12','<-12>12'],
+      ['american_samoa','(UTC-11:00) American Samoa','SST11','SST11'],
+      ['honolulu','(UTC-10:00) Honolulu','HST10','HST10'],
+      ['anchorage','(UTC-09:00) Anchorage','AKST9','AKST9AKDT,M3.2.0,M11.1.0'],
+      ['los_angeles','(UTC-08:00) Los Angeles','PST8','PST8PDT,M3.2.0,M11.1.0'],
+      ['phoenix_vancouver','(UTC-07:00) Phoenix, Vancouver','MST7','MST7'],
+      ['denver','(UTC-07:00) Denver','DEN7','MST7MDT,M3.2.0,M11.1.0'],
+      ['chicago','(UTC-06:00) Chicago','CHI6','CST6CDT,M3.2.0,M11.1.0'],
+      ['mexico_city','(UTC-06:00) Mexico City','CST6','CST6'],
+      ['new_york','(UTC-05:00) New York','EST5','EST5EDT,M3.2.0,M11.1.0'],
+      ['lima','(UTC-05:00) Lima','<-05>5','<-05>5'],
+      ['halifax','(UTC-04:00) Halifax','AST4','AST4ADT,M3.2.0,M11.1.0'],
+      ['santiago','(UTC-04:00) Santiago','<-04>4','<-04>4<-03>,M9.1.6/24,M4.1.6/24'],
+      ['newfoundland','(UTC-03:30) Newfoundland','NST3:30','NST3:30NDT,M3.2.0,M11.1.0'],
+      ['buenos_aires','(UTC-03:00) Buenos Aires','<-03>3','<-03>3'],
+      ['south_georgia','(UTC-02:00) South Georgia','<-02>2','<-02>2'],
+      ['azores','(UTC-01:00) Azores','<-01>1','<-01>1<+00>,M3.5.0/0,M10.5.0/1'],
+      ['utc_reykjavik','(UTC+00:00) UTC / Reykjavik','UTC0','UTC0'],
+      ['london','(UTC+00:00) London (GMT/BST)','GMT0','GMT0BST,M3.5.0/1,M10.5.0/2'],
+      ['paris_berlin','(UTC+01:00) Paris, Berlin','CET-1','CET-1CEST,M3.5.0,M10.5.0/3'],
+      ['athens','(UTC+02:00) Athens','EET-2','EET-2EEST,M3.5.0/3,M10.5.0/4'],
+      ['johannesburg','(UTC+02:00) Johannesburg','SAST-2','SAST-2'],
+      ['moscow_nairobi','(UTC+03:00) Moscow, Nairobi','MSK-3','MSK-3'],
+      ['tehran','(UTC+03:30) Tehran','<+0330>-3:30','<+0330>-3:30'],
+      ['dubai','(UTC+04:00) Dubai, Abu Dhabi','<+04>-4','<+04>-4'],
+      ['karachi','(UTC+05:00) Karachi, Islamabad','PKT-5','PKT-5'],
+      ['almaty','(UTC+05:00) Almaty','<+05>-5','<+05>-5'],
+      ['india_sri_lanka','(UTC+05:30) India, Sri Lanka','IST-5:30','IST-5:30'],
+      ['dhaka','(UTC+06:00) Dhaka','<+06>-6','<+06>-6'],
+      ['yangon','(UTC+06:30) Yangon','<+0630>-6:30','<+0630>-6:30'],
+      ['bangkok_jakarta','(UTC+07:00) Bangkok, Jakarta','<+07>-7','<+07>-7'],
+      ['singapore_beijing','(UTC+08:00) Singapore, Beijing','<+08>-8','<+08>-8'],
+      ['tokyo_seoul','(UTC+09:00) Tokyo, Seoul','JST-9','JST-9'],
+      ['darwin','(UTC+09:30) Darwin','ACST-9:30','ACST-9:30'],
+      ['sydney_melbourne','(UTC+10:00) Sydney, Melbourne','AEST-10','AEST-10AEDT,M10.1.0,M4.1.0/3'],
+      ['solomon','(UTC+11:00) Solomon Islands','<+11>-11','<+11>-11'],
+      ['auckland','(UTC+12:00) Auckland','NZST-12','NZST-12NZDT,M9.5.0,M4.1.0/3'],
+      ['fiji','(UTC+12:00) Fiji','<+12>-12','<+12>-12'],
+      ['samoa_tonga','(UTC+13:00) Samoa, Tonga','<+13>-13','<+13>-13'],
+      ['kiritimati','(UTC+14:00) Kiritimati','<+14>-14','<+14>-14']
+    ];
+    let savedSsid = '', hasSavedPassword = false;
+    for (let hour = 0; hour < 24; ++hour) {
+      const value = String(hour).padStart(2, '0');
+      $('syncHour').add(new Option(value, value));
+    }
+    let requestToken = '';
+    // A page identity, not an authentication secret. The TXW supplies the
+    // independent per-boot anti-forgery token when configuration is loaded.
+    const pageId = Array.from({length: 4}, () => Math.floor(Math.random() * 0x100000000).toString(16).padStart(8, '0')).join('');
+    let leaving = false, scanBusy = false, actionBusy = false, configLoaded = false;
+    let webSessionStarted = false, heartbeatBusy = false, statusBusy = false;
+    let heartbeatTimer, statusTimer;
+    let latestDstStatus = null;
+    let dstPreview = null, dstTimer, dstBusy = false, dstRevision = 0;
+    const notice = (text, kind = '') => {
+      $('notice').textContent = text;
+      $('notice').className = 'notice ' + kind;
+    };
+    // Bound every request so a sleeping clock cannot accumulate pending polls.
+    async function request(url, options = {}) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), options.method === 'POST' ? 30000 : 6000);
+      try {
+        const headers = {...options.headers};
+        if (requestToken) headers['X-Clock-Token'] = requestToken;
+        const response = await fetch(url, {...options, headers, cache: 'no-store', signal: controller.signal});
+        const data = response.status === 204 ? {} : await response.json();
+        if (!response.ok) {
+          const error = Error(data.error || 'The clock could not complete the request.');
+          error.status = response.status;
+          throw error;
+        }
+        return data;
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+    function setStatus(status) {
+      latestDstStatus = status;
+      showNextDst();
+      if (typeof status.firmwareVersion === 'string' && status.firmwareVersion) {
+        $('firmwareVersion').textContent = status.firmwareVersion;
+        $('firmwareVersion').title = status.buildId || '';
+      }
+      const localAddress = $('localAddress');
+      if (status.mode === 'station' && typeof status.mdnsHost === 'string' && status.mdnsHost) {
+        localAddress.textContent = 'Local address: http://' + status.mdnsHost + '/';
+        localAddress.className = 'small';
+      } else {
+        localAddress.textContent = '';
+        localAddress.className = 'small hidden';
+      }
+      if (status.mode === 'portal') {
+        $('dot').className = 'dot portal';
+        $('state').textContent = 'Setup active · ' + status.ip;
+      } else if (status.mode === 'station') {
+        $('dot').className = status.connected ? 'dot online' : 'dot';
+        $('state').textContent = status.connected
+          ? (status.timeSynced ? 'Time synchronised · ' : 'Connected · waiting for time · ') + status.ip
+          : 'Connecting to Wi-Fi…';
+      } else {
+        $('dot').className = 'dot';
+        $('state').textContent = 'Clock connection unavailable';
+      }
+    }
+    async function refreshStatus() {
+      if (leaving || statusBusy) return;
+      statusBusy = true;
+      try {
+        const status = await request('/api/v1/status');
+        if (!leaving) setStatus(status);
+      } catch (error) {
+        if (!leaving) {
+          latestDstStatus = null;
+          showNextDst();
+          $('dot').className = 'dot';
+          $('state').textContent = 'Clock connection lost';
+          $('localAddress').textContent = '';
+          $('localAddress').className = 'small hidden';
+        }
+      } finally {
+        statusBusy = false;
+      }
+    }
+    function updatePasswordHint() {
+      $('password').placeholder = hasSavedPassword && $('ssid').value === savedSsid
+        ? 'Leave blank to keep the saved password'
+        : 'Leave blank for open Wi-Fi';
+    }
+    function populateTimezonePresets() {
+      const menu = $('timezonePreset');
+      for (const preset of TIMEZONE_PRESETS) menu.add(new Option(preset[1], preset[0]));
+      menu.value = 'london';
+    }
+    function selectedTimezonePreset() {
+      return TIMEZONE_PRESETS.find(preset => preset[0] === $('timezonePreset').value) ||
+        TIMEZONE_PRESETS.find(preset => preset[0] === 'london');
+    }
+    function selectedTimezoneRule() {
+      if ($('dstMode').value === 'custom') return $('customTimezone').value.trim();
+      const preset = selectedTimezonePreset();
+      return preset[$('dstMode').value === 'disabled' ? 2 : 3];
+    }
+    function showNextDst() {
+      const revision = ++dstRevision, rule = selectedTimezoneRule();
+      clearTimeout(dstTimer);
+      const eligible = configLoaded && !leaving && $('dstMode').value !== 'disabled';
+      const status = dstPreview && dstPreview.rule === rule ? dstPreview.data :
+        latestDstStatus && latestDstStatus.timezone === rule ? latestDstStatus : null;
+      renderNextDst(eligible ? status : null);
+      if (!eligible) return;
+      dstTimer = setTimeout(async () => {
+        if (dstBusy) return; // The active request will refresh the latest edit.
+        dstBusy = true;
+        try {
+          const data = await request('/api/v1/dst-preview', {
+            method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({timezone:rule})
+          });
+          if (revision === dstRevision && !leaving) {
+            dstPreview = {rule, data};
+            renderNextDst(data);
+          }
+        } catch (error) {
+          if (revision === dstRevision && !leaving) {
+            dstPreview = null;
+            renderNextDst(null);
+            if (error.status === 400) {
+              $('nextDst').classList.remove('hidden');
+              $('nextDst').textContent = error.message;
+            }
+          }
+        } finally {
+          dstBusy = false;
+          if (revision !== dstRevision && !leaving) showNextDst();
+        }
+      }, 250);
+    }
+    function renderNextDst(status) {
+      const line = $('nextDst');
+      const change = status && status.nextDst;
+      const visible = status && status.timeSynced &&
+        change && Number.isFinite(change.utc) && Number.isFinite(change.before) && Number.isFinite(change.after);
+      line.classList.toggle('hidden', !visible);
+      line.textContent = '';
+      if (!visible) return;
+      const before = new Date((change.utc + change.before * 60) * 1000);
+      const after = new Date((change.utc + change.after * 60) * 1000);
+      const date = new Intl.DateTimeFormat('en-GB', {day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+      const time = new Intl.DateTimeFormat('en-GB', {hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'UTC'});
+      line.textContent = 'Next DST change: ' + date.format(before) + ' — ' + time.format(before) + ' → ' + time.format(after);
+    }
+    function loadTimezoneRule(rule) {
+      let preset = TIMEZONE_PRESETS.find(candidate => candidate[3] === rule);
+      if (preset) {
+        $('timezonePreset').value = preset[0];
+        $('dstMode').value = 'automatic';
+        $('customTimezone').value = '';
+        return;
+      }
+      preset = TIMEZONE_PRESETS.find(candidate => candidate[2] === rule);
+      if (preset) {
+        $('timezonePreset').value = preset[0];
+        $('dstMode').value = 'disabled';
+        $('customTimezone').value = '';
+        return;
+      }
+      $('timezonePreset').value = 'london';
+      $('dstMode').value = 'custom';
+      $('customTimezone').value = rule;
+    }
+    function updateControls() {
+      const locked = actionBusy || !configLoaded || leaving;
+      $('ssidRow').classList.toggle('hidden', $('networks').value !== 'manual');
+      $('customTimezoneRow').classList.toggle('hidden', $('dstMode').value !== 'custom');
+      $('movementHelp').textContent = {
+        sweep: 'Seconds sweep continuously; the minute hand advances gradually.',
+        burst: 'Seconds sweep continuously; the minute hand jumps at each minute change.',
+        hold_start: 'Seconds pause at 12, then restart as the minute hand jumps forward.'
+      }[$('handMovement').value];
+      if ($('nightParking').value === 'on') {
+        $('movementHelp').textContent = 'Second hand parks at 12; the minute hand ' +
+          ($('handMovement').value === 'sweep' ? 'advances gradually.' : 'jumps at each minute change.');
+      }
+      for (const id of ['networks', 'ssid', 'password', 'syncHour', 'syncMinute', 'timezonePreset', 'dstMode', 'ntpHost', 'ntpBackupHost', 'handMovement', 'nightParking', 'sendTime']) {
+        $(id).disabled = locked;
+      }
+      $('customTimezone').disabled = locked || $('dstMode').value !== 'custom';
+      showNextDst();
+      $('scan').disabled = locked || scanBusy;
+      $('factoryReset').disabled = locked;
+    }
+    async function load() {
+      updateControls();
+      try {
+        const config = await request('/api/v1/config');
+        if (leaving) return;
+        if (!/^[0-9a-f]{32}$/.test(config.requestToken || '')) throw Error('Reload the clock setup page.');
+        requestToken = config.requestToken;
+        savedSsid = config.ssid || '';
+        hasSavedPassword = config.hasPassword === true;
+        $('ssid').value = savedSsid;
+        if (savedSsid) {
+          $('networks').add(new Option(savedSsid, 'ssid:' + savedSsid));
+          $('networks').value = 'ssid:' + savedSsid;
+        }
+        $('ntpHost').value = config.ntpHost === DEFAULT_NTP ? '' : (config.ntpHost || '');
+        $('ntpBackupHost').value = config.ntpBackupHost === DEFAULT_NTP_BACKUP ? '' : (config.ntpBackupHost || '');
+        loadTimezoneRule(config.timezone || DEFAULT_TZ);
+        const hour = String(config.syncHour ?? 10).padStart(2, '0');
+        const savedMinute = config.syncMinute ?? 0;
+        const minute = String(Math.floor(savedMinute / 10) * 10).padStart(2, '0');
+        $('syncHour').value = hour;
+        $('syncMinute').value = minute;
+        $('updateHelp').textContent = savedMinute % 10
+          ? 'Saved time ' + hour + ':' + String(savedMinute).padStart(2, '0') +
+            ' is shown as ' + hour + ':' + minute + '. Save settings to apply.'
+          : 'Clock local time, in 10-minute steps.';
+        $('handMovement').value = config.secondHand === 'pause_at_12' ? 'hold_start' :
+          (config.minuteHand === 'jump' ? 'burst' : 'sweep');
+        $('nightParking').value = config.nightParking || 'off';
+        configLoaded = true;
+        updatePasswordHint();
+        updateControls();
+        await keepAlive();
+        await scan(true);
+      } catch (error) {
+        if (!leaving) notice('Could not load settings. Reconnect to the clock and refresh this page.', 'bad');
+      }
+    }
+    async function scan(quiet = false) {
+      if (scanBusy || actionBusy || leaving) return;
+      scanBusy = true;
+      updateControls();
+      if (!quiet) notice('Scanning nearby Wi-Fi networks…');
+      try {
+        let data = await request('/api/v1/scan?start=1');
+        const started = Date.now();
+        while (data.scanning) {
+          if (leaving || actionBusy) return;
+          if (Date.now() - started > 35000) throw Error('Scan timed out. Enter the network name manually or try again.');
+          await new Promise(resolve => setTimeout(resolve, 750));
+          if (leaving || actionBusy) return;
+          data = await request('/api/v1/scan');
+        }
+        if (leaving || actionBusy) return;
+        const strongest = new Map();
+        for (const network of data.networks) {
+          if (!network.ssid) continue;
+          if (!strongest.has(network.ssid) || strongest.get(network.ssid).rssi < network.rssi) {
+            strongest.set(network.ssid, network);
+          }
+        }
+        const networks = [...strongest.values()].sort((a, b) => b.rssi - a.rssi);
+        const menu = $('networks');
+        const previousSelection = menu.value;
+        menu.length = 0;
+        menu.add(new Option('Select a network', ''));
+        for (const network of networks) {
+          // Prefix values so an actual SSID cannot collide with our manual option.
+          menu.add(new Option(network.ssid === savedSsid ? savedSsid :
+            network.ssid + ' (' + network.rssi + ' dBm)', 'ssid:' + network.ssid));
+        }
+        // A saved hidden/out-of-range network must remain visible and selected.
+        if (savedSsid && !strongest.has(savedSsid)) {
+          menu.add(new Option(savedSsid, 'ssid:' + savedSsid));
+        }
+        menu.add(new Option('Enter manually / hidden SSID', 'manual'));
+        menu.value = quiet ? (savedSsid ? 'ssid:' + savedSsid : '') :
+          ([...menu.options].some(option => option.value === previousSelection) ? previousSelection : '');
+        notice(quiet ? '' : networks.length + ' network(s) found.', 'ok');
+      } catch (error) {
+        if (!leaving && !actionBusy) {
+          notice(error.message || 'Network scan failed. Enter the network name manually.', 'bad');
+        }
+      } finally {
+        scanBusy = false;
+        updateControls();
+      }
+    }
+    $('networks').onchange = event => {
+      if (event.target.value.startsWith('ssid:')) $('ssid').value = event.target.value.slice(5);
+      else if (!event.target.value) $('ssid').value = '';
+      updateControls();
+      if (event.target.value === 'manual') $('ssid').focus();
+      updatePasswordHint();
+    };
+    $('ssid').oninput = updatePasswordHint;
+    $('handMovement').onchange = updateControls;
+    $('nightParking').onchange = updateControls;
+    $('syncHour').onchange = $('syncMinute').onchange = () => {
+      $('updateHelp').textContent = 'Clock local time, in 10-minute steps.';
+    };
+    $('timezonePreset').onchange = showNextDst;
+    $('customTimezone').oninput = showNextDst;
+    $('dstMode').onchange = () => {
+      if ($('dstMode').value === 'custom' && !$('customTimezone').value.trim()) {
+        $('customTimezone').value = selectedTimezonePreset()[3];
+      }
+      updateControls();
+      if ($('dstMode').value === 'custom') $('customTimezone').focus();
+    };
+    $('scan').onclick = () => scan();
+    const settings = () => {
+      const syncHour = $('syncHour').value, syncMinute = $('syncMinute').value;
+      const movement = $('handMovement').value;
+      return new URLSearchParams({
+        ssid: $('ssid').value, password: $('password').value,
+        ntpHost: $('ntpHost').value.trim(), ntpBackupHost: $('ntpBackupHost').value.trim(), timezone: selectedTimezoneRule(),
+        syncHour, syncMinute, minute_hand: movement === 'sweep' ? 'gradual' : 'jump',
+        second_hand: movement === 'hold_start' ? 'pause_at_12' : 'continuous', night_parking: $('nightParking').value
+      });
+    };
+    function stopPolling() {
+      leaving = true;
+      clearInterval(heartbeatTimer);
+      clearInterval(statusTimer);
+      clearTimeout(dstTimer);
+      ++dstRevision;
+    }
+    function showRestart(message) {
+      stopPolling();
+      $('password').value = '';
+      $('dot').className = 'dot';
+      $('state').textContent = 'Clock reconnecting…';
+      notice(message, 'ok');
+      updateControls();
+    }
+    $('sendTime').onclick = async () => {
+      if (actionBusy || leaving || !configLoaded) return;
+      if (!$('ssid').value) {
+        notice('Choose a Wi-Fi network or enter its name.', 'bad');
+        ($('networks').value === 'manual' ? $('ssid') : $('networks')).focus();
+        return;
+      }
+      if ($('dstMode').value === 'custom' && !$('customTimezone').value.trim()) {
+        notice('Enter a custom POSIX time-zone rule.', 'bad');
+        $('customTimezone').focus();
+        return;
+      }
+      for (const id of ['ntpHost', 'ntpBackupHost']) {
+        const host = $(id).value.trim();
+        if (host && (host.length > 127 || !/^[A-Za-z0-9-][A-Za-z0-9.-]*$/.test(host) || host.endsWith('.'))) {
+          notice('Enter a hostname or IPv4 address for the ' + (id === 'ntpHost' ? 'primary' : 'secondary') + ' NTP server, without spaces, a URL or a port.', 'bad');
+          $(id).focus();
+          return;
+        }
+      }
+      actionBusy = true;
+      updateControls();
+      notice('Saving settings…');
+      try {
+        await request('/api/v1/config', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: settings()
+        });
+        const message = 'Settings saved. The clock will reconnect to Wi-Fi and send time once NTP synchronises. This page may be temporarily unavailable.';
+        showRestart(message + (latestDstStatus && latestDstStatus.mode === 'portal'
+          ? ' Rejoin your usual Wi-Fi network to access the clock.' : ''));
+      } catch (error) {
+        if (!error.status || error.status === 403) stopPolling();
+        notice('Save was not confirmed. Reconnect and check the saved settings before trying again. ' + error.message, 'bad');
+      } finally {
+        actionBusy = false;
+        updateControls();
+      }
+    };
+    $('factoryReset').onclick = async () => {
+      if (actionBusy || leaving) return;
+      if (!confirm('Erase saved Wi-Fi, time-server, time-zone, update-time and hand-movement settings? The clock will return to its setup network.')) return;
+      actionBusy = true;
+      updateControls();
+      try {
+        await request('/api/v1/factory-reset', {method: 'POST'});
+        showRestart('Saved settings erased. Reconnect to the clock setup network. Hand movement defaults to Sweep, with second hand battery saver Off.');
+      } catch (error) {
+        if (!error.status || error.status === 403) stopPolling();
+        notice('Reset was not confirmed. Reconnect to the clock and check. ' + error.message, 'bad');
+      } finally {
+        actionBusy = false;
+        updateControls();
+      }
+    };
+    async function keepAlive() {
+      if (leaving || heartbeatBusy || !requestToken) return;
+      heartbeatBusy = true;
+      try {
+        await request('/api/v1/keepalive', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: new URLSearchParams({start: webSessionStarted ? '0' : '1', page: pageId})
+        });
+        webSessionStarted = true;
+      } catch (error) {
+        // The firmware's session expiry covers lost requests.
+        if (error.status === 403 && !leaving) {
+          stopPolling();
+          notice('This setup page has expired. Reconnect to the clock and refresh it.', 'bad');
+          updateControls();
+        }
+      } finally {
+        heartbeatBusy = false;
+      }
+    }
+    function closeSession() {
+      stopPolling();
+      if (!requestToken) return;
+      const url = '/api/v1/session/close';
+      const body = new URLSearchParams({page: pageId, token: requestToken});
+      if (navigator.sendBeacon && navigator.sendBeacon(url, body)) return;
+      fetch(url, {method: 'POST', body, keepalive: true}).catch(() => {});
+    }
+    addEventListener('pagehide', closeSession);
+    // A page restored from the back/forward cache needs a new browser session.
+    addEventListener('pageshow', event => { if (event.persisted) location.reload(); });
+    populateTimezonePresets();
+    heartbeatTimer = setInterval(keepAlive, 2000);
+    statusTimer = setInterval(refreshStatus, 2000);
+    refreshStatus();
+    load();
+  </script>
+</body>
+</html>
