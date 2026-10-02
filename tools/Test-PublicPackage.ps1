@@ -2,7 +2,7 @@
 param([string]$Root = (Split-Path -Parent $PSScriptRoot))
 $ErrorActionPreference = 'Stop'
 $rootPath = (Resolve-Path -LiteralPath $Root).Path
-$files = @(Get-ChildItem -LiteralPath $rootPath -Recurse -File)
+$files = @(Get-ChildItem -LiteralPath $rootPath -Recurse -File | Where-Object { $_.FullName -notlike "$rootPath\.git\*" })
 $problems = [Collections.Generic.List[string]]::new()
 $forbidden = '.bin','.elf','.hex','.ihex','.a','.exe','.dll','.map','.log','.err','.sr','.pcap','.zip','.7z'
 $vendorNames = 'atcmd.c','atcmd.h','main.c','events.c','device.c','device.h','syscfg.c','syscfg.h','sys_config.h','project_config.h','psram_cfg.h','txw81x.cdkproj','makecode.ini','BinScript.BinScript','BinScript2.BinScript'

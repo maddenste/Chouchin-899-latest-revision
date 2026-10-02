@@ -74,7 +74,8 @@ Review the [package inventory](docs/PACKAGE_CONTENTS.md) and
 
 Source, editable web page, tests, tools and documentation belong here.
 Vendor SDK/tools, original firmware, raw captures, private credentials and
-factory-containing full images do not. Each owner must make a full TXW image
-using **their own** verified backup. APP and HC32 downloads are attached
-to GitHub Releases with checksums; no universal factory-containing FULL is supplied.
+factory-containing personal images do not. Releases supply only our complete
+HC32 V15 HEX and clean 2 MiB Wi-Fi R16 FULL, plus the user manual and a separate
+checksum file. No compilation or manual image assembly is needed. After Wi-Fi
+flashing, join WiFi-Clock-Setup and enter your Wi-Fi and clock settings.
 Do not bulk-upload the investigation folder.

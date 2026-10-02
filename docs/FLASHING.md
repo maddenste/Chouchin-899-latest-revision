@@ -1,121 +1,87 @@
-# TXW backup and power-on programming
+# Flash Wi-Fi R16 onto TXW813
 
-Read [HARDWARE.md](HARDWARE.md) first. These commands are for TXW813, not HC32.
-Use PowerShell 7. External DebugServer/GDB and matching algorithm files are
-required; the scripts do not install drivers or convert probe firmware.
+For the **TXW813-320** on the newer Chouchin-899. HC32 is flashed separately.
 
-## Configure paths
+## Downloads and wiring
 
-From the repository root, substitute your own paths and debugger host:
+Download **WiFi-Clock-v2.0-R16-20261002_FULL.bin** and **SHA256SUMS.txt** from
+[the release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1).
+The BIN contains the complete 2 MiB clean installation; no compiling, image
+assembly or settings-copy helper is needed. Original firmware is not included.
 
-```powershell
-$algorithm = 'D:\SDK\TXW81X_FLASH_ALGORITHM.elf'
-$init = 'D:\SDK\TXW81X_FLASH_ALGORITHM.init'
-$endpoint = '192.168.0.5:1025'
-$logs = 'D:\PrivateBackups\TXW-Logs'
-```
+| CKLink Lite pin | TXW board pad |
+| --- | --- |
+| TMS/IO | PA9 |
+| TCK/CK | PA10 |
+| GND | GND |
 
-The endpoint is the **PC running DebugServer**, not the Wi-Fi clock's IP.
-192.168.0.5 was the bench PC address; it is not a universal default.
-Check where DebugServer listens before substituting loopback or another IP.
-Vendor-command path handling with spaces has not been validated: use simple
-paths without spaces for firmware, algorithm and init inputs.
+Use stable board-compatible power and common ground. Do not connect 5 V.
+See [hardware](HARDWARE.md) for voltage-reference cautions and [tools](TOOLS.md)
+for the separately obtained C-SKY DebugServer/GDB and matching TXW flash algorithm.
 
-The documented writer pins the exact matching algorithm hashes:
+**Save a verified original backup before writing. Keep it private.**
+The full installation erases all old settings and configuration sectors.
+It does not erase the chip's eFuse. R16 uses eFuse MAC identification and its
+own settings store, not the old configuration-loading code. The clean image
+has been checked offline but not yet flashed and tested with its final sectors blank.
 
-- ELF: `7BF137DB393ECF74F361554691044D8D65266753340718DA63373510EEEEDC8A`
-- init: `16DE6E4FC6A9D4124B98D45DC934AAE6C6E2AF79E2681DF537F63C790E0DB88B`
+## Flash at address zero
 
-Do not remove the check to make a different algorithm “work”.
+Use the FULL BIN as a binary image at **0x000000**, covering all **2,097,152 bytes**.
+Do not flash an APP/raw linker image in its place.
 
-## Obtain an original full backup
+If you need to catch the chip at power-on, use the existing one-shot writer.
+Download the latest repository ZIP using GitHub's Code → Download ZIP, extract it,
+and open **PowerShell 7** in its top-level folder. Close FlashProgrammer and
+DebugServer windows first.
 
-Close all FlashProgrammer and DebugServer windows. Start before applying board
-power, with the CKLink connected. Preflight first:
-
-```powershell
-.\tools\Read-TXW813-OnPower.ps1 -AlgorithmPath $algorithm -InitScriptPath $init -DebuggerEndpoint $endpoint -PreflightOnly
-
-.\tools\Read-TXW813-OnPower.ps1 -AlgorithmPath $algorithm -InitScriptPath $init -DebuggerEndpoint $endpoint -OutputRoot $logs -GdbInitAndDump
-```
-
-Follow the start prompt, then power the TXW normally. If it misses the window,
-cycle board power between connection attempts. Choose **No** for the optional
-ICE firmware upgrade prompt. The backup catch retries without an overall
-30-second limit; an individual dump has its own timeout.
-
-The read route initialises hardware registers using the SDK init script and
-reads 0x200000 bytes from flash offset zero. It does not erase/program flash,
-but is not a purely passive electrical observation. It does not consume a
-live analyser trigger or detect the recorded power-on spike.
-
-Repeat independently and compare file sizes and SHA-256 hashes:
+Substitute your file paths and the IP of the **PC running DebugServer**, not the
+clock's Wi-Fi IP:
 
 ```powershell
-Get-Item -LiteralPath 'D:\PrivateBackups\read1.bin','D:\PrivateBackups\read2.bin' | Select-Object Name,Length
-Get-FileHash -LiteralPath 'D:\PrivateBackups\read1.bin','D:\PrivateBackups\read2.bin' -Algorithm SHA256
+.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 -CleanFullImage -ImagePath 'C:\ClockFiles\WiFi-Clock-v2.0-R16-20261002_FULL.bin' -AlgorithmPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.elf' -InitScriptPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.init' -DebuggerEndpoint 'YOUR_PC_IP:1025' -Program
 ```
 
-Both must be exactly 2,097,152 bytes, plausible and identical. Preserve both
-reads and their logs. Small slot-2 probes or all-FF data are not full backups.
+The script checks the download and image layout, then retries debug connections.
+Turn board power on while it is trying. If it misses the window, cycle power
+while still trying. Choose **No** if an ICE update box appears.
 
-## Construct a per-board full image
+**Once connected, stop cycling power.** Wait for **WRITTEN**.
+The script sends one complete erase/program operation, with no confirmation,
+automatic write retry or flash readback. The bench write took about 90–100 seconds;
+other setups may take longer. If it fails after writing starts, stop and inspect
+the logs rather than immediately repeating it.
 
-Use the SDK **packaged APP**, not a raw linker binary. Supply previously
-recorded and checked hashes; the following names are placeholders:
+Omit -Program for an offline preflight without accessing the board.
+Paths used in the vendor command must not contain spaces. Custom installations
+can use -ServerPath and -GdbPath.
+
+## Set up after flashing
+
+Power-cycle after success. Join **WiFi-Clock-Setup**, open **http://192.168.4.1/**
+and enter your Wi-Fi and clock settings. Old settings are not retained.
+
+If HC32 V15 is already installed, leave it alone. Otherwise follow
+[the HC32 instructions](HC32.md).
+
+## Original backup, if needed
+
+The read script uses the same debug wiring and separately obtained algorithm.
+Start it before applying board power, then power on while it is trying:
 
 ```powershell
-$backup = 'D:\PrivateBackups\my-original.bin'
-$backupHash = 'YOUR_VERIFIED_ORIGINAL_SHA256'
-$app = 'D:\Builds\clock_APP.bin'
-$appHash = 'YOUR_RECORDED_APP_SHA256'
-$full = 'D:\Builds\clock_FULL.bin'
-
-.\tools\Build-TXW813-DCDC0FullImage.ps1 -CodePath $app -OutputPath $full -ExpectedCodeHash $appHash -FactoryBackup $backup -ExpectedFactoryHash $backupHash
-$fullHash = (Get-FileHash -LiteralPath $full -Algorithm SHA256).Hash
+.\tools\Read-TXW813-OnPower.ps1 -AlgorithmPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.elf' -InitScriptPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.init' -DebuggerEndpoint 'YOUR_PC_IP:1025' -OutputRoot 'C:\ClockBackups' -GdbInitAndDump
 ```
 
-Layout: APP at zero, erased padding/settings, and **your original** final 8 KiB
-at 0x1FE000–0x1FFFFF. The builder refuses an existing output file.
-Never distribute or flash another board's factory-containing FULL image.
+Repeat independently. Compare the actual output files: both must be exactly
+2 MiB, plausible and have the same SHA-256. An all-FF dump is not a valid backup.
+The read initialises hardware through the SDK script; it does not erase/program.
 
-## Preflight, then one write
+## Matching algorithm
 
-```powershell
-$write = @{
-    CodePath = $app
-    ImagePath = $full
-    ExpectedCodeHash = $appHash
-    ExpectedImageHash = $fullHash
-    FactoryBackup = $backup
-    ExpectedFactoryHash = $backupHash
-    AlgorithmPath = $algorithm
-    InitScriptPath = $init
-    DebuggerEndpoint = $endpoint
-    OutputRoot = $logs
-}
-.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 @write
-```
+Checks are automatic; do not bypass them for another SDK algorithm:
 
-Without `-Program`, this checks local files/layout only. When ready:
+- ELF: 7BF137DB393ECF74F361554691044D8D65266753340718DA63373510EEEEDC8A
+- init: 16DE6E4FC6A9D4124B98D45DC934AAE6C6E2AF79E2681DF537F63C790E0DB88B
 
-```powershell
-.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 @write -Program
-```
-
-This is destructive: the vendor full-image program command erases/programs
-the TXW. There is **no confirmation prompt and no readback/verification command**.
-HC32 is untouched. It catches a connection, then sends **one** bounded program
-command; no automatic retry occurs after that command may have begun.
-
-Keep power steady throughout the write. The bench R14 write took roughly
-90–100 seconds, but this is not a guaranteed duration. The default catch timeout
-is 300 seconds and operation timeout 900 seconds. Progress messages alone
-are not success. Success requires the logged `Program success.` response.
-
-## If anything is uncertain
-
-Do not erase or retry blindly. Keep the attempt logs and diagnose them.
-A process error/timeout can happen after a partial write. See
-[TROUBLESHOOTING.md](TROUBLESHOOTING.md). A separately requested recovery operation
-can build a restore image from your own backup; it is not an automatic fallback.
+See [troubleshooting](TROUBLESHOOTING.md) if a connection or write fails.

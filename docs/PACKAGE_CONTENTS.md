@@ -47,6 +47,7 @@ Inspect the complete file list and screenshots before committing.
 
 ## Release assets
 
-The v2.0-rc1 downloads contain the Wi-Fi R16 APP, HC32 V15 HEX/BIN, user manual,
-SHA256SUMS and companion licence/notice files. No FULL image or original backup
-is supplied.
+The release has two firmware downloads: clean Wi-Fi R16 FULL and HC32 V15 HEX,
+plus the user manual and a separate SHA256SUMS.txt. Notices remain in this
+repository. Flash the full images and enter Wi-Fi settings afterwards.
+No original firmware or private backup is supplied.

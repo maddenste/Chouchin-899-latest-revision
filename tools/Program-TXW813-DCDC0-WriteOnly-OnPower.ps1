@@ -1,17 +1,19 @@
-# One-shot full-chip diagnostic program. The DebugServer flash command erases
-# the chip, so the image includes the preserved factory configuration sectors.
+# One-shot full-chip clock program. The DebugServer flash command erases
+# the chip. CleanFullImage uses the public R16 image with all settings erased.
+# The legacy per-board route preserves configuration from a private backup.
 # There is deliberately no confirmation prompt, -v verification, or readback.
 # Without -Program this script only checks the local input files.
 [CmdletBinding()]
 param(
     [switch]$Program,
+    [switch]$CleanFullImage,
     [switch]$ManualIcePrompt = $true,
-    [Parameter(Mandatory)][string]$CodePath,
+    [string]$CodePath,
     [Parameter(Mandatory)][string]$ImagePath,
-    [Parameter(Mandatory)][string]$ExpectedCodeHash,
-    [Parameter(Mandatory)][string]$ExpectedImageHash,
-    [Parameter(Mandatory)][string]$FactoryBackup,
-    [Parameter(Mandatory)][string]$ExpectedFactoryHash,
+    [string]$ExpectedCodeHash,
+    [string]$ExpectedImageHash,
+    [string]$FactoryBackup,
+    [string]$ExpectedFactoryHash,
     [Parameter(Mandatory)][string]$AlgorithmPath,
     [Parameter(Mandatory)][string]$InitScriptPath,
     [string]$ServerPath = 'C:\C-Sky\DebugServer\bin\DebugServerConsole.exe',
@@ -32,12 +34,24 @@ $factory = $FactoryBackup
 if ($DebuggerEndpoint -notmatch '^[A-Za-z0-9.-]+:1025$') { throw 'Use a debugger host with port 1025.' }
 $code = $CodePath
 $image = $ImagePath
+if ($CleanFullImage) {
+    if ($CodePath -or $FactoryBackup -or $ExpectedFactoryHash -or $ExpectedCodeHash) {
+        throw 'CleanFullImage does not use APP or original-backup parameters.'
+    }
+    $releaseHash = '54120864F2465D61D18D50E338DF1EDB006530271F15390885F808FD7BCC8D44'
+    if ($ExpectedImageHash -and $ExpectedImageHash -ne $releaseHash) { throw 'Unexpected clean R16 image hash.' }
+    $ExpectedImageHash = $releaseHash
+} elseif (-not $CodePath -or -not $ExpectedCodeHash -or -not $FactoryBackup -or -not $ExpectedFactoryHash -or -not $ExpectedImageHash) {
+    throw 'Legacy image mode requires APP, backup and recorded hashes. Use CleanFullImage for the public FULL.'
+}
 $expectedHashes = @{
     $algorithm = '7BF137DB393ECF74F361554691044D8D65266753340718DA63373510EEEEDC8A'
     $initScript = '16DE6E4FC6A9D4124B98D45DC934AAE6C6E2AF79E2681DF537F63C790E0DB88B'
-    $factory = $ExpectedFactoryHash
-    $code = $ExpectedCodeHash
     $image = $ExpectedImageHash
+}
+if (-not $CleanFullImage) {
+    $expectedHashes[$factory] = $ExpectedFactoryHash
+    $expectedHashes[$code] = $ExpectedCodeHash
 }
 $flashLength = 0x200000
 $configStart = 0x1FE000
@@ -52,9 +66,17 @@ foreach ($path in $expectedHashes.Keys) {
 if ($IceClock -notmatch '^(100|[1-9][0-9]{2,3})k$') { throw 'Invalid ICE clock.' }
 if ($CatchTimeoutSeconds -lt 5 -or $OperationTimeoutSeconds -lt 600) { throw 'Timeout too short.' }
 if (-not (Test-Path -LiteralPath (Split-Path -Qualifier $OutputRoot))) { throw "Output drive missing: $OutputRoot" }
-$factoryBytes = [IO.File]::ReadAllBytes($factory)
-$codeBytes = [IO.File]::ReadAllBytes($code)
 $imageBytes = [IO.File]::ReadAllBytes($image)
+if ($CleanFullImage) {
+    $factoryBytes = [byte[]]::new($flashLength)
+    [Array]::Fill($factoryBytes, [byte]0xff)
+    $codeBytes = [byte[]]::new(326160)
+    if ($imageBytes.Length -ne $flashLength) { throw 'Clean FULL must be exactly 2 MiB.' }
+    [Array]::Copy($imageBytes, $codeBytes, $codeBytes.Length)
+} else {
+    $factoryBytes = [IO.File]::ReadAllBytes($factory)
+    $codeBytes = [IO.File]::ReadAllBytes($code)
+}
 if ($factoryBytes.Length -ne $flashLength -or $imageBytes.Length -ne $flashLength -or
     $codeBytes.Length -lt 0x1000 -or $codeBytes.Length -ge $configStart -or $imageBytes[0] -ne 0x69 -or
     $imageBytes[1] -ne 0x5a -or $imageBytes[2] -ne 0) {
@@ -66,7 +88,9 @@ for ($i = 0; $i -lt $flashLength; $i++) {
         else { 0xff }
     if ($imageBytes[$i] -ne $expected) { throw ('Image layout mismatch at 0x{0:X}' -f $i) }
 }
-Write-Host "Preflight OK: 2 MiB DCDC-off image $($expectedHashes[$image]); factory sectors preserved."
+Write-Host "Preflight OK: 2 MiB DCDC-off image $($expectedHashes[$image])."
+if ($CleanFullImage) { Write-Host 'Clean installation: old settings are erased. Enter Wi-Fi settings after flashing.' }
+else { Write-Host 'Private per-board image: original configuration sectors preserved.' }
 Write-Host 'No flash verification or flash readback is configured.'
 if (-not $Program) { Write-Host 'Offline preflight only; no hardware accessed.'; return }
 

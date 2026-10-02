@@ -13,8 +13,10 @@ metadata, executables and flash algorithms are not bundled. Published source is
 not a complete reproducible cross-build environment. The build guide records the
 tested private workflow, not a promise that this tree can build unaided.
 
-Original backups, credentials, raw captures and factory-containing FULL images
-remain private. Each owner must preserve their own final 8 KiB of TXW flash.
+Original backups, credentials, raw captures and factory-containing personal FULL
+images remain private. The released clean 2 MiB FULL contains no copied original
+sectors. A full clean installation erases the old configuration and starts with
+empty replacement-firmware settings; users enter their Wi-Fi settings afterwards.
 
 ## Unresolved rights
 

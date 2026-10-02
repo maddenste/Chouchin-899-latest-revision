@@ -1,4 +1,4 @@
-# Package the DCDC-off diagnostic firmware with the saved factory settings.
+# Package clock firmware with the user's own preserved configuration sectors.
 # Offline only: this script never opens a debugger or accesses the board.
 [CmdletBinding()]
 param(
