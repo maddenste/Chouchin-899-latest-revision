@@ -4,6 +4,41 @@ Target: newer Chouchin-899 / CH-899, **HDSC HC32L130J8TA + Taixin TXW813-320**.
 Older ESP8285/MM32 electronics use the [original project](https://github.com/maddenste/Chouchin-CH899-Firmware).
 A model label is not enough. Photograph both sides and inspect the chip markings.
 
+## Board photographs
+
+Photos supplied by Steve Madden. Published copies retain orientation and full
+main-image resolution, with location/camera metadata removed. These are board
+identification photos, not photographs of the connected programmers.
+
+### Newer Chouchin-899 — whole-board overview
+
+<img src="photos/chouchin-899-newer-board-overview.jpg" alt="Whole newer Chouchin-899 PCB: HC32 movement controller above, TXW813 Wi-Fi circuitry and antenna below" width="500">
+
+**HC32 movement controller:** upper-left chip. **TXW813 Wi-Fi controller:**
+lower section beside the 40 MHz crystal and PCB antenna. Both chips must match
+this hardware family; the handwritten mark does not establish a PCB revision.
+
+### HC32L130J8TA — movement controller and programming pads
+
+<img src="photos/hc32l130-controller-and-programming-pads.jpg" alt="HDSC HC32L130J8TA close-up beside CLK, DIO, VDD, GND, RST and BOOT pads" width="600">
+
+The chip marking identifies **HDSC HC32L130J8TA**. The pads beside it are
+labelled **CLK, DIO, VDD, GND and RST**, with **BOOT** below.
+For the documented UART installation: programmer **U_TX → DIO**,
+**U_RX → CLK**, common **GND**, and **BOOT held at 3.3 V**.
+For SWD backup/debug, DIO and CLK instead carry SWDIO and SWCLK.
+These are two different programming modes; follow [the HC32 guide](HC32.md).
+
+### TXW813-320 — Wi-Fi controller and debug pads
+
+<img src="photos/txw813-wifi-chip-and-debug-pads.jpg" alt="Taixin TXW813-320 beside 40 MHz crystal, PCB antenna and J1 pads labelled GND, PA10, PA9, PA8 and VCC" width="800">
+
+The chip marking identifies **Taixin TXW813-320**, beside the **40 MHz crystal**
+and PCB antenna. **J1** is labelled **GND, PA10, PA9, PA8 and VCC**.
+The confirmed two-wire debug connections are **TMS/IO → PA9**,
+**TCK/CK → PA10** and common **GND**. PA8 is not required for the documented
+catch workflow. Refer to the printed pad names, not a guessed connector orientation.
+
 ## TXW debug connection — owner-confirmed working wiring
 
 | CKLink Lite V2 | TXW signal | Use |
@@ -17,8 +52,8 @@ A model label is not enough. Photograph both sides and inspect the chip markings
 
 The owner explicitly confirmed PA9/PA10 on 1 October 2026.
 PA10 must remain reserved for debug. Verify continuity to your own TXW;
-an annotated close-up confirming header orientation is still required before
-the final public guide. Do not infer left/right order from a list of pad names.
+the photographs above show the printed J1 pad labels. Do not infer left/right
+order from a programmer's connector layout; match signal names.
 
 The adapter shown during development has 5V, 3V3, TMS/IO, GND, TCK/CK and
 TDI, TDO, nRST, U-TX, U-RX labels. No separate VREF input was established.

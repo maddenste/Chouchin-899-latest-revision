@@ -15,6 +15,13 @@ Check both chip markings: the product name alone does not identify the electroni
 used on the HC32.** This is not an Arduino build or a manufacturer-endorsed upgrade.
 The PCB revision number is not established; compatibility is identified by chips.
 
+## Board photographs
+
+<img src="docs/photos/chouchin-899-newer-board-overview.jpg" alt="Newer Chouchin-899 board fitted with HC32L130 and TXW813-320" width="420">
+
+The newer HC32/TXW board. See the [hardware guide](docs/HARDWARE.md#board-photographs)
+for close-ups of both chips and the labelled programming pads.
+
 ## Candidate status
 
 The current pair is **HC32 V15 + Wi-Fi v2.0 R16**. R16 updates the version and
