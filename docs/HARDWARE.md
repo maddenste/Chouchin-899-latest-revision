@@ -94,7 +94,7 @@ device project. Keil uses HDSC.HC32L130.1.0.1 and FlashHC32L130_64K.FLM.
 The owner confirmed that TMS/IO, TCK/CK and GND were the only connections for
 **SWD debug mode and the original firmware backup in Keil µVision 5**.
 Saved session records identify Keil Command-pane SAVE commands for the backup;
-see [HC32 backup instructions](HC32.md#original-firmware-backup--keil-µvision-5-over-swd).
+see [HC32 backup instructions](HC32_BACKUP.md).
 
 For HC32 firmware programming through XHSC UART boot mode, the owner confirmed:
 
@@ -127,7 +127,8 @@ Do not infer physical header pin order from the probe name.
 
 Disconnect batteries/external power before soldering or moving wires. Use short,
 strain-relieved wires, stable appropriate board power and common ground.
-Our bench rail measured 3.38 V; that is an observation, not a voltage specification.
+For uploading, we used a 3.3 V bench supply connected to the battery terminals,
+positive to battery positive and negative to battery negative, with batteries removed.
 Keep hands/gears unobstructed; avoid back-powering through signal pins.
 
 Start the catch script before waking/power-cycling TXW. Once a program command

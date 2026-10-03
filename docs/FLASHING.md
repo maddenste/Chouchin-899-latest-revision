@@ -1,87 +1,109 @@
-# Flash Wi-Fi R16 onto TXW813
+# Upload Wi-Fi R16 — TXW813
 
-For the **TXW813-320** on the newer Chouchin-899. HC32 is flashed separately.
+[Start here](GETTING_STARTED.md) · [Equipment/software](TOOLS.md)
 
-## Downloads and wiring
+Our **CKLink Lite V2 power-on catch procedure** writes the complete 2 MiB FULL at **0x000000**. No building or settings-copy helper is needed.
 
-Download **WiFi-Clock-v2.0-R16-20261002_FULL.bin** and **SHA256SUMS.txt** from
-[the release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1).
-The BIN contains the complete 2 MiB clean installation; no compiling, image
-assembly or settings-copy helper is needed. Original firmware is not included.
+## 1. Prepare files
 
-| CKLink Lite pin | TXW board pad |
+Create these folders and copy the files:
+
+~~~text
+C:\ClockFlash\
+  tools\                         ← from current Code → Download ZIP
+  WiFi-Clock-v2.0-R16-20261002_FULL.bin
+C:\ClockTools\
+  TXW81X_FLASH_ALGORITHM.elf
+  TXW81X_FLASH_ALGORITHM.init
+~~~
+
+Get the BIN from [the release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1), algorithms from [the matching Taixin package](TOOLS.md).
+**Paths must not contain spaces.**
+
+Locate your installed DebugServer and C-SKY GDB. Our paths were:
+
+~~~text
+C:\C-Sky\DebugServer\bin\DebugServerConsole.exe
+C:\C-Sky\CDKRepo\Toolchain\CKV2ElfMinilib\V3.10.29\R\bin\csky-elfabiv2-gdb.exe
+~~~
+
+Use your actual paths below if different. Do not select RISC-V GDB.
+
+## 2. Wire with board power off
+
+Remove batteries. Connect bench 3.3 V at the **battery terminals**.
+
+![TXW813 signal connections](diagrams/txw-upload.svg)
+
+| CKLink Lite pin | Board pad |
 | --- | --- |
 | TMS/IO | PA9 |
 | TCK/CK | PA10 |
 | GND | GND |
 
-Use stable board-compatible power and common ground. Do not connect 5 V.
-See [hardware](HARDWARE.md) for voltage-reference cautions and [tools](TOOLS.md)
-for the separately obtained C-SKY DebugServer/GDB and matching TXW flash algorithm.
+Leave other probe pins disconnected, including 3V3, 5V, TDI, TDO and nRST. No BOOT/PA8 strap is used.
 
-**Save a verified original backup before writing. Keep it private.**
-The full installation erases all old settings and configuration sectors.
-It does not erase the chip's eFuse. R16 uses eFuse MAC identification and its
-own settings store, not the old configuration-loading code. The clean image
-has been checked offline but not yet flashed and tested with its final sectors blank.
+<img src="photos/txw813-wifi-chip-and-debug-pads.jpg" alt="TXW813 and J1 GND, PA10, PA9, PA8, VCC pads" width="650">
 
-## Flash at address zero
+Match pad names, not guessed header order. Plug CKLink into USB; keep bench power off for now.
 
-Use the FULL BIN as a binary image at **0x000000**, covering all **2,097,152 bytes**.
-Do not flash an APP/raw linker image in its place.
+## 3. Check the command before writing
 
-If you need to catch the chip at power-on, use the existing one-shot writer.
-Download the latest repository ZIP using GitHub's Code → Download ZIP, extract it,
-and open **PowerShell 7** in its top-level folder. Close FlashProgrammer and
-DebugServer windows first.
+Close **FlashProgrammer and all DebugServer windows**; the script starts its own server.
 
-Substitute your file paths and the IP of the **PC running DebugServer**, not the
-clock's Wi-Fi IP:
+Open **PowerShell 7**. Run **ipconfig** and find the IPv4 address of your PC's active network adapter. Use the **PC running DebugServer**, not the clock's address.
 
-```powershell
-.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 -CleanFullImage -ImagePath 'C:\ClockFiles\WiFi-Clock-v2.0-R16-20261002_FULL.bin' -AlgorithmPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.elf' -InitScriptPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.init' -DebuggerEndpoint 'YOUR_PC_IP:1025' -Program
-```
+Paste this block, changing **192.168.0.5** to your PC address and changing installed-program paths if needed:
 
-The script checks the download and image layout, then retries debug connections.
-Turn board power on while it is trying. If it misses the window, cycle power
-while still trying. Choose **No** if an ICE update box appears.
+~~~powershell
+Set-Location C:\ClockFlash
+$flashArgs = @{
+    CleanFullImage = $true
+    ImagePath = 'C:\ClockFlash\WiFi-Clock-v2.0-R16-20261002_FULL.bin'
+    AlgorithmPath = 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.elf'
+    InitScriptPath = 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.init'
+    ServerPath = 'C:\C-Sky\DebugServer\bin\DebugServerConsole.exe'
+    GdbPath = 'C:\C-Sky\CDKRepo\Toolchain\CKV2ElfMinilib\V3.10.29\R\bin\csky-elfabiv2-gdb.exe'
+    DebuggerEndpoint = '192.168.0.5:1025'
+}
+.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 @flashArgs
+~~~
 
-**Once connected, stop cycling power.** Wait for **WRITTEN**.
-The script sends one complete erase/program operation, with no confirmation,
-automatic write retry or flash readback. The bench write took about 90–100 seconds;
-other setups may take longer. If it fails after writing starts, stop and inspect
-the logs rather than immediately repeating it.
+This run is **offline checks only**. Continue when it prints **Preflight OK** and **Offline preflight only; no hardware accessed**. Fix missing-file/hash errors first.
 
-Omit -Program for an offline preflight without accessing the board.
-Paths used in the vendor command must not contain spaces. Custom installations
-can use -ServerPath and -GdbPath.
+If Windows blocks the downloaded script, inspect it and unblock that specific file:
 
-## Set up after flashing
+~~~powershell
+Unblock-File C:\ClockFlash\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1
+~~~
 
-Power-cycle after success. Join **WiFi-Clock-Setup**, open **http://192.168.4.1/**
-and enter your Wi-Fi and clock settings. Old settings are not retained.
+## 4. Catch and write
 
-If HC32 V15 is already installed, leave it alone. Otherwise follow
-[the HC32 instructions](HC32.md).
+In the **same PowerShell window**, run:
 
-## Original backup, if needed
+~~~powershell
+.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 @flashArgs -Program
+~~~
 
-The read script uses the same debug wiring and separately obtained algorithm.
-Start it before applying board power, then power on while it is trying:
+1. When debug connection attempts begin, turn on the bench supply.
+2. If not caught, cycle board power while the script is still retrying. Many attempts can be needed.
+3. Select **No** if an ICE/probe firmware update prompt appears.
+4. **Once connected and writing starts, stop power cycling. Keep power steady.**
 
-```powershell
-.\tools\Read-TXW813-OnPower.ps1 -AlgorithmPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.elf' -InitScriptPath 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.init' -DebuggerEndpoint 'YOUR_PC_IP:1025' -OutputRoot 'C:\ClockBackups' -GdbInitAndDump
-```
+The script sends one erase/program command. It does not automatically retry writing or read flash back.
 
-Repeat independently. Compare the actual output files: both must be exactly
-2 MiB, plausible and have the same SHA-256. An all-FF dump is not a valid backup.
-The read initialises hardware through the SDK script; it does not erase/program.
+Wait for **WRITTEN: programmer reported Program success**. Our write took roughly **90–100 seconds**; others may take longer. “Connected” alone is not success.
 
-## Matching algorithm
+If a write may have started and then fails, **do not immediately rerun it**. Keep logs and consult [troubleshooting](TROUBLESHOOTING.md).
 
-Checks are automatic; do not bypass them for another SDK algorithm:
+If the script stops without ever connecting, no write was started. Check wiring,
+power and drivers, then start the catch command again. Connection attempts time
+out after five minutes. Logs are saved under **C:\ClockFlash\logs**.
 
-- ELF: 7BF137DB393ECF74F361554691044D8D65266753340718DA63373510EEEEDC8A
-- init: 16DE6E4FC6A9D4124B98D45DC934AAE6C6E2AF79E2681DF537F63C790E0DB88B
+## 5. Restart and set up
 
-See [troubleshooting](TROUBLESHOOTING.md) if a connection or write fails.
+After WRITTEN, power off, unplug CKLink and remove its board connections. Restart normally.
+
+Join **WiFi-Clock-Setup**, open **http://192.168.4.1/** and enter your Wi-Fi and clock settings. Old settings are cleared.
+
+[User manual](WiFi-Clock-User-Manual-v2.0.pdf) · [Validation status](GETTING_STARTED.md#validation-note)
