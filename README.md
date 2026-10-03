@@ -25,7 +25,7 @@ file selection, automatic checks and power-on catch instructions, with no comman
 - [Three-page user manual](docs/WiFi-Clock-User-Manual-v2.0.pdf)
 - [Help / report a problem](docs/TROUBLESHOOTING.md)
 
-We used Windows. Other systems may work with suitable tools, but are untested; the supplied flashing script is Windows-specific.
+We used **Windows 11**. These instructions cover Windows 11; other systems may work with suitable tools, but have not been verified.
 
 ## Make it your clock
 

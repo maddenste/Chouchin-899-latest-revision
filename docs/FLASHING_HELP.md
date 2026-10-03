@@ -2,7 +2,7 @@
 
 [Simple flashing guide](FLASHING.md) · [Equipment and software downloads](TOOLS.md)
 
-Use the **guided Windows launcher**: select the files, check the wiring and
+Use the **guided launcher for Windows 11**: select the files, check the wiring and
 follow its prompts. No commands to copy or paths to edit.
 This installs Wi-Fi R17 on the **TXW813-320** only. Flash the
 [HC32 movement controller separately](HC32.md) if needed.
@@ -62,7 +62,7 @@ The launcher checks the firmware and both algorithm checksums before offering
 to start. If a check fails, **nothing is written**: correct the files first.
 When everything is ready, press **Enter** to start, or type **Q** to quit.
 
-If Windows blocks a downloaded file, inspect it, then use **Properties → Unblock**
+If Windows 11 blocks a downloaded file, inspect it, then use **Properties → Unblock**
 on that file if offered. The launcher uses a process-only PowerShell execution
 policy override; it does not change your system's execution policy. Organisation
 security restrictions may still prevent it running—do not disable them.
@@ -128,4 +128,4 @@ before writing starts, **unplug the CKLink probe from USB**, then close the
 flashing window. Do not unplug it during an active firmware write. If a write
 was interrupted, retain the logs and do not immediately retry.
 Launcher tests and the real R17 firmware/algorithm preflight also passed under
-built-in Windows PowerShell 5.1. No PowerShell 7 installation is required.
+Windows 11's built-in Windows PowerShell 5.1. No PowerShell 7 installation is required.

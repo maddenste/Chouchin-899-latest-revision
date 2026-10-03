@@ -1,6 +1,6 @@
 # Flash the Wi-Fi chip
 
-For **TXW813-320 + HC32L130J8TA boards**, using Windows and CKLink Lite.
+For **TXW813-320 + HC32L130J8TA boards**, using Windows 11 and CKLink Lite.
 The [HC32 chip has separate upload instructions](HC32.md).
 
 Prefer commands? Use the [manual CLI flashing guide](FLASHING_CLI.md).
@@ -17,7 +17,7 @@ Includes **[Flash-WiFi.bat](../Flash-WiFi.bat)** and its required scripts.
 Install **C-SKY DebugServer/driver and CDK** from the
 [software downloads and algorithm-location guide](TOOLS.md#software-downloads).
 Have **TXW81X_FLASH_ALGORITHM.elf** and its matching **.init** file ready.
-The launcher uses Windows' built-in PowerShell; no PowerShell installation is needed.
+The launcher uses Windows 11's built-in Windows PowerShell; no PowerShell installation is needed.
 
 **[Download Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v2.0/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
 

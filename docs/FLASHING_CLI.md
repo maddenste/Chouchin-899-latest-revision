@@ -65,7 +65,7 @@ Match pad names, not guessed header order. Plug CKLink into USB; keep board powe
 
 Close **FlashProgrammer and all DebugServer windows**; the script starts its own server.
 
-Open **Windows PowerShell (5.1 or later)**. Run **ipconfig** and find the IPv4 address of your PC's active network adapter. Use the **PC running DebugServer**, not the clock's address.
+On **Windows 11**, open **Windows PowerShell (5.1 or later)**. Run **ipconfig** and find the IPv4 address of your PC's active network adapter. Use the **PC running DebugServer**, not the clock's address.
 
 Paste this block, changing **192.168.0.5** to your PC address and changing installed-program paths if needed:
 
@@ -85,7 +85,7 @@ $flashArgs = @{
 
 This run is **offline checks only**. Continue when it prints **Preflight OK** and **Offline preflight only; no hardware accessed**. Fix missing-file/hash errors first.
 
-If Windows blocks the downloaded script, inspect it and unblock that specific file:
+If Windows 11 blocks the downloaded script, inspect it and unblock that specific file:
 
 ~~~powershell
 Unblock-File C:\ClockFlash\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1

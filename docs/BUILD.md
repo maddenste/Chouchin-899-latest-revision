@@ -1,4 +1,4 @@
-# Development and build notes (Windows)
+# Development and build notes (Windows 11)
 
 **Scope:** this records the working local build, not a complete buildable public
 SDK project. Vendor-derived startup/integration overlays and project metadata
@@ -12,8 +12,8 @@ See [the project notices](../NOTICE.md) for source and binary licensing scope.
 - TXW81x IOT SDK **2.5.2.6-31320**, separately obtained; root must contain
   `sdk`, `csky`, `libs`, `project`. Use PowerShell 7 for the image builder.
 - C-Sky CDK and CKV2ElfMinilib **3.10.29**, `csky-elfabiv2-*` tools.
-- Python 3 with `tzdata` available for `zoneinfo` tests on Windows.
-- TinyCC native Windows compiler for real-C host tests.
+- Python 3 with `tzdata` available for `zoneinfo` tests on Windows 11.
+- TinyCC native Windows compiler for real-C host tests on Windows 11.
 - Node.js, Playwright and Microsoft Edge for browser tests.
 - Your own verified 2 MiB original flash backup, kept outside the repository.
 

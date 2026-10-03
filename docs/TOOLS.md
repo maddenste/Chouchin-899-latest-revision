@@ -1,6 +1,6 @@
 # Before you start
 
-We used **Windows**. Other systems may work, but are untested; the supplied script is Windows-specific.
+We used **Windows 11**. These instructions cover Windows 11; other systems may work with suitable tools, but have not been verified.
 
 ## Equipment
 
@@ -42,7 +42,7 @@ See [UART diagnosis and wiring](TROUBLESHOOTING.md#optional-uart-diagnosis).
 | Tool | Official download | Version / files used |
 | --- | --- | --- |
 | XHSC MCU Programmer | [XHSC ISP V2.23 ZIP](https://oss-nc-beijing-2.cecloudcs.com/doc-xh/XHSC%20ISP%20V2.23.zip) · [vendor listing](https://www.xhsc.com.cn/product/1248.html) | V2.23; run XHSC.exe |
-| PowerShell | Included with Windows | The guided launcher uses built-in Windows PowerShell 5.1; no extra installation |
+| PowerShell | Included with Windows 11 | The guided launcher uses built-in Windows PowerShell 5.1; no extra installation |
 | C-SKY / XuanTie CDK | [Official CDK page](https://www.xrvm.cn/community/download?id=4478329920585535488) | CKV2ElfMinilib 3.10.29; csky-elfabiv2-gdb.exe |
 | C-SKY / XuanTie DebugServer | [Official DebugServer page](https://www.xrvm.cn/community/download?id=4453644425750450176) | User layer 5.18.10 and CKLink Windows driver |
 | TXW flash algorithm | [Taixin FPV 2.5.4.7 V45354](https://taixin-semi.com/zh/downloads/TXW81x_FPV-v2.5.4.7) | TXW81X_FLASH_ALGORITHM.elf and matching .init |
