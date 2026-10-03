@@ -50,6 +50,10 @@ minute-resolution special DST wake, including transitions off the full hour.
 | Sweep | Gradual minute-hand steps |
 | Burst | Minute-hand jump |
 | Hold&Start | Swiss railway station-clock-style movement: seconds pause at 12, then restart as the minute hand jumps forward |
+
+[Wait&Start movement example video](https://youtu.be/SJYg5ni0lvE): a Mondaine clock
+illustrating the style we call **Hold&Start** in the settings, not footage of this
+modified Chouchin-899.
 | Second hand battery saver: Off | Normal selected movement, no scheduled parking |
 | Night parking | Seconds parked between 00:00 and 06:00 |
 | On | Seconds reach 12 and remain parked indefinitely; useful if no second hand is fitted |

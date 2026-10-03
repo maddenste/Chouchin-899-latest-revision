@@ -27,6 +27,10 @@ We used Windows. Other systems may work with suitable tools, but are untested; t
 
 Hold&Start recreates the characteristic Swiss railway station-clock motion: the seconds hand pauses at 12, then restarts as the minute hand advances.
 
+[Watch an example of the Wait&Start movement](https://youtu.be/SJYg5ni0lvE)
+(called **Hold&Start** in our settings). The linked video shows a Mondaine clock,
+not this modified Chouchin-899; it illustrates the movement style only.
+
 <img src="docs/screenshots/setup-desktop.png" alt="WiFi Clock settings page" width="700">
 
 [Research, source notes and test results](docs/BACKGROUND.md) are available separately.
