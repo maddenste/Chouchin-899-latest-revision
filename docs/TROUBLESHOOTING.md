@@ -35,6 +35,7 @@ addresses as appropriate and factory data before posting.
 ## Optional UART diagnosis
 
 Experienced users can inspect clock messages with [PulseView](https://www.sigrok.org/wiki/Downloads);
+we used a [DAOKAI 24 MHz, 8-channel USB logic analyser](https://www.amazon.co.uk/dp/B0CP952357).
 see its [user manual](https://www.sigrok.org/doc/pulseview/0.4.2/manual.html)
 for capture and decoder controls. Use the [confirmed wiring](HARDWARE.md#inter-chip-uart--passive-analyser)
 and decode **9600 baud, 8N1**. A logic analyser is not required for uploading.

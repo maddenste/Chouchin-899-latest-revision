@@ -29,6 +29,14 @@ Do not confuse the AC input with the +Vo/−Vo DC output.
 
 Remove batteries. Connect supply **+3.3 V to battery +**, supply **negative to battery −**, and common programmer/board GND. Leave programmer 3V3/5V disconnected.
 
+## Optional diagnostic equipment
+
+We used a [DAOKAI 24 MHz, 8-channel USB logic analyser](https://www.amazon.co.uk/dp/B0CP952357)
+with [PulseView](https://www.sigrok.org/wiki/Downloads) to inspect the inter-chip
+UART messages. This is **not required for flashing**. The purchase link was
+supplied by Steve; check the selected model, as listings can change.
+See [UART diagnosis and wiring](TROUBLESHOOTING.md#optional-uart-diagnosis).
+
 ## Software downloads
 
 | Tool | Official download | Version / files used |
