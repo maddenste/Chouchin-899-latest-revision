@@ -13,9 +13,8 @@ Includes **[Flash-WiFi.bat](../Flash-WiFi.bat)** and its required scripts.
 ## 1. Get the software and firmware
 
 Install **C-SKY DebugServer/driver and CDK** from the
-[software download list](TOOLS.md#software-downloads).
-Keep the Taixin **TXW81X_FLASH_ALGORITHM.elf** and matching **.init** files.
-See [an example extracted folder path](TOOLS.md#software-downloads) if you cannot find them.
+[software downloads and algorithm-location guide](TOOLS.md#software-downloads).
+Have **TXW81X_FLASH_ALGORITHM.elf** and its matching **.init** file ready.
 The launcher uses Windows' built-in PowerShell; no PowerShell installation is needed.
 
 **[Download Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v2.0/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
@@ -23,53 +22,41 @@ The launcher uses Windows' built-in PowerShell; no PowerShell installation is ne
 ## 2. Connect with power off
 
 Remove batteries. Connect a regulated **3.3 V supply to the battery terminals**,
-positive to **+**, negative to **−**. Check polarity.
-
-| CKLink Lite | Board |
-| --- | --- |
-| TMS/IO | PA9 |
-| TCK/CK | PA10 |
-| GND | GND |
+positive to **+**, negative to **−**. Check polarity and leave the supply off.
 
 Leave **all other probe pins disconnected**. No BOOT strap is needed.
 Plug CKLink into USB, but keep board power off.
 
-<details>
-<summary>Show wiring diagram and board photograph</summary>
-
 ![TXW813 wiring](diagrams/txw-upload.svg)
 
 <img src="photos/txw813-wifi-chip-and-debug-pads.jpg" alt="TXW813 board pads: GND, PA10, PA9, PA8 and VCC" width="650">
-
-</details>
 
 ## 3. Run Flash-WiFi.bat
 
 Close FlashProgrammer and all DebugServer windows.
 Double-click **Flash-WiFi.bat** in the extracted folder.
 
-Select any files it asks for. The launcher checks them and guides you through
-starting. No commands or paths to edit.
+Select files when prompted. The launcher checks them; press **Enter** when
+wired and ready. No commands or paths to edit.
 
 - When connection attempts begin, turn board power **on**.
-- If it has not connected, cycle board power. Around **five cycles** was typical.
+- If it has not connected, cycle board power. About **five power cycles** was typical.
 - The script automatically declines the CKLink update prompt. If it stays open, choose **No**.
 - **Once connected, stop cycling power and keep power steady.**
 
-**Be careful: the clock's red LED is controlled by the HC32, not the Wi-Fi chip.**
-It can keep flashing while firmware is being written or when the boot window
-has been missed. **Follow the script's messages, not the LED.** Never cycle
-power during writing just because the LED is still flashing.
+Wait for **WRITTEN: programmer reported Program success**. Writing took around
+**90–100 seconds** on our setup; other setups may take longer.
 
-To get out of a repeating firmware-update window loop **before writing starts**,
-unplug the CKLink probe from USB, then close the flashing window.
-**Do not unplug the probe while firmware is being written.**
+**Red LED warning:** the HC32 controls this LED, so it can keep flashing during
+writing or after a missed boot window. **Follow the script's messages, not the
+LED. Do not cycle power or unplug the probe during writing.**
 
-Wait for **WRITTEN: programmer reported Program success**—usually around
-90–100 seconds on our setup. There is no automatic write retry or flash readback.
+To stop a repeating update-window loop **before writing starts**, unplug the
+probe from USB, then close the flashing window.
 
 If writing fails, **do not immediately retry**. Keep the logs and follow
-[troubleshooting](TROUBLESHOOTING.md).
+[troubleshooting](TROUBLESHOOTING.md). There is no automatic write retry or
+flash readback.
 
 ## 4. Restart and set up
 
