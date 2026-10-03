@@ -27,7 +27,10 @@ Use **Chouchin-899-HC32-V15-20261001.hex**, DAPLink UART pins and XHSC MCU Progr
 
 [Wi-Fi-controller upload steps →](FLASHING.md)
 
-Use **WiFi-Clock-v2.0-R17-20261003_FULL.bin**, CKLink Lite and the power-on catch script. If a chip already has the correct version, leave it alone.
+Use **WiFi-Clock-v2.0-R17-20261003_FULL.bin**, CKLink Lite and the double-click
+**Flash-WiFi.bat** guided launcher. It checks the files and guides the power-on
+catch procedure without commands to edit. If a chip already has the correct
+version, leave it alone.
 
 ## 5. Set up
 

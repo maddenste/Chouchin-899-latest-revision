@@ -1,54 +1,35 @@
-# Upload Wi-Fi R17 — TXW813
+# Upload Wi-Fi firmware
 
-[Start here](GETTING_STARTED.md) · [Equipment/software](TOOLS.md)
+[Start here](GETTING_STARTED.md) · [Equipment and software downloads](TOOLS.md)
 
-Our **CKLink Lite V2 power-on catch procedure** writes the complete 2 MiB FULL at **0x000000**. No building or settings-copy helper is needed.
+Use the **guided Windows launcher**: select the files, check the wiring and
+follow its prompts. No commands to copy or paths to edit.
+This installs Wi-Fi R17 on the **TXW813-320** only. Flash the
+[HC32 movement controller separately](HC32.md) if needed.
 
-## Why do we need to catch it at power-on?
+## 1. Download and install
 
-With the original firmware, **PA10 starts out as the debug clock pin but is
-quickly repurposed for UART debug output**. We observed boot messages on this
-line during the investigation. This leaves only a short window at startup to
-connect before normal firmware takes over the pin.
+- Install **PowerShell 7**, **C-SKY DebugServer with the CKLink driver** and
+  **C-SKY CDK/toolchain**, using [these software links](TOOLS.md#software-downloads).
+- Download **WiFi-Clock-v2.0-R17-20261003_FULL.bin** from
+  [the v2.0 release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0).
+- Extract the Taixin package linked in the software list. You need
+  **TXW81X_FLASH_ALGORITHM.elf** and its matching **.init** file under
+  **sdk/chip/txw81x**. No SDK build is required.
+- Download the [current project ZIP](https://github.com/maddenste/Chouchin-899-latest-revision/archive/refs/heads/main.zip)
+  and **extract it**. Keep **Flash-WiFi.bat** beside its **tools** folder.
+  Do not use the release's older “Source code” ZIP for the launcher.
 
-The script repeatedly tries to connect while you power-cycle the board. Not
-every connection attempt lands inside that short window. On our setup, it
-took **about five power cycles on average** to catch the chip. The script's
-connection-attempt counter is not the number of power cycles you have performed.
+The downloads can remain in their usual folders, including folders with spaces.
+The launcher copies the three flash inputs into a separate working folder with
+simple paths; you do not need to reorganise them yourself.
 
-**Our replacement firmware leaves PA10 available for debug**, rather than
-repurposing it for UART output. After it has been successfully installed, this
-particular boot-window problem goes away. Correct wiring, power and working
-debug tools are still required. The same script can be used for later uploads.
+## 2. Connect with board power off
 
-## 1. Prepare files
-
-Create these folders and copy the files:
-
-~~~text
-C:\ClockFlash\
-  tools\                         ← from current Code → Download ZIP
-  WiFi-Clock-v2.0-R17-20261003_FULL.bin
-C:\ClockTools\
-  TXW81X_FLASH_ALGORITHM.elf
-  TXW81X_FLASH_ALGORITHM.init
-~~~
-
-Get the BIN from [the release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0), algorithms from [the matching Taixin package](TOOLS.md).
-**Paths must not contain spaces.**
-
-Locate your installed DebugServer and C-SKY GDB. Our paths were:
-
-~~~text
-C:\C-Sky\DebugServer\bin\DebugServerConsole.exe
-C:\C-Sky\CDKRepo\Toolchain\CKV2ElfMinilib\V3.10.29\R\bin\csky-elfabiv2-gdb.exe
-~~~
-
-Use your actual paths below if different. Do not select RISC-V GDB.
-
-## 2. Wire with board power off
-
-Remove batteries. Connect external 3.3 V at the **battery terminals**.
+Check the board markings: **HC32L130J8TA + TXW813-320**, not MM32/ESP.
+Remove batteries. Use external regulated **3.3 V at the battery terminals**:
+positive to battery **+**, negative to battery **−**. Check polarity.
+See [power-supply safety](TOOLS.md#equipment).
 
 ![TXW813 signal connections](diagrams/txw-upload.svg)
 
@@ -58,69 +39,73 @@ Remove batteries. Connect external 3.3 V at the **battery terminals**.
 | TCK/CK | PA10 |
 | GND | GND |
 
-Leave other probe pins disconnected, including 3V3, 5V, TDI, TDO and nRST. No BOOT/PA8 strap is used.
+Leave all other probe pins disconnected, including **3V3, 5V, TDI, TDO and
+nRST**. No BOOT/PA8 strap is used. Match pad names, not guessed header order.
 
 <img src="photos/txw813-wifi-chip-and-debug-pads.jpg" alt="TXW813 and J1 GND, PA10, PA9, PA8, VCC pads" width="650">
 
-Match pad names, not guessed header order. Plug CKLink into USB; keep board power off for now.
+Plug CKLink into USB. **Keep board power off for now.**
+Close FlashProgrammer and all DebugServer windows.
 
-## 3. Check the command before writing
+## 3. Double-click Flash-WiFi.bat
 
-Close **FlashProgrammer and all DebugServer windows**; the script starts its own server.
+The launcher finds tools in our usual installation locations and remembers
+your selections for next time. If anything is missing, a file-selection window
+asks you to locate it. Choose **csky-elfabiv2-gdb.exe**, not RISC-V GDB.
 
-Open **PowerShell 7**. Run **ipconfig** and find the IPv4 address of your PC's active network adapter. Use the **PC running DebugServer**, not the clock's address.
+It selects your PC's active IPv4 network automatically. If there is more than
+one, choose your normal Ethernet or Wi-Fi adapter, not a VPN. This is the
+**PC's address**, not the clock's address.
 
-Paste this block, changing **192.168.0.5** to your PC address and changing installed-program paths if needed:
+The launcher checks the firmware and both algorithm checksums before offering
+to start. If a check fails, **nothing is written**: correct the files first.
+When everything is ready, press **Enter** to start, or type **Q** to quit.
 
-~~~powershell
-Set-Location C:\ClockFlash
-$flashArgs = @{
-    CleanFullImage = $true
-    ImagePath = 'C:\ClockFlash\WiFi-Clock-v2.0-R17-20261003_FULL.bin'
-    AlgorithmPath = 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.elf'
-    InitScriptPath = 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.init'
-    ServerPath = 'C:\C-Sky\DebugServer\bin\DebugServerConsole.exe'
-    GdbPath = 'C:\C-Sky\CDKRepo\Toolchain\CKV2ElfMinilib\V3.10.29\R\bin\csky-elfabiv2-gdb.exe'
-    DebuggerEndpoint = '192.168.0.5:1025'
-}
-.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 @flashArgs
-~~~
-
-This run is **offline checks only**. Continue when it prints **Preflight OK** and **Offline preflight only; no hardware accessed**. Fix missing-file/hash errors first.
-
-If Windows blocks the downloaded script, inspect it and unblock that specific file:
-
-~~~powershell
-Unblock-File C:\ClockFlash\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1
-~~~
+If Windows blocks a downloaded file, inspect it, then use **Properties → Unblock**
+on that file if offered. The launcher uses a process-only PowerShell execution
+policy override; it does not change your system's execution policy. Organisation
+security restrictions may still prevent it running—do not disable them.
 
 ## 4. Catch and write
 
-In the **same PowerShell window**, run:
+1. When connection attempts begin, switch the board supply **on**.
+2. If it has not connected, cycle board power while it retries.
+3. Choose **No** if a probe firmware-update prompt appears.
+4. **Once connected, stop power cycling and keep power steady.**
 
-~~~powershell
-.\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 @flashArgs -Program
-~~~
+With the original firmware, PA10 quickly changes from debug clock to UART
+debug output. The script must catch that short boot window. On our setup it
+took **about five power cycles on average**; the connection-attempt counter
+is not a power-cycle count. Our firmware leaves PA10 available for debug,
+so this particular boot-window problem goes away after installation.
 
-1. When debug connection attempts begin, turn on the external supply.
-2. If not caught, cycle board power while the script is still retrying. Many attempts can be needed.
-3. Select **No** if an ICE/probe firmware update prompt appears.
-4. **Once connected and writing starts, stop power cycling. Keep power steady.**
+Wait for **WRITTEN: programmer reported Program success**. “Connected” alone
+is not success. Our writes took roughly **90–100 seconds**; allow longer on
+other setups. The script issues **one erase/program command**, with no automatic
+write retry or flash readback.
 
-The script sends one erase/program command. It does not automatically retry writing or read flash back.
+If writing may have started and then fails, **do not immediately rerun it**.
+Keep power steady, retain the logs and see [troubleshooting](TROUBLESHOOTING.md).
+If it never connected, no write command was issued; check wiring, power and
+drivers before retrying. Connection attempts time out after five minutes.
 
-Wait for **WRITTEN: programmer reported Program success**. Our write took roughly **90–100 seconds**; others may take longer. “Connected” alone is not success.
-
-If a write may have started and then fails, **do not immediately rerun it**. Keep logs and consult [troubleshooting](TROUBLESHOOTING.md).
-
-If the script stops without ever connecting, no write was started. Check wiring,
-power and drivers, then start the catch command again. Connection attempts time
-out after five minutes. Logs are saved under **C:\ClockFlash\logs**.
+The window stays open after completion or failure. Each run has its own files
+and logs under **C:\ClockFlash\run-…** by default; the launcher prints the exact
+location. File selections are remembered under **%LOCALAPPDATA%\WiFiClockFlasher\paths.json**;
+no passwords are stored. If the working folder cannot be created, select a
+writable local folder with **no spaces in its path**. Run folders are retained
+for diagnosis; no existing files are deleted.
 
 ## 5. Restart and set up
 
-After WRITTEN, power off, unplug CKLink and remove its board connections. Restart normally.
+After **WRITTEN**, power off, unplug CKLink and remove its board connections.
+Restart normally. Join **WiFi-Clock-Setup**, open **http://192.168.4.1/** and
+enter your Wi-Fi and clock settings. The clean installation clears old settings.
 
-Join **WiFi-Clock-Setup**, open **http://192.168.4.1/** and enter your Wi-Fi and clock settings. Old settings are cleared.
+[User manual](WiFi-Clock-User-Manual-v2.0.pdf) ·
+[Manual PowerShell alternative](FLASHING_CLI.md) ·
+[Validation status](GETTING_STARTED.md#validation-note)
 
-[User manual](WiFi-Clock-User-Manual-v2.0.pdf) · [Validation status](GETTING_STARTED.md#validation-note)
+The launcher has automated offline tests; its interactive file dialogs and
+end-to-end hardware flashing have not yet been tested by another owner.
+It uses the existing writer, not a new flash protocol.
