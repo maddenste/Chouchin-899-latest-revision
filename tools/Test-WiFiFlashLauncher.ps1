@@ -73,6 +73,7 @@ try {
     $script:failWrite = $false
     function Invoke-ClockWriter {
         param([hashtable]$Arguments, [switch]$Program)
+        Assert-ClockTest ($Arguments.ManualIcePrompt -eq $false) 'Wizard must enable automatic prompt dismissal.'
         $script:writerCalls.Add([bool]$Program)
         if (-not $Program -and $script:failPreflight) { throw 'Test: invalid image.' }
         if ($Program -and $script:failWrite) { throw 'Test: programmer did not report success.' }
@@ -109,6 +110,12 @@ try {
     Copy-Item -LiteralPath (Join-Path (Split-Path -Parent $PSScriptRoot) 'Flash-WiFi.bat') -Destination $testBat
     $batchOutput = & cmd.exe /d /c ('""{0}" <nul"' -f $testBat) 2>&1 | Out-String
     Assert-ClockTest ($LASTEXITCODE -eq 1 -and $batchOutput -match 'Extract the complete project ZIP first') 'Detached BAT did not stop safely.'
+    $writerTokens = $null; $writerErrors = $null
+    $writerAst = [Management.Automation.Language.Parser]::ParseFile((Join-Path $PSScriptRoot 'Program-TXW813-DCDC0-WriteOnly-OnPower.ps1'), [ref]$writerTokens, [ref]$writerErrors)
+    $manualParameter = $writerAst.ParamBlock.Parameters | Where-Object { $_.Name.VariablePath.UserPath -eq 'ManualIcePrompt' }
+    Assert-ClockTest ($null -eq $manualParameter.DefaultValue) 'Writer must not default to manual prompt handling.'
+    $polls = @($writerAst.FindAll({ param($node) $node -is [Management.Automation.Language.CommandAst] -and $node.GetCommandName() -eq 'Start-Sleep' }, $true))
+    Assert-ClockTest ($polls.Count -eq 1 -and $polls[0].Extent.Text -eq 'Start-Sleep -Milliseconds 25') 'Catch-loop fast polling regressed.'
     Write-Host 'PASS: file/staging/network checks and mocked complete wizard: cancellation, failed preflight, failed write, one-write success and remembered paths. No hardware accessed.'
 } finally {
     # Only delete the exact UUID fixture directories this test created.

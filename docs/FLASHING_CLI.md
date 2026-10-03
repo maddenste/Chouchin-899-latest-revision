@@ -107,7 +107,9 @@ In the **same PowerShell window**, run:
 
 1. When debug connection attempts begin, turn on the external supply.
 2. If not caught, cycle board power while the script is still retrying. Many attempts can be needed.
-3. Select **No** if an ICE/probe firmware update prompt appears.
+3. The script automatically selects **No** on the CKLink firmware-update prompt.
+   If it remains open, select **No** manually. Use **-ManualIcePrompt** only to
+   opt out of automatic dismissal.
 4. **Once connected and writing starts, stop power cycling. Keep power steady.**
 
 The script sends one erase/program command. It does not automatically retry writing or read flash back.

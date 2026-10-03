@@ -52,7 +52,7 @@ starting. No commands or paths to edit.
 
 - When connection attempts begin, turn board power **on**.
 - If it has not connected, cycle board power. Around **five cycles** was typical.
-- Choose **No** if a probe firmware-update prompt appears.
+- The script automatically declines the CKLink update prompt. If it stays open, choose **No**.
 - **Once connected, stop cycling power and keep power steady.**
 
 Wait for **WRITTEN: programmer reported Program success**—usually around

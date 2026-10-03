@@ -9,7 +9,7 @@
 param(
     [switch]$Program,
     [switch]$CleanFullImage,
-    [switch]$ManualIcePrompt = $true,
+    [switch]$ManualIcePrompt,
     [string]$CodePath,
     [Parameter(Mandatory)][string]$ImagePath,
     [string]$ExpectedCodeHash,
@@ -158,13 +158,15 @@ while ((Get-Date) -lt $deadline -and -not $caught) {
     try {
         $attemptDeadline = (Get-Date).AddSeconds(5)
         while ((Get-Date) -lt $attemptDeadline -and -not $server.HasExited) {
-            [void](Dismiss-IceFirmwareUpdatePrompt -ProcessId $server.Id)
+            if (Dismiss-IceFirmwareUpdatePrompt -ProcessId $server.Id) {
+                "Attempt $attempt declined CKLink firmware update prompt (No)." | Add-Content -LiteralPath $summary
+            }
             if ((Test-Path -LiteralPath $serverLog -PathType Leaf) -and
                 (Select-String -LiteralPath $serverLog -SimpleMatch 'Connect target end(Leave target_open).' -Quiet -ErrorAction SilentlyContinue)) {
                 $caught = $true
                 break
             }
-            Start-Sleep -Milliseconds 100
+            Start-Sleep -Milliseconds 25
         }
         if ($caught) {
             Write-Host "Attempt $attempt connected. Sending the single full-image program command..."

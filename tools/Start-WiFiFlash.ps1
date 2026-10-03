@@ -128,6 +128,7 @@ function Invoke-ClockFlashWizard {
     }
     $flashArgs = New-ClockFlashStage $workspace $image $algorithm $init
     $flashArgs.CleanFullImage = $true
+    $flashArgs.ManualIcePrompt = $false
     $flashArgs.ServerPath = $server
     $flashArgs.GdbPath = $gdb
     $flashArgs.DebuggerEndpoint = $endpoint
@@ -149,7 +150,8 @@ function Invoke-ClockFlashWizard {
     if ((Read-Host 'Ready') -ne '') { Write-Host 'Cancelled. No write started.'; return }
     Write-Host "`nWhen connection attempts begin, switch board power ON."
     Write-Host 'If it does not catch, cycle board power. About five cycles was typical on our setup.'
-    Write-Host 'Choose NO if a probe firmware-update prompt appears.'
+    Write-Host 'The script automatically chooses NO on the CKLink firmware-update prompt.'
+    Write-Host 'If that prompt remains visible, choose NO manually. Never update the probe during this operation.'
     Write-Host 'ONCE CONNECTED: STOP CYCLING POWER. KEEP POWER STEADY UNTIL WRITTEN.' -ForegroundColor Yellow
     Write-Host "Working files and logs: $($flashArgs.OutputRoot)"
     Invoke-ClockWriter $flashArgs -Program

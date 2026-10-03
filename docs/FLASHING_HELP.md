@@ -71,7 +71,8 @@ security restrictions may still prevent it running—do not disable them.
 
 1. When connection attempts begin, switch the board supply **on**.
 2. If it has not connected, cycle board power while it retries.
-3. Choose **No** if a probe firmware-update prompt appears.
+3. The script automatically chooses **No** on the exact CKLink firmware-update
+   prompt, polling every 25 ms. If it remains open, choose **No** manually.
 4. **Once connected, stop power cycling and keep power steady.**
 
 With the original firmware, PA10 quickly changes from debug clock to UART
@@ -110,5 +111,10 @@ enter your Wi-Fi and clock settings. The clean installation clears old settings.
 The launcher has automated offline tests; its interactive file dialogs and
 end-to-end hardware flashing have not yet been tested by another owner.
 It uses the existing writer, not a new flash protocol.
+Automatic dismissal applies only to the update prompt belonging to the
+DebugServer process started by this script; other dialogs are left alone.
+Manual users can opt out with **-ManualIcePrompt**. Failed connections can
+restart promptly when DebugServer exits; the five-second per-attempt timeout
+is only a limit for a stalled attempt, not a delay between every retry.
 Launcher tests and the real R17 firmware/algorithm preflight also passed under
 built-in Windows PowerShell 5.1. No PowerShell 7 installation is required.
