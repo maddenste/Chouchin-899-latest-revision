@@ -2,7 +2,7 @@
 
 ## Why a second project?
 
-The older Chouchin-899 project targets MM32 + ESP hardware. This newer unit
+The older Chouchin-CH899 project targets MM32 + ESP hardware. This newer unit
 uses HC32L130J8TA + TXW813-320, so an ESP binary could not be reused.
 The useful part to port was the behaviour: setup web page, NTP/timezone backend,
 and the UART contract with the movement controller.

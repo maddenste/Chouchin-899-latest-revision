@@ -6,7 +6,7 @@ We used **Windows**. Other systems may work, but are untested; the supplied scri
 
 | Item | Purpose |
 | --- | --- |
-| HC32L130J8TA + TXW813-320 Chouchin-899 | Supported board |
+| HC32L130J8TA + TXW813-320 Chouchin-CH899 | Supported board |
 | [CMSIS-DAP / DAPLink probe](https://www.ebay.co.uk/itm/254327616482) **with U_TX and U_RX UART pins** | HC32 upload |
 | [CKLink Lite V2](https://www.aliexpress.com/item/1005009972319809.html) | TXW813 upload |
 | **TENSTAR ROBOT TSP-03 fixed 3.3 V supply** | Power at battery terminals; label states 3.3 V DC / 3 W |

@@ -1,6 +1,6 @@
 # Board identification and wiring
 
-Target: newer Chouchin-899 / CH-899, **HDSC HC32L130J8TA + Taixin TXW813-320**.
+Target: newer Chouchin-CH899, **HDSC HC32L130J8TA + Taixin TXW813-320**.
 Older ESP8285/MM32 electronics use the [original project](https://github.com/maddenste/Chouchin-CH899-Firmware).
 A model label is not enough. Photograph both sides and inspect the chip markings.
 
@@ -14,9 +14,9 @@ Photos supplied by Steve Madden. Published copies retain orientation and full
 main-image resolution, with location/camera metadata removed. These are board
 identification photos, not photographs of the connected programmers.
 
-### Newer Chouchin-899 — whole-board overview
+### Newer Chouchin-CH899 — whole-board overview
 
-<img src="photos/chouchin-899-newer-board-overview.jpg" alt="Whole newer Chouchin-899 PCB: HC32 movement controller above, TXW813 Wi-Fi circuitry and antenna below" width="500">
+<img src="photos/chouchin-899-newer-board-overview.jpg" alt="Whole newer Chouchin-CH899 PCB: HC32 movement controller above, TXW813 Wi-Fi circuitry and antenna below" width="500">
 
 **HC32 movement controller:** upper-left chip. **TXW813 Wi-Fi controller:**
 lower section beside the 40 MHz crystal and PCB antenna. Both chips must match

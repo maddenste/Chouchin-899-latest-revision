@@ -1,6 +1,6 @@
-# Chouchin-899 · WiFi Clock v2.0
+# Chouchin-CH899 · WiFi Clock v2.0
 
-![Chouchin-899 WiFi Clock v2.0 — HC32L130 and TXW813](docs/assets/social-preview.jpg)
+![Chouchin-CH899 WiFi Clock v2.0 — HC32L130 and TXW813](docs/assets/social-preview.jpg)
 
 <sub>Illustrative artwork with a digitally restyled dial and hands.</sub>
 
@@ -8,9 +8,9 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 **Check your board first:** this project is for **HC32L130J8TA + TXW813-320** only. For **MM32 + ESP8285**, use [the older-board project](https://github.com/maddenste/Chouchin-CH899-Firmware). The firmware is not interchangeable.
 
-<img src="docs/photos/chouchin-899-newer-board-overview.jpg" alt="Newer Chouchin-899 board" width="350">
+<img src="docs/photos/chouchin-899-newer-board-overview.jpg" alt="Newer Chouchin-CH899 board" width="350">
 
-[Example CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) — for identification only, not a confirmed compatible purchase. The listing does not identify the board revision; check for **HC32L130J8TA + TXW813-320** before buying for this project.
+[Example Chouchin-CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) — for identification only, not a confirmed compatible purchase. The listing does not identify the board revision; check for **HC32L130J8TA + TXW813-320** before buying for this project.
 
 ## Ready to install?
 
