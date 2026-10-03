@@ -1,4 +1,4 @@
-# Upload Wi-Fi R16 — TXW813
+# Upload Wi-Fi R17 — TXW813
 
 [Start here](GETTING_STARTED.md) · [Equipment/software](TOOLS.md)
 
@@ -28,7 +28,7 @@ Create these folders and copy the files:
 ~~~text
 C:\ClockFlash\
   tools\                         ← from current Code → Download ZIP
-  WiFi-Clock-v2.0-R16-20261002_FULL.bin
+  WiFi-Clock-v2.0-R17-20261003_FULL.bin
 C:\ClockTools\
   TXW81X_FLASH_ALGORITHM.elf
   TXW81X_FLASH_ALGORITHM.init
@@ -76,7 +76,7 @@ Paste this block, changing **192.168.0.5** to your PC address and changing insta
 Set-Location C:\ClockFlash
 $flashArgs = @{
     CleanFullImage = $true
-    ImagePath = 'C:\ClockFlash\WiFi-Clock-v2.0-R16-20261002_FULL.bin'
+    ImagePath = 'C:\ClockFlash\WiFi-Clock-v2.0-R17-20261003_FULL.bin'
     AlgorithmPath = 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.elf'
     InitScriptPath = 'C:\ClockTools\TXW81X_FLASH_ALGORITHM.init'
     ServerPath = 'C:\C-Sky\DebugServer\bin\DebugServerConsole.exe'

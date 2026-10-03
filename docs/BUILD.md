@@ -39,7 +39,7 @@ Build example; substitute your actual tool/module/backup paths:
 ```powershell
 $backup = 'D:\PrivateBackups\my-txw-original.bin'
 $backupHash = (Get-FileHash -LiteralPath $backup -Algorithm SHA256).Hash
-.\firmware\Build-Firmware.ps1 -Name WiFi_Clock_v2_0_R16_TEST `
+.\firmware\Build-Firmware.ps1 -Name WiFi_Clock_v2_0_R17_TEST `
   -TccPath 'D:\Tools\tcc\tcc.exe' `
   -NodeModules 'D:\Tools\node-project\node_modules' `
   -FactoryBackup $backup -ExpectedFactoryHash $backupHash
@@ -56,7 +56,8 @@ The portable staging build does not include private HC32 machine-code emulation.
 ## Pipeline
 
 1. Generate `clock_web_ui.h` from tracked `web/index.html`.
-2. Compile/run native protocol, backend, application and HTTP tests.
+2. Compile/run native protocol, UART-buffer/timestamp, backend, application,
+   exhaustive bounded command-sequence and HTTP tests.
 3. Run browser/UI tests unless explicitly skipped.
 4. Compile `TXW813_Minimal.cdkws`, active project
    `iot_sdk_work/clock_project/txw81x.cdkproj`, configuration `FLASH`.
@@ -76,6 +77,11 @@ external PSRAM assumptions, UART0 PA13/PA14 at 9600, no debug output on PA14,
 cached WPA PSK at boot, enabled lwIP receive/send socket timeouts with timeval
 format throughout the locally compiled stack. Do not copy prebuilt lwIP or
 restore incompatible vendor defaults without rerunning tests.
+
+In the SDK UART task, drain `clock_uart_next_command_at(&received_ms)` and pass
+each record to `clock_app_command_at(command, received_ms)`. Do not substitute
+the untimestamped compatibility wrappers: queued reset requests must retain
+their receive-time spacing. The build checks both timestamped target symbols.
 
 ## Portable package validation status
 

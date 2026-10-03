@@ -37,7 +37,7 @@ const token = '0123456789abcdef0123456789abcdef';
       }
       data = {saved:true,reset:true};
     } else if (url.pathname === '/api/v1/config') data = config;
-    else if (url.pathname === '/api/v1/status') data = {mode:statusMode,ip:statusMode === 'station' ? '192.168.0.123' : '192.168.4.1',firmwareVersion:'WiFi Clock · v2.0',buildId:'TXW813 HC32-V15 R16',hostname:'WiFi-Clock-ABCDEF',connected:statusConnected,timeSynced:statusSynced,timezone:'GMT0BST,M3.5.0/1,M10.5.0/2',nextDst:statusSynced ? {utc:1792890000,before:60,after:0} : null};
+    else if (url.pathname === '/api/v1/status') data = {mode:statusMode,ip:statusMode === 'station' ? '192.168.0.123' : '192.168.4.1',firmwareVersion:'WiFi Clock · v2.0',buildId:'TXW813 HC32-V15 R17',hostname:'WiFi-Clock-ABCDEF',connected:statusConnected,timeSynced:statusSynced,timezone:'GMT0BST,M3.5.0/1,M10.5.0/2',nextDst:statusSynced ? {utc:1792890000,before:60,after:0} : null};
     else if (url.pathname === '/api/v1/scan') {
       if (scanFails) return route.fulfill({status:503,body:'Scan unavailable'});
       data = {scanning:false,networks:[
@@ -85,7 +85,7 @@ const token = '0123456789abcdef0123456789abcdef';
     }
   }
   await load();
-  await page.waitForFunction(() => document.getElementById('firmwareVersion').title === 'TXW813 HC32-V15 R16');
+  await page.waitForFunction(() => document.getElementById('firmwareVersion').title === 'TXW813 HC32-V15 R17');
   assert.equal(await page.locator('#firmwareVersion').textContent(),'WiFi Clock · v2.0');
   assert.equal(await page.locator('#projectLink').getAttribute('href'),'https://github.com/maddenste/Chouchin-899-latest-revision');
   assert.equal(await page.locator('#projectLink').textContent(),'WiFi Clock · v2.0 — Modified by Steve Madden · 2026');

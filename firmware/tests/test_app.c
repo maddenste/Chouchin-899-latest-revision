@@ -10,7 +10,7 @@ struct test_status sys_status;
 static struct txw_clock_settings stored;
 static uint32 ticks;
 static uint32 ntp_utc = 1790858096u;
-static int have_stored, fail_save, starts, ntp_ready;
+static int have_stored, fail_save, starts, ntp_ready, fail_iface;
 static char sent[512];
 static struct netdev wifi;
 uint32 os_jiffies(void) { return ticks; }
@@ -25,7 +25,7 @@ void sysctrl_efuse_mac_addr_calc(uint8 *mac) { const uint8 fixture[6] = {2,0x11,
 void dhcpd_start(const char *name, struct dhcpd_param *p) { (void)name; assert(p->start_ip == AP_START_ADDR); }
 void dhcpd_stop(const char *name) { (void)name; }
 void ieee80211_iface_stop(int mode) { (void)mode; }
-int ieee80211_iface_start(int mode) { (void)mode; ++starts; return 0; }
+int ieee80211_iface_start(int mode) { (void)mode; ++starts; return fail_iface ? -1 : 0; }
 void netdev_set_wifi_mode(struct netdev *dev, int mode) { (void)dev; (void)mode; }
 void lwip_netif_set_ip2(const char *n, ip_addr_t *ip, ip_addr_t *m, ip_addr_t *g) { (void)n; (void)m; (void)g; sys_cfgs.ipaddr = ip->addr; }
 void lwip_netif_set_dhcp2(const char *n, int e) { (void)n; (void)e; }

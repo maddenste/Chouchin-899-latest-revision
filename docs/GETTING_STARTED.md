@@ -23,11 +23,11 @@ Programming replaces existing firmware. Keep any original backups you already ha
 
 Use **Chouchin-899-HC32-V15-20261001.hex**, DAPLink UART pins and XHSC MCU Programmer.
 
-## 4. Upload Wi-Fi R16
+## 4. Upload Wi-Fi R17
 
 [Wi-Fi-controller upload steps →](FLASHING.md)
 
-Use **WiFi-Clock-v2.0-R16-20261002_FULL.bin**, CKLink Lite and the power-on catch script. If a chip already has the correct version, leave it alone.
+Use **WiFi-Clock-v2.0-R17-20261003_FULL.bin**, CKLink Lite and the power-on catch script. If a chip already has the correct version, leave it alone.
 
 ## 5. Set up
 
@@ -42,4 +42,7 @@ The clean Wi-Fi image starts with no saved settings. See [the user manual](WiFi-
 
 ### Validation note
 
-HC32 V15 and Wi-Fi R16 have been tested successfully, including a 48-hour run. The public Wi-Fi image contains the same application firmware, with saved settings cleared for a fresh installation. [Test record](TESTING.md).
+The published pair is **HC32 V15 + Wi-Fi R17**. Earlier Wi-Fi builds passed
+owner tests including a 48-hour run; R17 passed the full offline test/build
+pipeline but has not yet been tested on the clock. The clean Wi-Fi image starts
+with no saved settings. [Test record](TESTING.md).

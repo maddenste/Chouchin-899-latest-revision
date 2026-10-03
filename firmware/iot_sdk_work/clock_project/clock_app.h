@@ -10,6 +10,7 @@
 void clock_app_prepare(void);
 void clock_app_network_ready(void);
 void clock_app_command(enum txw_hc32_command command);
+void clock_app_command_at(enum txw_hc32_command command, uint32 received_ms);
 void clock_app_tick(void);
 void clock_app_dhcp_ready(void);
 void clock_app_disconnected(void);

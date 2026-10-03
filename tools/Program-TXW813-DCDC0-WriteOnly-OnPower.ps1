@@ -1,7 +1,7 @@
 # Copyright (C) 2026 Steve Madden
 # SPDX-License-Identifier: GPL-3.0-or-later
 # One-shot full-chip clock program. The DebugServer flash command erases
-# the chip. CleanFullImage uses the public R16 image with all settings erased.
+# the chip. CleanFullImage uses the public R17 image with all settings erased.
 # The legacy per-board route preserves configuration from a private backup.
 # There is deliberately no confirmation prompt, -v verification, or readback.
 # Without -Program this script only checks the local input files.
@@ -40,8 +40,8 @@ if ($CleanFullImage) {
     if ($CodePath -or $FactoryBackup -or $ExpectedFactoryHash -or $ExpectedCodeHash) {
         throw 'CleanFullImage does not use APP or original-backup parameters.'
     }
-    $releaseHash = '3CDA5DB1040F64533186499A1FBCF4348E996FC672021EE9A7FFC936A08FB708'
-    if ($ExpectedImageHash -and $ExpectedImageHash -ne $releaseHash) { throw 'Unexpected clean R16 image hash.' }
+    $releaseHash = '1F4908F9ACC9160CDF53CA3F5C5BEF96CBF4C9197700C87640C01F13592CE9A9'
+    if ($ExpectedImageHash -and $ExpectedImageHash -ne $releaseHash) { throw 'Unexpected clean R17 image hash.' }
     $ExpectedImageHash = $releaseHash
 } elseif (-not $CodePath -or -not $ExpectedCodeHash -or -not $FactoryBackup -or -not $ExpectedFactoryHash -or -not $ExpectedImageHash) {
     throw 'Legacy image mode requires APP, backup and recorded hashes. Use CleanFullImage for the public FULL.'
@@ -73,7 +73,7 @@ $imageBytes = [IO.File]::ReadAllBytes($image)
 if ($CleanFullImage) {
     $factoryBytes = [byte[]]::new($flashLength)
     [Array]::Fill($factoryBytes, [byte]0xff)
-    $codeBytes = [byte[]]::new(326160)
+    $codeBytes = [byte[]]::new(327184)
     if ($imageBytes.Length -ne $flashLength) { throw 'Clean FULL must be exactly 2 MiB.' }
     [Array]::Copy($imageBytes, $codeBytes, $codeBytes.Length)
 } else {

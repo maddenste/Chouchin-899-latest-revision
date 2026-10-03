@@ -24,7 +24,7 @@ SDK libraries. No explicit redistribution licence has yet been established for
 all those files. A successful compile does not establish either source or
 combined-binary redistribution rights. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-Integration overlays are excluded from the repository. Compiled Wi-Fi R16
+Integration overlays are excluded from the repository. Compiled Wi-Fi R17
 and patched HC32 V15 images are supplied separately as release assets at the
 owner's decision while underlying redistribution rights remain unresolved.
 The owner sent Taixin a permission request; a reply is pending. This decision

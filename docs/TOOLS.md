@@ -55,7 +55,7 @@ Keil, compilers, Python and a logic analyser are **not required for uploading**.
 
 ## Project files
 
-1. [Release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0): HC32 V15 HEX, Wi-Fi R16 FULL BIN, SHA256SUMS.txt and user manual.
+1. [Release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0): HC32 V15 HEX, Wi-Fi R17 FULL BIN, SHA256SUMS.txt and user manual.
 2. On [the repository main page](https://github.com/maddenste/Chouchin-899-latest-revision), select **Code → Download ZIP**. Extract the current **tools** folder.
    The v2.0 release's “Source code” ZIP contains the tools as they were at that tag;
    use the main-page ZIP for the latest script fixes.
@@ -65,7 +65,7 @@ Check downloaded firmware with PowerShell 7 if desired:
 
 ~~~powershell
 Get-FileHash 'C:\ClockFlash\Chouchin-899-HC32-V15-20261001.hex' -Algorithm SHA256
-Get-FileHash 'C:\ClockFlash\WiFi-Clock-v2.0-R16-20261002_FULL.bin' -Algorithm SHA256
+Get-FileHash 'C:\ClockFlash\WiFi-Clock-v2.0-R17-20261003_FULL.bin' -Algorithm SHA256
 ~~~
 
 Compare against SHA256SUMS.txt. The Wi-Fi script also checks the image and algorithms automatically.

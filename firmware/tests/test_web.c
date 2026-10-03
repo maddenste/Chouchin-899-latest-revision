@@ -79,6 +79,7 @@ int main(void) {
     }
     request("GET", "/api/v1/status", "", ""); assert(strstr(output,"\"timeSynced\":false"));
     assert(strstr(output,"\"nextDst\":null"));
+    assert(strstr(output,"\"buildId\":\"TXW813 HC32-V15 R17\""));
     assert(strstr(output,"\"primaryDns\":{\"state\":2,\"error\":0,\"address\":\"192.168.0.2\"}"));
     assert(strstr(output,"\"secondaryDns\":{\"state\":3,\"error\":-1,\"address\":\"0.0.0.0\"}"));
     time_synced = 1;

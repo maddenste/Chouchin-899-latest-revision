@@ -1,6 +1,6 @@
 # HC32 / TXW UART protocol
 
-Target: HC32 V15 + Wi-Fi v2.0 R16. TXW UART0 PA13 RX / PA14 TX, **9600 8N1**, CRLF.
+Target: HC32 V15 + Wi-Fi v2.0 R17. TXW UART0 PA13 RX / PA14 TX, **9600 8N1**, CRLF.
 The real C formatter/parser and tests are authoritative.
 
 | HC32 request | TXW response / action |
@@ -12,7 +12,16 @@ The real C formatter/parser and tests are authoritative.
 
 Spaces in “ OK” responses matter. Successful page save/switch also sends WIFIAPPOK.
 Acknowledgment does not prove DHCP, DNS or NTP success. Early startup commands
-are deferred; repeated requests do not repeatedly restart the interface.
+are deferred; repeated requests for a successfully active mode do not restart
+the interface. Failed starts are not acknowledged and can retry; the newest
+explicit mode request supersedes older delayed work.
+
+Reset spacing uses UART receive timestamps, not delayed task processing time.
+Saving settings cancels old reset arming; queued pre-save/reset requests cannot
+erase a newly saved record. During the bounded reset transaction, time and AP
+exit output pause. Successful reset cancels NTP, clears the old browser lease
+and renews the AP's four-second inactivity grace period. Save also invalidates
+old NTP time; +TIME resumes only after the new station session synchronises.
 
 ## Keep-alive
 

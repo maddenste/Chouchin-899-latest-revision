@@ -23,7 +23,7 @@ The TXW read tool remains in tools/Read-TXW813-OnPower.ps1 for experienced users
 | verify_hc32_backup.py | Offline validation of exported HC32 backups |
 | Prepare-Sdk.ps1 | Development SDK preparation; does not restore omitted integration |
 | Build-TXW813-DCDC0FullImage.ps1 | Development image assembly retaining a private board's final sectors |
-| New-TXW813-PublicFullImage.ps1 | Offline clean-image packaging for the released R16 APP |
+| New-TXW813-PublicFullImage.ps1 | Offline clean-image packaging for the released R17 APP |
 | Test-PublicPackage.ps1 | Repository hygiene, syntax and local-link checks |
 | Test-TXW813-ImageLayout.ps1 | Synthetic offline tests preventing code overlap with settings sectors |
 

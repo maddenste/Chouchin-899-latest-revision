@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 [CmdletBinding()]
 param(
-    [string]$Name = ('WiFi_Clock_v2_0_R16_' + (Get-Date -Format 'yyyyMMdd-HHmmss')),
+    [string]$Name = ('WiFi_Clock_v2_0_R17_' + (Get-Date -Format 'yyyyMMdd-HHmmss')),
     [string]$Python = 'python',
     [Parameter(Mandatory)][string]$TccPath,
     [string]$CdkMake = 'C:\C-Sky\CDK\cdk-make.exe',
@@ -29,6 +29,10 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'UART test compilation failed' }
     & .\tests\protocol.exe
     if ($LASTEXITCODE -ne 0) { throw 'UART execution tests failed' }
+    & $tcc -I tests -I . tests\test_uart.c txw_hc32_protocol.c -o tests\uart.exe
+    if ($LASTEXITCODE -ne 0) { throw 'UART boundary test compilation failed' }
+    & .\tests\uart.exe
+    if ($LASTEXITCODE -ne 0) { throw 'UART boundary execution tests failed' }
     & $tcc -shared '-Wl,-export-all-symbols' clock_psk.c clock_settings.c clock_calendar.c clock_ntp_packet.c txw_hc32_protocol.c -o tests\backend.dll
     if ($LASTEXITCODE -ne 0) { throw 'Backend test compilation failed' }
     & $python tests\test_backend.py
@@ -41,6 +45,10 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'App test compilation failed' }
     & .\tests\app.exe
     if ($LASTEXITCODE -ne 0) { throw 'App integration tests failed' }
+    & $tcc -I tests -I . tests\test_app_sequences.c clock_psk.c clock_settings.c clock_calendar.c txw_hc32_protocol.c -o tests\app_sequences.exe
+    if ($LASTEXITCODE -ne 0) { throw 'App sequence test compilation failed' }
+    & .\tests\app_sequences.exe
+    if ($LASTEXITCODE -ne 0) { throw 'App sequence execution tests failed' }
     & $tcc -I tests -I . tests\test_web.c clock_settings.c clock_calendar.c -o tests\web.exe
     if ($LASTEXITCODE -ne 0) { throw 'HTTP test compilation failed' }
     & .\tests\web.exe
@@ -60,7 +68,7 @@ try {
     $elf = Get-Item (Join-Path $project 'Obj\txw81x.elf')
     if ($elf.LastWriteTime -lt $before.AddSeconds(-2)) { throw 'ELF was not rebuilt' }
     $symbols = & (Join-Path $toolchain 'csky-elfabiv2-nm.exe') $elf.FullName
-    foreach ($required in @('clock_app_prepare','clock_app_command','clock_uart_loop','clock_psk_derive','clock_ntp_worker')) {
+    foreach ($required in @('clock_app_prepare','clock_app_command_at','clock_uart_next_command_at','clock_uart_loop','clock_psk_derive','clock_ntp_worker')) {
         if (($symbols -join "`n") -notmatch "\b$required\b") { throw "Missing application symbol: $required" }
     }
     Copy-Item $elf.FullName (Join-Path $project 'project.elf') -Force

@@ -7,13 +7,13 @@ param(
     [Parameter(Mandatory)][string]$OutputPath
 )
 $ErrorActionPreference = 'Stop'
-$expectedApp = '07E750565AA9F3AB3ABA5328B0A11BE8E8A4223AD010C38CBB71F5B8431AB4A2'
+$expectedApp = 'C028F8CA7196795C05D7CABF8CF2E39B64DCDD06734DB542DB56A027D5C948A5'
 if ((Get-FileHash -LiteralPath $AppPath -Algorithm SHA256).Hash -ne $expectedApp) {
-    throw 'This packager accepts the released R16 APP only.'
+    throw 'This packager accepts the released R17 APP only.'
 }
 if (Test-Path -LiteralPath $OutputPath) { throw 'Output already exists.' }
 $app = [IO.File]::ReadAllBytes((Resolve-Path -LiteralPath $AppPath).Path)
-if ($app.Length -ne 326160 -or $app[0] -ne 0x69 -or $app[1] -ne 0x5a -or $app[2] -ne 0) {
+if ($app.Length -ne 327184 -or $app[0] -ne 0x69 -or $app[1] -ne 0x5a -or $app[2] -ne 0) {
     throw 'Unexpected APP size or boot header.'
 }
 $full = [byte[]]::new(0x200000)

@@ -1,6 +1,6 @@
 # Test record
 
-Current pair: **HC32 V15 + Wi-Fi v2.0 R16**. The human-facing v2.0 footer is not a
+Current pair: **HC32 V15 + Wi-Fi v2.0 R17**. The human-facing v2.0 footer is not a
 complete binary identity: retain build ID and SHA-256. Programmer-reported
 success is not independent flash readback; R13–R16 writes were write-only.
 V15 installation was reconfirmed by the owner. R16 completed the full test/build
@@ -8,14 +8,19 @@ pipeline and the programmer reported success on 1 October 2026. The original
 R16 changes from R14 were presentation/build identity only. Hardware observations below retain
 the actual revision on which they were reported.
 
-## Rebuild checks, 3 October 2026
+## Current R17 offline checks, 3 October 2026
 
-The same-revision R16 rebuild passes the full C-Sky build, backend, UART,
+The R17 build passes the full C-Sky build, backend, UART,
 NTP, HTTP and desktop/mobile browser pipeline. New regression checks cover
 signed/extended custom DST transitions across year boundaries, rejection of
 daylight offsets outside the +TIME range, and intact 121–127 character NTP
-hostnames. The clean FULL layout and upload-script preflight are checked offline.
-This rebuild is published for download only; it has not been flashed or bench-tested.
+hostnames. UART tests retain actual receive timestamps through queueing and
+tick rollover, check buffer overflow recovery, and exercise 40,000 bounded
+command/event sequences plus 10,002 reset timing/rollover cases. Injected
+interface-start failures test retry and acknowledgment behavior; reset/save,
+mode-switch, AP lease and stale-NTP overlaps have explicit regressions.
+The clean FULL layout and upload-script preflight are checked offline.
+R17 is published for download only; it has not been flashed or bench-tested.
 
 ## Owner-reported hardware tests, 1 October 2026
 

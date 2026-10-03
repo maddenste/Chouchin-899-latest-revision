@@ -35,8 +35,11 @@ static char clock_hostname[32];
 static struct txw_hc32_time_stream time_stream;
 static uint8 configured;
 static uint8 network_initialized;
+static uint8 interface_ready;
 static uint8 reset_armed;
 static uint32 reset_at_ms;
+static uint8 reset_floor_active;
+static uint32 reset_floor_ms;
 static volatile uint8 station_switch_pending;
 static uint32 station_switch_at_ms;
 static volatile uint8 portal_switch_pending;
@@ -47,6 +50,8 @@ static uint32 portal_started_ms;
 static uint32 web_last_line_ms;
 static struct os_mutex settings_lock;
 static enum txw_hc32_command pending_mode;
+static uint32 pending_mode_retry_ms;
+static uint8 pending_station_restart;
 
 extern int32 wificfg_flush(uint8 ifidx);
 static int reset_settings_locked(void);
@@ -112,6 +117,10 @@ static void portal_dhcp_start(void)
 void clock_app_prepare(void)
 {
     os_mutex_init(&settings_lock);
+    network_initialized = interface_ready = reset_armed = reset_floor_active = 0u;
+    station_switch_pending = portal_switch_pending = pending_station_restart = 0u;
+    pending_mode = TXW_HC32_COMMAND_NONE;
+    pending_mode_retry_ms = 0u;
     web_client_seen = 0u;
     web_client_last_ms = web_last_line_ms = 0u;
     configured = clock_storage_load(&settings) &&
@@ -135,6 +144,7 @@ void clock_app_prepare(void)
 void clock_app_network_ready(void)
 {
     network_initialized = 1u;
+    interface_ready = 1u;
     if (sys_cfgs.wifi_mode == WIFI_MODE_AP) portal_dhcp_start();
     else if (lwip_netif_get_ip2("w0").addr != 0u) clock_app_dhcp_ready();
 }
@@ -144,11 +154,12 @@ static int switch_to_portal(void)
     struct netdev *netdev = (struct netdev *)dev_get(HG_WIFI0_DEVID);
     ip_addr_t ip, mask, gateway;
     if (!network_initialized || netdev == NULL) return 0;
-    if (sys_cfgs.wifi_mode == WIFI_MODE_AP) return 1;
+    if (interface_ready && sys_cfgs.wifi_mode == WIFI_MODE_AP) return 1;
+    interface_ready = 0u;
     lwip_netif_set_dhcp2("w0", 0);
     sys_status.dhcpc_done = sys_status.wifi_connected = 0u;
     clock_ntp_disconnected();
-    ieee80211_iface_stop(WIFI_MODE_STA);
+    ieee80211_iface_stop(sys_cfgs.wifi_mode);
     configure_portal();
     wificfg_flush(WIFI_MODE_AP);
     netdev_set_wifi_mode(netdev, WIFI_MODE_AP);
@@ -160,6 +171,7 @@ static int switch_to_portal(void)
     web_client_seen = 0u;
     portal_started_ms = now_ms();
     web_last_line_ms = portal_started_ms;
+    interface_ready = 1u;
     return 1;
 }
 
@@ -168,7 +180,8 @@ static int switch_to_station(int restart_existing)
     struct netdev *netdev = (struct netdev *)dev_get(HG_WIFI0_DEVID);
     ip_addr_t empty;
     if (!network_initialized || netdev == NULL || !configured) return 0;
-    if (sys_cfgs.wifi_mode == WIFI_MODE_STA && !restart_existing) return 1;
+    if (interface_ready && sys_cfgs.wifi_mode == WIFI_MODE_STA && !restart_existing) return 1;
+    interface_ready = 0u;
     // Saving new Wi-Fi credentials while already in STA mode must restart
     // the interface; returning early would leave the old network active.
     clock_ntp_disconnected();
@@ -187,6 +200,7 @@ static int switch_to_station(int restart_existing)
     empty.addr = 0u;
     lwip_netif_set_ip2("w0", &empty, &empty, &empty);
     lwip_netif_set_dhcp2("w0", 1);
+    interface_ready = 1u;
     return 1;
 }
 
@@ -197,6 +211,11 @@ static void send_literal(const char *line)
 
 void clock_app_command(enum txw_hc32_command command)
 {
+    clock_app_command_at(command, now_ms());
+}
+
+void clock_app_command_at(enum txw_hc32_command command, uint32 received_ms)
+{
     os_mutex_lock(&settings_lock, -1);
     switch (command) {
     case TXW_HC32_COMMAND_WIFI_ID:
@@ -204,20 +223,33 @@ void clock_app_command(enum txw_hc32_command command)
                                   txw_hc32_wifi_id_no_credentials);
         break;
     case TXW_HC32_COMMAND_WIFI_AP:
-        if (!network_initialized) pending_mode = command;
-        else if (switch_to_portal()) send_literal(txw_hc32_wifi_ap_ok);
-        break;
     case TXW_HC32_COMMAND_WIFI_STA:
-        if (!network_initialized) pending_mode = command;
-        else if (switch_to_station(0)) send_literal(txw_hc32_wifi_sta_ok);
+        /* No credentials means STA cannot start; do not stall AP expiry. */
+        if (command == TXW_HC32_COMMAND_WIFI_STA && !configured) break;
+        /* The newest explicit mode request supersedes older delayed work. */
+        pending_station_restart = command == TXW_HC32_COMMAND_WIFI_STA &&
+                                  (station_switch_pending || pending_station_restart);
+        station_switch_pending = portal_switch_pending = 0u;
+        pending_mode = command;
+        pending_mode_retry_ms = now_ms();
+        if (network_initialized &&
+            (command == TXW_HC32_COMMAND_WIFI_AP ? switch_to_portal() :
+             switch_to_station(pending_station_restart))) {
+            send_literal(command == TXW_HC32_COMMAND_WIFI_AP ?
+                         txw_hc32_wifi_ap_ok : txw_hc32_wifi_sta_ok);
+            pending_mode = TXW_HC32_COMMAND_NONE;
+            pending_station_restart = 0u;
+        } else if (network_initialized) pending_mode_retry_ms = now_ms() + 1000u;
         break;
     case TXW_HC32_COMMAND_WIFI_RESET:
         // Require the second HC32 request in the observed 1.3 s sequence;
         // do not erase credentials on a single garbled UART record.
-        if (!reset_armed || (uint32)(now_ms() - reset_at_ms) > 4000u) {
+        /* Do not let records queued before a save/reset erase a new record. */
+        if (reset_floor_active && (int32)(received_ms - reset_floor_ms) <= 0) break;
+        if (!reset_armed || (uint32)(received_ms - reset_at_ms) > 4000u) {
             reset_armed = 1u;
-            reset_at_ms = now_ms();
-        } else if ((uint32)(now_ms() - reset_at_ms) >= 750u) {
+            reset_at_ms = received_ms;
+        } else if ((uint32)(received_ms - reset_at_ms) >= 750u) {
             if (reset_settings_locked()) {
                 reset_armed = 0u;
                 send_literal(txw_hc32_wifi_reset_ok);
@@ -233,7 +265,9 @@ void clock_app_command(enum txw_hc32_command command)
 void clock_app_dhcp_ready(void)
 {
     os_mutex_lock(&settings_lock, -1);
-    if (configured && sys_cfgs.wifi_mode == WIFI_MODE_STA)
+    if (configured && interface_ready && !station_switch_pending &&
+        !portal_switch_pending && pending_mode == TXW_HC32_COMMAND_NONE &&
+        sys_cfgs.wifi_mode == WIFI_MODE_STA)
         clock_ntp_begin(settings.ntp_host, settings.ntp_backup_host);
     os_mutex_unlock(&settings_lock);
 }
@@ -272,24 +306,33 @@ void clock_app_tick(void)
     size_t length;
     /* Credential derivation happens in the web task, outside this lock. */
     os_mutex_lock(&settings_lock, -1);
-    if (network_initialized && pending_mode != TXW_HC32_COMMAND_NONE) {
-        if (pending_mode == TXW_HC32_COMMAND_WIFI_AP && switch_to_portal())
-            send_literal(txw_hc32_wifi_ap_ok);
-        else if (pending_mode == TXW_HC32_COMMAND_WIFI_STA && switch_to_station(0))
-            send_literal(txw_hc32_wifi_sta_ok);
-        pending_mode = TXW_HC32_COMMAND_NONE;
+    if (reset_armed && (uint32)(now_ms() - reset_at_ms) > 4000u) reset_armed = 0u;
+    if (network_initialized && !reset_armed && pending_mode != TXW_HC32_COMMAND_NONE &&
+        (int32)(now_ms() - pending_mode_retry_ms) >= 0) {
+        int success = pending_mode == TXW_HC32_COMMAND_WIFI_AP ? switch_to_portal() :
+                      switch_to_station(pending_station_restart);
+        if (success) {
+            send_literal(pending_mode == TXW_HC32_COMMAND_WIFI_AP ?
+                         txw_hc32_wifi_ap_ok : txw_hc32_wifi_sta_ok);
+            pending_mode = TXW_HC32_COMMAND_NONE;
+            pending_station_restart = 0u;
+        } else pending_mode_retry_ms = now_ms() + 1000u;
     }
-    if (station_switch_pending &&
+    if (network_initialized && !reset_armed && station_switch_pending &&
         (int32)(now_ms() - station_switch_at_ms) >= 0) {
-        station_switch_pending = 0u;
-        if (switch_to_station(1)) send_literal(txw_hc32_wifi_app_ok);
+        if (switch_to_station(1)) {
+            station_switch_pending = 0u;
+            send_literal(txw_hc32_wifi_app_ok);
+        } else station_switch_at_ms = now_ms() + 1000u;
     }
-    if (portal_switch_pending &&
+    if (network_initialized && !reset_armed && portal_switch_pending &&
         (int32)(now_ms() - portal_switch_at_ms) >= 0) {
-        portal_switch_pending = 0u;
-        switch_to_portal();
+        if (switch_to_portal()) portal_switch_pending = 0u;
+        else portal_switch_at_ms = now_ms() + 1000u;
     }
-    if (network_initialized &&
+    if (network_initialized && interface_ready && !reset_armed &&
+        !station_switch_pending && !portal_switch_pending &&
+        pending_mode == TXW_HC32_COMMAND_NONE &&
         (uint32)(now_ms() - web_last_line_ms) >= 1000u) {
         if (web_client_seen &&
             (uint32)(now_ms() - web_client_last_ms) < 15000u) {
@@ -303,7 +346,10 @@ void clock_app_tick(void)
         /* Expired station sessions become quiet, not WIFIEXIT: normal
          * station wake/+TIME behaviour must remain under HC32 control. */
     }
-    if (!txw_hc32_time_due(&time_stream, now_ms(), clock_ntp_fresh()) ||
+    if (reset_armed || station_switch_pending || portal_switch_pending ||
+        pending_mode != TXW_HC32_COMMAND_NONE || !interface_ready ||
+        sys_cfgs.wifi_mode != WIFI_MODE_STA ||
+        !txw_hc32_time_due(&time_stream, now_ms(), clock_ntp_fresh()) ||
         !clock_ntp_utc_now(&utc)) goto done;
     txw_hc32_time_init(&local);
     if (!txw_clock_local_from_unix(utc, settings.timezone, &local)) goto done;
@@ -358,6 +404,13 @@ int clock_app_save_settings(const struct txw_clock_settings *candidate)
     }
     settings = copy;
     configured = 1u;
+    reset_armed = 0u;
+    reset_floor_active = 1u;
+    reset_floor_ms = now_ms();
+    pending_mode = TXW_HC32_COMMAND_NONE;
+    pending_station_restart = 0u;
+    clock_ntp_disconnected();
+    txw_hc32_time_stream_init(&time_stream);
     portal_switch_pending = 0u;
     // Let the HTTP response leave before tearing down the setup AP. The HC32
     // sends WIFISTA only after WIFIAPPOK, so send that once STA is started.
@@ -371,10 +424,19 @@ static int reset_settings_locked(void)
 {
     if (!clock_storage_reset(&settings)) return 0;
     configured = 0u;
+    reset_armed = 0u;
+    reset_floor_active = 1u;
+    reset_floor_ms = now_ms();
     station_switch_pending = 0u;
     pending_mode = TXW_HC32_COMMAND_NONE;
+    pending_station_restart = 0u;
     clock_ntp_disconnected();
-    if (sys_cfgs.wifi_mode != WIFI_MODE_AP) {
+    txw_hc32_time_stream_init(&time_stream);
+    web_client_seen = 0u;
+    web_client_last_ms = 0u;
+    portal_started_ms = web_last_line_ms = now_ms();
+    portal_switch_pending = 0u;
+    if (!interface_ready || sys_cfgs.wifi_mode != WIFI_MODE_AP) {
         portal_switch_at_ms = now_ms() + 500u;
         portal_switch_pending = 1u;
     }

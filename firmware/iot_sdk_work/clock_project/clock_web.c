@@ -307,7 +307,7 @@ static void send_status(int fd)
     snprintf(ip, sizeof(ip), "%u.%u.%u.%u", IP2STR_N(address.addr));
     snprintf(json, sizeof(json),
         "{\"firmwareVersion\":\"WiFi Clock \\u00b7 v2.0\","
-        "\"buildId\":\"TXW813 HC32-V15 R16\",\"mode\":\"%s\","
+        "\"buildId\":\"TXW813 HC32-V15 R17\",\"mode\":\"%s\","
         "\"ip\":\"%s\",\"hostname\":\"%s\",\"connected\":%s,\"timeSynced\":%s,"
         "\"timezone\":\"%s\",\"nextDst\":%s,"
         "\"dnsServer\":\"%u.%u.%u.%u\","
