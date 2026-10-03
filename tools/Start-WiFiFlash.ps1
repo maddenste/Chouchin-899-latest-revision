@@ -83,9 +83,19 @@ function Invoke-ClockWriter {
     & (Join-Path $PSScriptRoot 'Program-TXW813-DCDC0-WriteOnly-OnPower.ps1') @Arguments -Program:$Program
 }
 
+function Read-ClockPaths {
+    param([string]$Path)
+    $result = @{}
+    $record = Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json
+    foreach ($name in 'Image','Algorithm','Init','Server','Gdb','Workspace') {
+        if ($record.$name -is [string]) { $result[$name] = $record.$name }
+    }
+    return $result
+}
+
 function Invoke-ClockFlashWizard {
     param([string]$PreferencesPath = (Join-Path $env:LOCALAPPDATA 'WiFiClockFlasher\paths.json'))
-    if (-not $IsWindows -or $PSVersionTable.PSVersion.Major -lt 7) { throw 'Use Windows and PowerShell 7 through Flash-WiFi.bat.' }
+    if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or $PSVersionTable.PSVersion -lt [version]'5.1') { throw 'Use Windows PowerShell 5.1 or later through Flash-WiFi.bat.' }
     Add-Type -AssemblyName System.Windows.Forms
     Write-Host "`nWiFi Clock v2.0 - guided Wi-Fi R17 installation" -ForegroundColor Cyan
     Write-Host 'TXW813-320 only. This does not flash the HC32 movement controller.'
@@ -96,7 +106,7 @@ function Invoke-ClockFlashWizard {
     $preferencesPath = $PreferencesPath
     $saved = @{}
     if (Test-Path -LiteralPath $preferencesPath) {
-        try { $saved = Get-Content -LiteralPath $preferencesPath -Raw | ConvertFrom-Json -AsHashtable } catch { Write-Host 'Saved paths could not be loaded; please select files again.' }
+        try { $saved = Read-ClockPaths $preferencesPath } catch { Write-Host 'Saved paths could not be loaded; please select files again.' }
         if ($null -eq $saved -or $saved -isnot [Collections.IDictionary]) { $saved = @{} }
     }
     $imageName = 'WiFi-Clock-v2.0-R17-20261003_FULL.bin'

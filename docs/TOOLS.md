@@ -42,7 +42,7 @@ See [UART diagnosis and wiring](TROUBLESHOOTING.md#optional-uart-diagnosis).
 | Tool | Official download | Version / files used |
 | --- | --- | --- |
 | XHSC MCU Programmer | [XHSC ISP V2.23 ZIP](https://oss-nc-beijing-2.cecloudcs.com/doc-xh/XHSC%20ISP%20V2.23.zip) · [vendor listing](https://www.xhsc.com.cn/product/1248.html) | V2.23; run XHSC.exe |
-| PowerShell 7 | [Microsoft installation instructions](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows) | Open PowerShell 7, not Windows PowerShell 5.1 |
+| PowerShell | Included with Windows | The guided launcher uses built-in Windows PowerShell 5.1; no extra installation |
 | C-SKY / XuanTie CDK | [Official CDK page](https://www.xrvm.cn/community/download?id=4478329920585535488) | CKV2ElfMinilib 3.10.29; csky-elfabiv2-gdb.exe |
 | C-SKY / XuanTie DebugServer | [Official DebugServer page](https://www.xrvm.cn/community/download?id=4453644425750450176) | User layer 5.18.10 and CKLink Windows driver |
 | TXW flash algorithm | [Taixin FPV 2.5.4.7 V45354](https://taixin-semi.com/zh/downloads/TXW81x_FPV-v2.5.4.7) | TXW81X_FLASH_ALGORITHM.elf and matching .init |
@@ -61,7 +61,7 @@ Keil, compilers, Python and a logic analyser are **not required for uploading**.
    includes the guided launcher. Download the firmware images separately.
 3. Follow [the guided Wi-Fi upload](FLASHING.md). The launcher handles input-file paths for you; no PowerShell commands need editing.
 
-Check downloaded firmware with PowerShell 7 if desired:
+Check downloaded firmware with PowerShell if desired:
 
 ~~~powershell
 Get-FileHash 'C:\ClockFlash\Chouchin-899-HC32-V15-20261001.hex' -Algorithm SHA256

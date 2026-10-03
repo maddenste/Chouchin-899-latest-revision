@@ -9,7 +9,7 @@ This installs Wi-Fi R17 on the **TXW813-320** only. Flash the
 
 ## 1. Download and install
 
-- Install **PowerShell 7**, **C-SKY DebugServer with the CKLink driver** and
+- Install **C-SKY DebugServer with the CKLink driver** and
   **C-SKY CDK/toolchain**, using [these software links](TOOLS.md#software-downloads).
 - Download **WiFi-Clock-v2.0-R17-20261003_FULL.bin** from
   [the v2.0 release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0).
@@ -110,3 +110,5 @@ enter your Wi-Fi and clock settings. The clean installation clears old settings.
 The launcher has automated offline tests; its interactive file dialogs and
 end-to-end hardware flashing have not yet been tested by another owner.
 It uses the existing writer, not a new flash protocol.
+Launcher tests and the real R17 firmware/algorithm preflight also passed under
+built-in Windows PowerShell 5.1. No PowerShell 7 installation is required.

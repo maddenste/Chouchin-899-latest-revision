@@ -71,7 +71,7 @@ Match pad names, not guessed header order. Plug CKLink into USB; keep board powe
 
 Close **FlashProgrammer and all DebugServer windows**; the script starts its own server.
 
-Open **PowerShell 7**. Run **ipconfig** and find the IPv4 address of your PC's active network adapter. Use the **PC running DebugServer**, not the clock's address.
+Open **Windows PowerShell (5.1 or later)**. Run **ipconfig** and find the IPv4 address of your PC's active network adapter. Use the **PC running DebugServer**, not the clock's address.
 
 Paste this block, changing **192.168.0.5** to your PC address and changing installed-program paths if needed:
 

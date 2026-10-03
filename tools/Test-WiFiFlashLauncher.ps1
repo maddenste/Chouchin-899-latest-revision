@@ -82,7 +82,7 @@ try {
     function Read-Host { return 'Q' }
     Invoke-ClockFlashWizard -PreferencesPath $preferences | Out-Null
     Assert-ClockTest ($script:writerCalls.Count -eq 1 -and -not $script:writerCalls[0]) 'Cancel must perform offline preflight only.'
-    $remembered = Get-Content -LiteralPath $preferences -Raw | ConvertFrom-Json -AsHashtable
+    $remembered = Read-ClockPaths $preferences
     Assert-ClockTest ($remembered.Count -eq 6 -and -not $remembered.ContainsKey('DebuggerEndpoint')) 'Preferences must contain only file/workspace paths.'
     $script:writerCalls.Clear()
     $script:failPreflight = $true

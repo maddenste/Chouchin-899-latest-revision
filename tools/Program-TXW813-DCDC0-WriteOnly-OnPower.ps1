@@ -72,7 +72,6 @@ if (-not (Test-Path -LiteralPath (Split-Path -Qualifier $OutputRoot))) { throw "
 $imageBytes = [IO.File]::ReadAllBytes($image)
 if ($CleanFullImage) {
     $factoryBytes = [byte[]]::new($flashLength)
-    [Array]::Fill($factoryBytes, [byte]0xff)
     $codeBytes = [byte[]]::new(327184)
     if ($imageBytes.Length -ne $flashLength) { throw 'Clean FULL must be exactly 2 MiB.' }
     [Array]::Copy($imageBytes, $codeBytes, $codeBytes.Length)
@@ -87,7 +86,7 @@ if ($factoryBytes.Length -ne $flashLength -or $imageBytes.Length -ne $flashLengt
 }
 for ($i = 0; $i -lt $flashLength; $i++) {
     $expected = if ($i -lt $codeBytes.Length) { $codeBytes[$i] }
-        elseif ($i -ge $configStart) { $factoryBytes[$i] }
+        elseif ($i -ge $configStart -and -not $CleanFullImage) { $factoryBytes[$i] }
         else { 0xff }
     if ($imageBytes[$i] -ne $expected) { throw ('Image layout mismatch at 0x{0:X}' -f $i) }
 }
