@@ -12,8 +12,9 @@ line during the investigation. This leaves only a short window at startup to
 connect before normal firmware takes over the pin.
 
 The script repeatedly tries to connect while you power-cycle the board. Not
-every attempt lands inside that window, so **many attempts can be needed**;
-on our setup, some successful connections took hundreds of attempts.
+every connection attempt lands inside that short window. On our setup, it
+took **about five power cycles on average** to catch the chip. The script's
+connection-attempt counter is not the number of power cycles you have performed.
 
 **Our replacement firmware leaves PA10 available for debug**, rather than
 repurposing it for UART output. After it has been successfully installed, this
