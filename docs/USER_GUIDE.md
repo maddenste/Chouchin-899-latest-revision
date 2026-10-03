@@ -4,6 +4,10 @@
 
 ## Connect
 
+Hold **REC for three seconds** to wake Wi-Fi. With saved credentials, connect
+your phone or computer to the same LAN and open the clock's router-assigned IP.
+REC does not erase settings.
+
 With no saved credentials, join **WiFi-Clock-Setup** and open
 `http://192.168.4.1/`. Initial provisioning is an open AP; use a trusted environment.
 Automatic captive-portal detection and mDNS are not required.
@@ -74,6 +78,19 @@ Defaults are **Sweep + Off** (selector suffix `00`). On does not stop the
 minute hand. Original battery checks remain active in the HC32.
 
 ## Save and use
+
+### Movement buttons
+
+| Hold for three seconds | Action |
+| --- | --- |
+| REC | Wake Wi-Fi for access to the settings page |
+| RESET | Move all hands to the 12 o'clock reference; settings are retained |
+| REC + RESET together | Erase saved Wi-Fi and clock settings |
+
+Before fitting or refitting hands, hold **RESET for three seconds**, wait for
+the movement to reach its 12 o'clock reference, then remove power and fit all
+hands pointing exactly to 12. If a transport locking pin is fitted, leave it
+in place during hand fitting and remove it before powering the movement.
 
 **Save settings** persists the selected configuration. Saving is not a claim that
 DNS/NTP has succeeded; check live connection/time status. Network changes can
