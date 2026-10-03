@@ -47,9 +47,9 @@ Keil, compilers, Python and a logic analyser are **not required for uploading**.
 
 ## Project files
 
-1. [Release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1): HC32 V15 HEX, Wi-Fi R16 FULL BIN, SHA256SUMS.txt and user manual.
+1. [Release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0): HC32 V15 HEX, Wi-Fi R16 FULL BIN, SHA256SUMS.txt and user manual.
 2. On [the repository main page](https://github.com/maddenste/Chouchin-899-latest-revision), select **Code → Download ZIP**. Extract the current **tools** folder.
-   Do not use the release's automatic “Source code” ZIP: its tag predates the clean-image script update.
+   The v2.0 release's “Source code” ZIP also includes the current flashing tools.
 3. Use paths without spaces, following [the Wi-Fi guide](FLASHING.md).
 
 Check downloaded firmware with PowerShell 7 if desired:

@@ -33,7 +33,7 @@ C:\ClockTools\
   TXW81X_FLASH_ALGORITHM.init
 ~~~
 
-Get the BIN from [the release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1), algorithms from [the matching Taixin package](TOOLS.md).
+Get the BIN from [the release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0), algorithms from [the matching Taixin package](TOOLS.md).
 **Paths must not contain spaces.**
 
 Locate your installed DebugServer and C-SKY GDB. Our paths were:

@@ -5,7 +5,7 @@ startup and board configuration; do not replace it with unrelated ESP startup co
 
 | Files | Responsibility |
 | --- | --- |
-| `iot_sdk_work/clock_project/main.c`, `syscfg.c`, `events.c` | Vendor board/network startup and task/event integration |
+| Vendor `main.c`, `syscfg.c`, `events.c` (not bundled) | Board/network startup and task/event integration in the private SDK build |
 | `clock_app.c` in that project | Command state machine, settings ownership, mode switching, time-output scheduling |
 | `clock_uart.c` | UART0 driver boundary, bounded receive/command handling |
 | `clock_ntp.c` | Network-facing DNS/UDP worker and connectivity handling |
@@ -27,7 +27,7 @@ The settings lock protects state changes; cached PSK reuse avoids expensive boot
 derivation. Credentials remain private in API responses. No logging should be
 inserted into PA14's clock protocol stream in a release build.
 
-## Web routes
+## Network synchronisation
 
 NTP replies may arrive from a different IPv4 address when a router transparently
 redirects UDP port 123 to a local server. R4 accepts that source-address change,
@@ -47,9 +47,12 @@ All application settings are grouped in a 476-byte version-3 CRC-protected flash
 record: Wi-Fi credentials/cached key, primary and secondary NTP hostnames,
 timezone, daily update time and hand settings. The complete record alternates
 between adjacent sectors 0x1FC000 and 0x1FD000; the second is a redundant copy,
-not a separate settings category. Original factory data remains at 0x1FE000 and
-0x1FF000. No version-2 migration is implemented; incompatible records reset to
+not a separate settings category. The final sectors at 0x1FE000 and 0x1FF000
+were retained in the private tested image but are blank in the clean public FULL.
+No version-2 migration is implemented; incompatible records reset to
 defaults. Keep future application settings in this grouped record.
+
+## Web routes
 
 GET `/` serves the embedded page. GET `/api/v1/config`, `/api/v1/status` and
 `/api/v1/scan` return configuration/status/scan data. Authenticated scan start
@@ -58,7 +61,7 @@ uses `/api/v1/scan?start=1`. POST config saves settings; POST
 and portal-session lifetime. Reuse the page's per-boot request token and handler
 validation rather than adding an unauthenticated write endpoint.
 
-## Flash ownership
+## DST scheduling
 
 The current V15/R16 DST wake planner changes only outgoing +TIME schedule fields.
 On the last normal sync before a transition, it requests the needed
@@ -73,9 +76,12 @@ POST `/api/v1/dst-preview` calculates from unsaved timezone selections without
 saving configuration, resetting the chip or extending the browser lease.
 The UI debounces edits and rejects stale preview responses.
 
+## Flash layout and controller responsibilities
+
 Code begins at `0x0`; the boot wrapper's code offset is `0xC00` and load/run
 address `0x18000000`. Application settings use `0x1FC000/0x1FD000`. Factory radio
-configuration is preserved at `0x1FE000/0x1FF000`. This division is specific to
+configuration sectors are at `0x1FE000/0x1FF000`; the clean public image blanks
+them instead of copying private board data. This division is specific to
 the tested 2 MiB image/board; changing it requires a reviewed layout and recovery
 plan. CRC is corruption detection, not confidentiality or authenticity.
 

@@ -85,7 +85,7 @@ E: location. Its full image matched the installed R14 candidate byte-for-byte.
 The renamed-image writer's offline preflight passed with no hardware access.
 The portable write-only helper was subsequently used for R15/R16; both
 reported programming success without flash readback.
-A clean public-draft copy was prepared with the separately obtained original
+A clean source-staging copy was prepared with the separately obtained original
 SDK and completed the same full test/build pipeline. Its raw code differs
 only in five build-timestamp characters; packaged checksum differences follow.
 No firmware from that check was flashed. Another user's machine/board and an

@@ -13,6 +13,18 @@ These documents are not needed to upload the prepared firmware.
 
 The TXW read tool remains in tools/Read-TXW813-OnPower.ps1 for experienced users. Reading, building and editing are separate from the upload guide.
 
+## Tools at a glance
+
+| Tool in tools/ | Role |
+| --- | --- |
+| Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 | Wi-Fi upload; the only script needed by the installation guide |
+| Read-TXW813-OnPower.ps1 | Advanced original-firmware backup and diagnosis |
+| verify_hc32_backup.py | Offline validation of exported HC32 backups |
+| Prepare-Sdk.ps1 | Development SDK preparation; does not restore omitted integration |
+| Build-TXW813-DCDC0FullImage.ps1 | Development image assembly retaining a private board's final sectors |
+| New-TXW813-PublicFullImage.ps1 | Offline clean-image packaging for the released R16 APP |
+| Test-PublicPackage.ps1 | Repository hygiene, syntax and local-link checks |
+
 ## Development and validation
 
 - [Build notes and source scope](BUILD.md)

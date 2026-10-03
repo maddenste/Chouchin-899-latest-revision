@@ -108,8 +108,8 @@ For HC32 firmware programming through XHSC UART boot mode, the owner confirmed:
 | U_RX | CLK |
 | GND | GND / common ground |
 
-The board's **BOOT pad was held at 3.3 V from the bench supply**, not the
-programmer's 3V3/5V pins. The bench supply also powered the clock board itself.
+The board's **BOOT pad was held at 3.3 V from the external supply**, not the
+programmer's 3V3/5V pins. The same supply powered the clock at its battery terminals.
 These are pad-label connections
 reported by the owner; do not substitute guessed UART pin numbers.
 The programming software was **XHSC.exe (HDSC MCU New Programmer)**.
@@ -131,9 +131,12 @@ Do not infer physical header pin order from the probe name.
 
 Disconnect batteries/external power before soldering or moving wires. Use short,
 strain-relieved wires, stable appropriate board power and common ground.
-For uploading, we used a 3.3 V bench supply connected to the battery terminals,
+For uploading, we used a TENSTAR ROBOT TSP-03 fixed 3.3 V supply at the battery terminals,
 positive to battery positive and negative to battery negative, with batteries removed.
 Keep hands/gears unobstructed; avoid back-powering through signal pins.
+
+The TSP-03 has mains-input terminals. This guide covers only its low-voltage
+output; see [the mains safety note](TOOLS.md#equipment).
 
 Start the catch script before waking/power-cycling TXW. Once a program command
 begins, keep power steady until completion. Do not power-cycle during writing.

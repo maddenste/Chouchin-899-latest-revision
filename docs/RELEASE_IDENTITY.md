@@ -14,7 +14,7 @@ V1.0 refers to the older MM32/ESP board project, not this hardware revision.
 | WiFi-Clock-v2.0-R16-20261002_FULL.bin | 2097152 bytes | 54120864F2465D61D18D50E338DF1EDB006530271F15390885F808FD7BCC8D44 |
 
 Only the HC32 HEX and clean Wi-Fi FULL are attached to
-[v2.0-rc1](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1).
+[v2.0](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0).
 APP and HC32 BIN identities remain above for developer/reference checks.
 The HC32 installation was reconfirmed by the owner.
 The local XHSC configuration selects the V15 HEX, and its latest log reports
@@ -33,5 +33,7 @@ Packaging changed on 2 October; firmware code is unchanged. The clean image
 has passed offline layout/preflight checks but has not been hardware-tested
 with the old configuration sectors blank.
 
-Source and binary release tags must match the exact approved build. Do not
-attach a raw linker binary in place of the packaged APP.
+The v2.0 tag includes the public source, current upload script and polished
+documentation. It does not supply the omitted vendor integration or make the
+public tree independently rebuildable. Do not substitute a raw linker binary
+for the packaged firmware.

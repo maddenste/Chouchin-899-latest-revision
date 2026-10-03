@@ -46,9 +46,10 @@ The web page was refined with a restrained glass-like theme, saved SSID display,
 two racing NTP servers, concise movement/saving controls and custom POSIX rules.
 DST preview now recalculates from unsaved settings without writing them.
 
-## Current candidate
+## First public release
 
-**HC32 V15 + Wi-Fi v2.0 R16**, branded
+**WiFi Clock v2.0 — Public release 1**, containing internal builds
+**HC32 V15 + Wi-Fi R16**, branded
 **WiFi Clock · v2.0 — Modified by Steve Madden · 2026**.
 V1.0 is the older board revision. R15/R16 refined labels and attribution without
 changing clock behavior; the footer links to the new project.

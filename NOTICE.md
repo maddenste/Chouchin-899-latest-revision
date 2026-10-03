@@ -1,4 +1,4 @@
-# Licensing and attribution — publication gate
+# Licensing and attribution
 
 Project-authored clock backend, protocol, tests, scripts, documentation and
 ESP-derived web work are offered under **GPL-3.0-or-later**, copyright
@@ -30,10 +30,10 @@ separate review. Original flash dumps, Wi-Fi secrets and per-board factory data
 remain private regardless of copyright clearance.
 
 Vendor SDK/libraries, loader/packaging executables, DebugServer, toolchain,
-flash algorithms and developer runtimes are not supplied in the public draft.
+flash algorithms and developer runtimes are not supplied in this repository.
 Owners obtain permitted copies themselves.
 
-## Publication gate
+## Unresolved licensing review
 
 Unresolved review items:
 
