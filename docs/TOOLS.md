@@ -7,12 +7,18 @@ We used **Windows**. Other systems may work, but are untested; the supplied scri
 | Item | Purpose |
 | --- | --- |
 | HC32L130J8TA + TXW813-320 Chouchin-899 | Supported board |
-| CMSIS-DAP / DAPLink probe **with U_TX and U_RX UART pins** | HC32 upload |
-| **CKLink Lite V2** | TXW813 upload |
+| [CMSIS-DAP / DAPLink probe](https://www.ebay.co.uk/itm/254327616482) **with U_TX and U_RX UART pins** | HC32 upload |
+| [CKLink Lite V2](https://www.aliexpress.com/item/1005009972319809.html) | TXW813 upload |
 | **3.3 V bench supply** | Power at battery terminals |
 | Short wires, USB cables and multimeter | Connections and polarity checks |
 
 The probes look similar but serve different chips. A SWD-only probe without UART pins cannot follow our HC32 procedure. Our CKLink reported App_ver 2.38.
+
+These are the programmer listings Steve supplied for the hardware used, not
+endorsements of other variants. Check the selected model and signal labels before
+ordering; seller stock/listings can change. The eBay listing was accessible when
+checked on 3 October 2026; the AliExpress page could not be independently reopened.
+The bench-supply model has not been recorded, so no purchase link is guessed.
 
 Remove batteries. Connect bench **+3.3 V to battery +**, bench **negative to battery −**, and common programmer/board GND. Leave programmer 3V3/5V disconnected.
 
