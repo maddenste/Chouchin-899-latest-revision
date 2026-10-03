@@ -52,15 +52,19 @@ const token = '0123456789abcdef0123456789abcdef';
       !document.getElementById('scan').disabled && document.getElementById('networks').options.length >= 5);
   }
   async function documentationScreenshot(filename) {
-    // Keep legacy-time regression coverage above, but show normal settings in docs.
+    // Keep regression fixtures unchanged; use illustrative settings for docs.
     const previousConfig = config;
     const previousSynced = statusSynced;
-    config = {...config, syncHour:10, syncMinute:10,
+    config = {...config, ssid:'Wi-Fi Network', syncHour:10, syncMinute:10,
+      minuteHand:'jump', secondHand:'pause_at_12', nightParking:'night',
       ntpHost:'pool.ntp.org', ntpBackupHost:'time.cloudflare.com',
       timezone:'GMT0BST,M3.5.0/1,M10.5.0/2'};
     statusSynced = false;
     try {
       await load();
+      assert.equal(await page.locator('#networks option:checked').textContent(),'Wi-Fi Network');
+      assert.equal(await page.locator('#handMovement').inputValue(),'hold_start');
+      assert.equal(await page.locator('#nightParking').inputValue(),'night');
       assert.equal(await page.locator('#syncMinute').inputValue(),'10');
       assert.doesNotMatch(await page.locator('#updateHelp').textContent(),/Saved time/);
       await page.screenshot({path:path.join(root,'tests',filename),fullPage:true});
