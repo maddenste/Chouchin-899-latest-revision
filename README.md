@@ -18,8 +18,10 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 No compiling or firmware editing is required. Install the two prepared files, then enter your Wi-Fi settings.
 
-Wi-Fi flashing now has a [double-click guided launcher](docs/FLASHING.md):
-file selection, automatic checks and power-on catch instructions, with no commands to edit.
+**Flashing instructions for both chips:** follow the [illustrated guide](docs/FLASHING.md)
+to install the HC32 movement firmware and TXW813 Wi-Fi firmware. The Wi-Fi firmware
+includes a double-click launcher that guides you through file selection and catching
+the chip at power-on—no commands to edit.
 
 - [Public release 1 — firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0)
 - [Three-page user manual](docs/WiFi-Clock-User-Manual-v2.0.pdf)
