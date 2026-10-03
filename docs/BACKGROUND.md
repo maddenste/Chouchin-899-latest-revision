@@ -15,9 +15,16 @@ The TXW read tool remains in tools/Read-TXW813-OnPower.ps1 for experienced users
 
 ## Tools at a glance
 
-| Tool in tools/ | Role |
+For guided Wi-Fi uploading, double-click **Flash-WiFi.bat** in the project root.
+It runs the setup launcher, which checks your files and starts the underlying
+writer. Keep the complete extracted project together; the BAT is not standalone.
+
+| Tool | Role |
 | --- | --- |
-| Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 | Wi-Fi upload; the only script needed by the installation guide |
+| [Flash-WiFi.bat](../Flash-WiFi.bat) | Double-click entry point for the guided Wi-Fi upload |
+| [tools/Start-WiFiFlash.ps1](../tools/Start-WiFiFlash.ps1) | Guided file selection, setup checks and writer launch |
+| Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 | Underlying writer: catches the boot-time debug window and performs one bounded write |
+| Test-WiFiFlashLauncher.ps1 | Offline regression tests for the launcher; does not flash hardware |
 | Read-TXW813-OnPower.ps1 | Advanced original-firmware backup and diagnosis |
 | Test-TXW813-DumpResult.ps1 / Test-TXW813-DumpResultTests.ps1 | Backup-result checks and synthetic offline regression tests |
 | verify_hc32_backup.py | Offline validation of exported HC32 backups |
@@ -26,6 +33,8 @@ The TXW read tool remains in tools/Read-TXW813-OnPower.ps1 for experienced users
 | New-TXW813-PublicFullImage.ps1 | Offline clean-image packaging for the released R17 APP |
 | Test-PublicPackage.ps1 | Repository hygiene, syntax and local-link checks |
 | Test-TXW813-ImageLayout.ps1 | Synthetic offline tests preventing code overlap with settings sectors |
+
+Except for the root BAT, the tools listed above are in the **tools/** folder.
 
 ## Development and validation
 
