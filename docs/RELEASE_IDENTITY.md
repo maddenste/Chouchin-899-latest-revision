@@ -36,7 +36,9 @@ sequence regressions, and clean-image preflight. The status API reports
 R17 has not been flashed to the owner's clock; the hardware observations
 above describe the previously installed R16 build.
 
-Use the main branch for the updated public source and upload script; the v2.0
-tag retains the original release snapshot. Neither supplies the omitted vendor integration or makes the
-public tree independently rebuildable. Do not substitute a raw linker binary
-for the packaged firmware.
+Both the main-branch ZIP and the v2.0 release's "Source code (zip)" include
+the guided Flash-WiFi.bat launcher and its required scripts. Download the
+packaged firmware images separately from the release assets. Neither source
+archive includes the omitted vendor integration or makes the public tree
+independently rebuildable. Do not substitute a raw linker binary for the
+packaged firmware.
