@@ -12,7 +12,7 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 No compiling or firmware editing is required. Install the two prepared files, then enter your Wi-Fi settings.
 
-- [Firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1)
+- [Public release 1 — firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0-rc1)
 - [Three-page user manual](docs/WiFi-Clock-User-Manual-v2.0.pdf)
 - [Flashing help](docs/TROUBLESHOOTING.md)
 
