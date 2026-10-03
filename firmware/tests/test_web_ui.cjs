@@ -49,6 +49,25 @@ const token = '0123456789abcdef0123456789abcdef';
     await page.waitForFunction(() => !document.getElementById('sendTime').disabled &&
       !document.getElementById('scan').disabled && document.getElementById('networks').options.length >= 5);
   }
+  async function documentationScreenshot(filename) {
+    // Keep legacy-time regression coverage above, but show normal settings in docs.
+    const previousConfig = config;
+    const previousSynced = statusSynced;
+    config = {...config, syncHour:10, syncMinute:10,
+      ntpHost:'pool.ntp.org', ntpBackupHost:'time.cloudflare.com',
+      timezone:'GMT0BST,M3.5.0/1,M10.5.0/2'};
+    statusSynced = false;
+    try {
+      await load();
+      assert.equal(await page.locator('#syncMinute').inputValue(),'10');
+      assert.doesNotMatch(await page.locator('#updateHelp').textContent(),/Saved time/);
+      await page.screenshot({path:path.join(root,'tests',filename),fullPage:true});
+    } finally {
+      config = previousConfig;
+      statusSynced = previousSynced;
+      await load();
+    }
+  }
   await load();
   await page.waitForFunction(() => document.getElementById('firmwareVersion').title === 'TXW813 HC32-V15 R16');
   assert.equal(await page.locator('#firmwareVersion').textContent(),'WiFi Clock · v2.0');
@@ -93,7 +112,7 @@ const token = '0123456789abcdef0123456789abcdef';
   await page.locator('#sendTime').focus();
   assert.notEqual(await page.locator('#sendTime').evaluate(el=>getComputedStyle(el).outlineStyle),'none');
   await page.locator('#sendTime').evaluate(el=>el.blur());
-  await page.screenshot({path:path.join(root,'tests/web-desktop.png'),fullPage:true});
+  await documentationScreenshot('web-desktop.png');
   await page.setViewportSize({width:390,height:844});
   statusSynced = true;
   await load();
@@ -117,7 +136,7 @@ const token = '0123456789abcdef0123456789abcdef';
   assert.equal(posts.filter(p=>p.path==='/api/v1/config').length,savedPostsBefore);
   statusSynced = false;
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
-  await page.screenshot({path:path.join(root,'tests/web-mobile.png'),fullPage:true});
+  await documentationScreenshot('web-mobile.png');
   await page.setViewportSize({width:320,height:720});
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   await page.emulateMedia({reducedMotion:'reduce'});
