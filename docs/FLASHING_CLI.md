@@ -55,12 +55,6 @@ Remove batteries. Connect external 3.3 V at the **battery terminals**.
 
 ![TXW813 signal connections](diagrams/txw-upload.svg)
 
-| CKLink Lite pin | Board pad |
-| --- | --- |
-| TMS/IO | PA9 |
-| TCK/CK | PA10 |
-| GND | GND |
-
 Leave other probe pins disconnected, including 3V3, 5V, TDI, TDO and nRST. No BOOT/PA8 strap is used.
 
 <img src="photos/txw813-wifi-chip-and-debug-pads.jpg" alt="TXW813 and J1 GND, PA10, PA9, PA8, VCC pads" width="650">
