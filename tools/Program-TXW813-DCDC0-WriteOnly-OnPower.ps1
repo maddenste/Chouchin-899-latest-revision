@@ -56,6 +56,7 @@ if (-not $CleanFullImage) {
     $expectedHashes[$code] = $ExpectedCodeHash
 }
 $flashLength = 0x200000
+$settingsStart = 0x1FC000
 $configStart = 0x1FE000
 
 foreach ($path in @($serverExe, $gdbExe) + @($expectedHashes.Keys)) {
@@ -80,7 +81,7 @@ if ($CleanFullImage) {
     $codeBytes = [IO.File]::ReadAllBytes($code)
 }
 if ($factoryBytes.Length -ne $flashLength -or $imageBytes.Length -ne $flashLength -or
-    $codeBytes.Length -lt 0x1000 -or $codeBytes.Length -ge $configStart -or $imageBytes[0] -ne 0x69 -or
+    $codeBytes.Length -lt 0x1000 -or $codeBytes.Length -gt $settingsStart -or $imageBytes[0] -ne 0x69 -or
     $imageBytes[1] -ne 0x5a -or $imageBytes[2] -ne 0) {
     throw 'Image size or first-slot boot header is unexpected.'
 }

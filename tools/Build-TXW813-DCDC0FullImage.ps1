@@ -15,6 +15,7 @@ $ErrorActionPreference = 'Stop'
 $factoryPath = $FactoryBackup
 $expectedFactoryHash = $ExpectedFactoryHash
 $flashLength = 0x200000
+$settingsStart = 0x1FC000
 $configStart = 0x1FE000
 
 foreach ($item in @(@($factoryPath, $expectedFactoryHash), @($codePath, $expectedCodeHash))) {
@@ -28,7 +29,7 @@ $factory = [IO.File]::ReadAllBytes($factoryPath)
 $code = [IO.File]::ReadAllBytes($codePath)
 if ($factory.Length -ne $flashLength -or $code.Length -lt 0x1000 -or
     $code[0] -ne 0x69 -or $code[1] -ne 0x5a -or $code[2] -ne 0 -or
-    $code.Length -ge $configStart) {
+    $code.Length -gt $settingsStart) {
     throw 'Unexpected flash length, firmware length, or first-slot boot header.'
 }
 
