@@ -32,7 +32,8 @@ to the browser. Enterprise Wi-Fi is not supported.
 
 Primary NTP defaults to **pool.ntp.org** and secondary to **time.cloudflare.com**.
 After five seconds the second server is tried while the first remains eligible:
-the first valid reply wins. Hostnames and IPv4 addresses are supported.
+the first valid reply wins. Hostnames (up to 127 ASCII characters) and IPv4
+addresses are supported in both server fields; saved names are returned intact.
 
 See the [NTP Pool guidance](https://www.ntppool.org/en/use.html) for server names
 and regional pools. After synchronisation, [Time.is](https://time.is/) provides
@@ -42,6 +43,9 @@ Choose timezone and Automatic, Disabled or Custom rule DST. The Custom POSIX
 rule box appears only in Custom rule mode. Fixed offsets and
 `Mmonth.week.weekday[/time]` transitions are supported; J/day-number transition
 forms are rejected. POSIX offset signs differ from ordinary UTC notation.
+Standard and daylight UTC offsets must stay within -23:59 to +23:59.
+Signed or extended transition times are supported, including transitions that
+fall in an adjacent calendar year.
 
 Need a custom rule? Use the [Techlogics POSIX timezone generator](https://techlogics.net/electronics/timezone-db.php).
 Select your city or timezone, choose **Copy POSIX string**, then select **Custom

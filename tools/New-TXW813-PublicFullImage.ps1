@@ -7,7 +7,7 @@ param(
     [Parameter(Mandatory)][string]$OutputPath
 )
 $ErrorActionPreference = 'Stop'
-$expectedApp = 'E77836597F056C7627609B982298AACE6E8952CF9A5FDDBA80FA302699DE1707'
+$expectedApp = '07E750565AA9F3AB3ABA5328B0A11BE8E8A4223AD010C38CBB71F5B8431AB4A2'
 if ((Get-FileHash -LiteralPath $AppPath -Algorithm SHA256).Hash -ne $expectedApp) {
     throw 'This packager accepts the released R16 APP only.'
 }

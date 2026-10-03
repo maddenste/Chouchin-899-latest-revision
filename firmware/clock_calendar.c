@@ -116,7 +116,8 @@ static int parse_zone(const char *zone, struct zone_rules *rules)
         daylight = -daylight;
     }
     if (*p++ != ',' || !rule(&p, &start) || *p++ != ',' ||
-        !rule(&p, &end) || *p || daylight < -86400 || daylight > 86400) return 0;
+        !rule(&p, &end) || *p ||
+        daylight < -1439 * 60 || daylight > 1439 * 60) return 0;
     rules->standard = standard; rules->daylight = daylight;
     rules->has_dst = 1; rules->start = start; rules->end = end;
     return 1;
@@ -124,9 +125,9 @@ static int parse_zone(const char *zone, struct zone_rules *rules)
 
 static int offset_for_zone(uint32_t utc, const char *zone, int *minutes)
 {
-    unsigned year = 1970u, days;
-    int standard, daylight;
-    int64_t begin, finish, local;
+    unsigned year = 1970u, days, candidate_year;
+    int standard, daylight, effective;
+    int64_t begin, finish, local, latest = INT64_MIN;
     struct zone_rules rules;
     if (minutes == NULL || !parse_zone(zone, &rules)) return 0;
     standard = rules.standard; daylight = rules.daylight;
@@ -140,8 +141,23 @@ static int offset_for_zone(uint32_t utc, const char *zone, int *minutes)
     begin = transition(year, &rules.start, standard);
     finish = transition(year, &rules.end, daylight);
     if (begin == finish) return 0;
-    *minutes = ((begin < finish) ? ((int64_t)utc >= begin && (int64_t)utc < finish) :
-                     ((int64_t)utc >= begin || (int64_t)utc < finish)) ? daylight / 60 : standard / 60;
+    /* Extended transition times can move January rules into December, or
+     * December rules into January. Apply the most recent actual transition,
+     * including adjacent rule years, rather than assuming the calendar year. */
+    effective = standard;
+    for (candidate_year = year > 1970u ? year - 1u : year;
+         candidate_year <= year + 1u; ++candidate_year) {
+        begin = transition(candidate_year, &rules.start, standard);
+        finish = transition(candidate_year, &rules.end, daylight);
+        if (begin == finish) continue;
+        if (begin <= (int64_t)utc && begin > latest) {
+            latest = begin; effective = daylight;
+        }
+        if (finish <= (int64_t)utc && finish > latest) {
+            latest = finish; effective = standard;
+        }
+    }
+    *minutes = effective / 60;
     return 1;
 }
 

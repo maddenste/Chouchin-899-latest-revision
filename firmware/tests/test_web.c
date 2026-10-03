@@ -59,6 +59,24 @@ int main(void) {
     request("GET", "/", "", ""); assert(strstr(output,"WiFi-Clock Setup") && strstr(output,"Hold&amp;Start") && strstr(output,"Save settings"));
     request("GET", "/api/v1/config", "", "");
     assert(strstr(output,"Test\\\"network") && strstr(output,"\"nightParking\":\"off\"") && !strstr(output,"secretpassword"));
+    {
+        char escaped[128], host[128];
+        unsigned length;
+        for (length = 121; length <= 127; ++length) {
+            memset(host, 'a', length); host[length] = 0;
+            json_string(escaped, sizeof(escaped), host);
+            assert(strcmp(escaped, host) == 0);
+            strcpy(saved.ntp_host, host);
+            strcpy(saved.ntp_backup_host, host);
+            request("GET", "/api/v1/config", "", "");
+            assert(strstr(output, host));
+        }
+        strcpy(saved.ntp_host, TXW_CLOCK_DEFAULT_NTP);
+        strcpy(saved.ntp_backup_host, TXW_CLOCK_DEFAULT_NTP_BACKUP);
+        json_string(escaped, 4, "\"a"); assert(strcmp(escaped, "\\\"a") == 0);
+        json_string(escaped, 7, "\x01"); assert(strcmp(escaped, "\\u0001") == 0);
+        json_string(escaped, 6, "\x01"); assert(escaped[0] == 0);
+    }
     request("GET", "/api/v1/status", "", ""); assert(strstr(output,"\"timeSynced\":false"));
     assert(strstr(output,"\"nextDst\":null"));
     assert(strstr(output,"\"primaryDns\":{\"state\":2,\"error\":0,\"address\":\"192.168.0.2\"}"));

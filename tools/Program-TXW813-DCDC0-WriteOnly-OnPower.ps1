@@ -40,7 +40,7 @@ if ($CleanFullImage) {
     if ($CodePath -or $FactoryBackup -or $ExpectedFactoryHash -or $ExpectedCodeHash) {
         throw 'CleanFullImage does not use APP or original-backup parameters.'
     }
-    $releaseHash = '54120864F2465D61D18D50E338DF1EDB006530271F15390885F808FD7BCC8D44'
+    $releaseHash = '3CDA5DB1040F64533186499A1FBCF4348E996FC672021EE9A7FFC936A08FB708'
     if ($ExpectedImageHash -and $ExpectedImageHash -ne $releaseHash) { throw 'Unexpected clean R16 image hash.' }
     $ExpectedImageHash = $releaseHash
 } elseif (-not $CodePath -or -not $ExpectedCodeHash -or -not $FactoryBackup -or -not $ExpectedFactoryHash -or -not $ExpectedImageHash) {

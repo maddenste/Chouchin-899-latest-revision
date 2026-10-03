@@ -128,6 +128,27 @@ assert (change.utc_seconds, change.before_minutes, change.after_minutes) == (tim
 assert not lib.txw_clock_next_dst_change(timestamp('2026-10-01T00:00:00'), b'GMT0', C.byref(change))
 print('DST wake: UK forward/back, exact minutes, second rounding, midnight carry, southern hemisphere, daily-wake ordering, restoration and Disabled passed')
 
+# Signed/extended transition times can cross a rule-year boundary.
+for zone, before, boundary, old_offset, new_offset in [
+    (b'AAA0BBB,M1.1.4/-2,M6.1.0/2', '2025-12-31T21:59:59', '2025-12-31T22:00:00', 0, 60),
+    (b'AAA0BBB,M12.5.4/26,M6.1.0/2', '2027-01-01T01:59:59', '2027-01-01T02:00:00', 0, 60),
+    (b'AAA0BBB,M6.1.0/2,M1.1.4/-2', '2025-12-31T20:59:59', '2025-12-31T21:00:00', 60, 0),
+]:
+    assert lib.txw_clock_timezone_supported(zone)
+    for instant, expected in [(before, old_offset), (boundary, new_offset)]:
+        t = Time()
+        assert lib.txw_clock_local_from_unix(timestamp(instant), zone, C.byref(t))
+        assert t.utc_offset_minutes == expected, (zone, instant, t.utc_offset_minutes)
+        assert lib.txw_hc32_format_time_for_clock(C.create_string_buffer(64), 64, C.byref(t))
+    assert lib.txw_clock_next_dst_change(timestamp(before), zone, C.byref(change))
+    assert change.utc_seconds == timestamp(boundary)
+for unsupported in (b'AAA-23BBB,M3.5.0/2,M10.5.0/2',
+                    b'AAA0BBB-23:59:01,M3.5.0/2,M10.5.0/2'):
+    assert not lib.txw_clock_timezone_supported(unsupported)
+assert lib.txw_clock_timezone_supported(b'AAA-22:59BBB,M3.5.0/2,M10.5.0/2')
+assert lib.txw_clock_timezone_supported(b'AAA0BBB23:59,M3.5.0/2,M10.5.0/2')
+print('Custom DST: adjacent-year transitions and wire-offset limits passed')
+
 for instant, expected in [
     ('2026-03-29T00:59:59', (0, 59, 59, 0)),
     ('2026-03-29T01:00:00', (2, 0, 0, 60)),

@@ -220,7 +220,12 @@ static int parse_form(const char *body, struct txw_clock_settings *candidate)
 static void json_string(char *out, size_t capacity, const char *input)
 {
     size_t used = 0;
-    while (*input && used + 7u < capacity) {
+    if (capacity == 0u) return;
+    while (*input) {
+        unsigned char next = (unsigned char)*input;
+        size_t needed = next < 32u || next > 126u ? 6u :
+                        (next == '"' || next == '\\' ? 2u : 1u);
+        if (used + needed >= capacity) break;
         unsigned char c = (unsigned char)*input++;
         if (c == '"' || c == '\\') { out[used++] = '\\'; out[used++] = c; }
         else if (c < 32u || c > 126u) {
