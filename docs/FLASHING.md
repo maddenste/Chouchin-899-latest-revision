@@ -3,6 +3,8 @@
 For **TXW813-320 + HC32L130J8TA boards**, using Windows and CKLink Lite.
 The [HC32 chip has separate upload instructions](HC32.md).
 
+Prefer commands? Use the [manual CLI flashing guide](FLASHING_CLI.md).
+
 ## Download the launcher
 
 **[Download flashing launcher and scripts (ZIP)](https://github.com/maddenste/Chouchin-899-latest-revision/archive/refs/tags/v2.0.zip)**
