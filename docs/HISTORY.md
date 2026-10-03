@@ -58,6 +58,27 @@ This is a successful test programme on one board, not proof of compatibility
 with every “899” clock. Outstanding tests and rights questions are listed in
 [TESTING.md](TESTING.md) and [NOTICE](../NOTICE.md).
 
+## Wi-Fi R17 maintenance — 3 October 2026
+
+The public version remains **v2.0**. Wi-Fi R17 replaces the Wi-Fi download;
+the HC32 V15 firmware is unchanged.
+
+- Reset-command timing now uses UART arrival timestamps, including when
+  commands wait in the receive queue. Saving settings cancels an armed reset
+  and prevents older queued reset commands from erasing the new settings.
+- AP/station acknowledgements reflect successful interface startup. Failed
+  startup can retry, and a newer mode command cancels older pending mode work.
+- Reset renews the setup AP grace period and clears stale browser keep-alive
+  state. Time output pauses during reset and after saving until the new NTP
+  session synchronises, preventing stale time messages.
+- Includes the custom-DST fixes for transitions crossing a year boundary and
+  offsets outside the UART time format, plus intact NTP hostname responses
+  up to the supported 127-character limit.
+
+Automated UART, reset/mode-state, settings, DST, NTP and web tests passed, as
+did the target build and image checks. R17 has not yet been bench-tested on
+the clock; the earlier owner confirmations apply to the preceding build.
+
 Historical captures, failed builds and recovery logs are preserved privately.
 They should not be mixed into a public source repository or described as
 working release images.
