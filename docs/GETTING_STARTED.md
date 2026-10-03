@@ -42,4 +42,4 @@ The clean Wi-Fi image starts with no saved settings. See [the user manual](WiFi-
 
 ### Validation note
 
-HC32 V15 and Wi-Fi R16 functionality were tested on Steve's clock. The public Wi-Fi FULL removes old configuration sectors for a clean installation; that specific blank-configuration packaging has been checked offline but has not yet been hardware-tested. [Test record](TESTING.md).
+HC32 V15 and Wi-Fi R16 have been tested successfully, including a 48-hour run. The public Wi-Fi image contains the same application firmware, with saved settings cleared for a fresh installation. [Test record](TESTING.md).
