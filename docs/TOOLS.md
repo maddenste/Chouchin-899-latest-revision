@@ -9,7 +9,7 @@ We used **Windows**. Other systems may work, but are untested; the supplied scri
 | HC32L130J8TA + TXW813-320 Chouchin-899 | Supported board |
 | [CMSIS-DAP / DAPLink probe](https://www.ebay.co.uk/itm/254327616482) **with U_TX and U_RX UART pins** | HC32 upload |
 | [CKLink Lite V2](https://www.aliexpress.com/item/1005009972319809.html) | TXW813 upload |
-| **3.3 V bench supply** | Power at battery terminals |
+| **TENSTAR ROBOT TSP-03 fixed 3.3 V supply** | Power at battery terminals; label states 3.3 V DC / 3 W |
 | Short wires, USB cables and multimeter | Connections and polarity checks |
 
 The probes look similar but serve different chips. A SWD-only probe without UART pins cannot follow our HC32 procedure. Our CKLink reported App_ver 2.38.
@@ -18,9 +18,16 @@ These are the programmer listings Steve supplied for the hardware used, not
 endorsements of other variants. Check the selected model and signal labels before
 ordering; seller stock/listings can change. The eBay listing was accessible when
 checked on 3 October 2026; the AliExpress page could not be independently reopened.
-The bench-supply model has not been recorded, so no purchase link is guessed.
+Steve used a **TENSTAR ROBOT TSP-03**, not an adjustable bench supply.
+Its label states **100–240 V AC input** and **3.3 V DC / 3 W output**.
+No exact purchase link has been supplied.
 
-Remove batteries. Connect bench **+3.3 V to battery +**, bench **negative to battery −**, and common programmer/board GND. Leave programmer 3V3/5V disconnected.
+**Mains safety:** this module has mains-input terminals. This guide covers only
+the low-voltage output connections, not mains wiring. For a new setup, use a
+properly enclosed, regulated 3.3 V DC supply; do not operate exposed mains terminals.
+Do not confuse the AC input with the +Vo/−Vo DC output.
+
+Remove batteries. Connect supply **+3.3 V to battery +**, supply **negative to battery −**, and common programmer/board GND. Leave programmer 3V3/5V disconnected.
 
 ## Software downloads
 

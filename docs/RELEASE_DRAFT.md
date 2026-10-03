@@ -7,7 +7,7 @@ Not compatible with the older MM32/ESP board.
 
 **[Start here: equipment, software downloads and step-by-step upload guide](https://github.com/maddenste/Chouchin-899-latest-revision/blob/main/docs/GETTING_STARTED.md)**
 
-We used Windows and a **3.3 V bench supply connected to the battery terminals**.
+We used Windows and a **3.3 V external supply connected to the battery terminals**.
 Install the prepared files using the documented UART and CKLink procedures; no compiling is required.
 
 After Wi-Fi flashing, enter your settings: join **WiFi-Clock-Setup**, open **http://192.168.4.1/** and select **Save settings**.

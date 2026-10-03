@@ -13,7 +13,7 @@ Check both markings: **HC32L130J8TA** and **TXW813-320**.
 
 Follow [the equipment and software checklist](TOOLS.md).
 
-We used a **3.3 V bench supply connected to the battery terminals**: positive to battery positive, negative to battery negative. Remove the batteries and check polarity. Do not connect programmer 3V3/5V outputs.
+We used a **TENSTAR ROBOT TSP-03 fixed 3.3 V supply connected to the battery terminals**: +Vo to battery positive, −Vo to battery negative. Remove the batteries and check polarity. Do not connect programmer 3V3/5V outputs. See [the supply safety note](TOOLS.md#equipment); this is not a mains-wiring guide.
 
 Programming replaces existing firmware. Keep any original backups you already have. Optional backup procedures are in [the background documents](BACKGROUND.md), outside this upload guide.
 

@@ -31,7 +31,7 @@ Use your actual paths below if different. Do not select RISC-V GDB.
 
 ## 2. Wire with board power off
 
-Remove batteries. Connect bench 3.3 V at the **battery terminals**.
+Remove batteries. Connect external 3.3 V at the **battery terminals**.
 
 ![TXW813 signal connections](diagrams/txw-upload.svg)
 
@@ -45,7 +45,7 @@ Leave other probe pins disconnected, including 3V3, 5V, TDI, TDO and nRST. No BO
 
 <img src="photos/txw813-wifi-chip-and-debug-pads.jpg" alt="TXW813 and J1 GND, PA10, PA9, PA8, VCC pads" width="650">
 
-Match pad names, not guessed header order. Plug CKLink into USB; keep bench power off for now.
+Match pad names, not guessed header order. Plug CKLink into USB; keep board power off for now.
 
 ## 3. Check the command before writing
 
@@ -85,7 +85,7 @@ In the **same PowerShell window**, run:
 .\tools\Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 @flashArgs -Program
 ~~~
 
-1. When debug connection attempts begin, turn on the bench supply.
+1. When debug connection attempts begin, turn on the external supply.
 2. If not caught, cycle board power while the script is still retrying. Many attempts can be needed.
 3. Select **No** if an ICE/probe firmware update prompt appears.
 4. **Once connected and writing starts, stop power cycling. Keep power steady.**
