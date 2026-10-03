@@ -31,8 +31,7 @@ We used Windows. Other systems may work with suitable tools, but are untested; t
 
 Hold&Start recreates the characteristic Swiss railway station-clock motion: the seconds hand pauses at 12, then restarts as the minute hand advances.
 
-[Watch an example of the Wait&Start movement](https://youtube.com/shorts/2L59QxfKAD8)
-(called **Hold&Start** in our settings).
+[Watch an example of the Hold&Start movement](https://youtube.com/shorts/2L59QxfKAD8)
 
 <img src="docs/screenshots/setup-desktop.png" alt="WiFi Clock settings page" width="700">
 

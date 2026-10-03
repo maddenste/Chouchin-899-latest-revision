@@ -64,8 +64,7 @@ minute-resolution special DST wake, including transitions off the full hour.
 | Night parking | Seconds parked between 00:00 and 06:00 |
 | On | Seconds reach 12 and remain parked indefinitely; useful if no second hand is fitted |
 
-[Wait&Start movement example video](https://youtube.com/shorts/2L59QxfKAD8),
-illustrating the style we call **Hold&Start** in the settings.
+[Watch an example of the Hold&Start movement](https://youtube.com/shorts/2L59QxfKAD8)
 
 Defaults are **Sweep + Off** (selector suffix `00`). On does not stop the
 minute hand. Original battery checks remain active in the HC32.
