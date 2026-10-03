@@ -15,6 +15,7 @@ const token = '0123456789abcdef0123456789abcdef';
   let scanFails = false;
   let statusSynced = false;
   let statusMode = 'portal';
+  let statusConnected = false;
   page.on('pageerror', error => errors.push(error.message));
   let config = {requestToken:token,ssid:'Test Network',hasPassword:true,ntpHost:'pool.ntp.org',ntpBackupHost:'time.cloudflare.com',
                 timezone:'GMT0BST,M3.5.0/1,M10.5.0/2',syncHour:10,syncMinute:17,
@@ -36,7 +37,7 @@ const token = '0123456789abcdef0123456789abcdef';
       }
       data = {saved:true,reset:true};
     } else if (url.pathname === '/api/v1/config') data = config;
-    else if (url.pathname === '/api/v1/status') data = {mode:statusMode,ip:'192.168.4.1',firmwareVersion:'WiFi Clock · v2.0',buildId:'TXW813 HC32-V15 R16',hostname:'WiFi-Clock-ABCDEF',connected:false,timeSynced:statusSynced,timezone:'GMT0BST,M3.5.0/1,M10.5.0/2',nextDst:statusSynced ? {utc:1792890000,before:60,after:0} : null};
+    else if (url.pathname === '/api/v1/status') data = {mode:statusMode,ip:statusMode === 'station' ? '192.168.0.123' : '192.168.4.1',firmwareVersion:'WiFi Clock · v2.0',buildId:'TXW813 HC32-V15 R16',hostname:'WiFi-Clock-ABCDEF',connected:statusConnected,timeSynced:statusSynced,timezone:'GMT0BST,M3.5.0/1,M10.5.0/2',nextDst:statusSynced ? {utc:1792890000,before:60,after:0} : null};
     else if (url.pathname === '/api/v1/scan') {
       if (scanFails) return route.fulfill({status:503,body:'Scan unavailable'});
       data = {scanning:false,networks:[
@@ -55,11 +56,15 @@ const token = '0123456789abcdef0123456789abcdef';
     // Keep regression fixtures unchanged; use illustrative settings for docs.
     const previousConfig = config;
     const previousSynced = statusSynced;
+    const previousMode = statusMode;
+    const previousConnected = statusConnected;
     config = {...config, ssid:'Wi-Fi Network', syncHour:10, syncMinute:10,
       minuteHand:'jump', secondHand:'pause_at_12', nightParking:'night',
       ntpHost:'pool.ntp.org', ntpBackupHost:'time.cloudflare.com',
       timezone:'GMT0BST,M3.5.0/1,M10.5.0/2'};
-    statusSynced = false;
+    statusSynced = true;
+    statusMode = 'station';
+    statusConnected = true;
     try {
       await load();
       assert.equal(await page.locator('#networks option:checked').textContent(),'Wi-Fi Network');
@@ -67,10 +72,15 @@ const token = '0123456789abcdef0123456789abcdef';
       assert.equal(await page.locator('#nightParking').inputValue(),'night');
       assert.equal(await page.locator('#syncMinute').inputValue(),'10');
       assert.doesNotMatch(await page.locator('#updateHelp').textContent(),/Saved time/);
+      await page.waitForFunction(() => document.getElementById('nextDst').textContent ===
+        'Next DST change: 25 October 2026 — 02:00 → 01:00');
+      assert.equal(await page.locator('#nextDst').isVisible(),true);
       await page.screenshot({path:path.join(root,'tests',filename),fullPage:true});
     } finally {
       config = previousConfig;
       statusSynced = previousSynced;
+      statusMode = previousMode;
+      statusConnected = previousConnected;
       await load();
     }
   }
