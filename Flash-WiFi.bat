@@ -9,6 +9,15 @@ if not exist "%~dp0tools\Start-WiFiFlash.ps1" (
   pause
   exit /b 1
 )
+if not exist "%CLOCK_POWERSHELL%" (
+  echo Windows PowerShell could not be found.
+  echo Expected: "%CLOCK_POWERSHELL%"
+  echo Windows 11 normally includes Windows PowerShell 5.1.
+  echo Restore Windows PowerShell, then try again. PowerShell 7 is not required.
+  echo No flashing tools were started.
+  pause
+  exit /b 1
+)
 "%CLOCK_POWERSHELL%" -NoLogo -NoProfile -STA -ExecutionPolicy Bypass -File "%~dp0tools\Start-WiFiFlash.ps1"
 set "CLOCK_RESULT=%ERRORLEVEL%"
 pause

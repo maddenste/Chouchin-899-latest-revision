@@ -137,13 +137,25 @@ try {
             Assert-ClockTest ($batchProcess.ExitCode -eq $stubExit) 'BAT failed to preserve the launcher exit code.'
         } finally { $batchProcess.Dispose() }
     }
+    # Simulate missing PowerShell only in the child CMD environment.
+    # Never alter the real Windows installation or start a flashing tool.
+    $batchInfo.EnvironmentVariables['SystemRoot'] = Join-Path $testRoot 'missing-windows'
+    $batchProcess = [Diagnostics.Process]::Start($batchInfo)
+    try {
+        $missingOutput = $batchProcess.StandardOutput.ReadToEnd()
+        $missingError = $batchProcess.StandardError.ReadToEnd()
+        $batchProcess.WaitForExit()
+        Assert-ClockTest ($batchProcess.ExitCode -eq 1 -and -not $missingError) 'Missing PowerShell must stop cleanly with exit code 1.'
+        Assert-ClockTest ($missingOutput -match 'Windows PowerShell could not be found' -and $missingOutput -match 'PowerShell 7 is not required') 'Missing PowerShell guidance was not shown.'
+        Assert-ClockTest ($missingOutput -notmatch 'BANG_PATH_LAUNCH_OK') 'Launcher ran despite missing PowerShell.'
+    } finally { $batchProcess.Dispose() }
     $writerTokens = $null; $writerErrors = $null
     $writerAst = [Management.Automation.Language.Parser]::ParseFile((Join-Path $PSScriptRoot 'Program-TXW813-DCDC0-WriteOnly-OnPower.ps1'), [ref]$writerTokens, [ref]$writerErrors)
     $manualParameter = $writerAst.ParamBlock.Parameters | Where-Object { $_.Name.VariablePath.UserPath -eq 'ManualIcePrompt' }
     Assert-ClockTest ($null -eq $manualParameter.DefaultValue) 'Writer must not default to manual prompt handling.'
     $polls = @($writerAst.FindAll({ param($node) $node -is [Management.Automation.Language.CommandAst] -and $node.GetCommandName() -eq 'Start-Sleep' }, $true))
     Assert-ClockTest ($polls.Count -eq 1 -and $polls[0].Extent.Text -eq 'Start-Sleep -Milliseconds 25') 'Catch-loop fast polling regressed.'
-    Write-Host 'PASS: file/staging/network checks, BAT ! paths with inherited delayed expansion, exit codes and mocked complete wizard: cancellation, failed preflight, failed write, one-write success and remembered paths. No hardware accessed.'
+    Write-Host 'PASS: file/staging/network checks, BAT ! paths with inherited delayed expansion, missing PowerShell, exit codes and mocked complete wizard: cancellation, failed preflight, failed write, one-write success and remembered paths. No hardware accessed.'
 } finally {
     # Only delete the exact UUID fixture directories this test created.
     foreach ($fixture in @($testRoot, $simpleRoot)) {
