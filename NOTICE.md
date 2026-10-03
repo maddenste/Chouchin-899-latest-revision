@@ -39,18 +39,6 @@ Vendor SDK/libraries, loader/packaging executables, DebugServer, toolchain,
 flash algorithms and developer runtimes are not supplied in this repository.
 Owners obtain permitted copies themselves.
 
-## Unresolved licensing review
-
-Unresolved review items:
-
-1. Establish the origin and permitted redistribution of each integration overlay.
-2. Resolve combined firmware binary licensing, including linked SDK libraries.
-3. Resolve HC32 patched vendor-binary rights.
-4. Preserve each applicable third-party notice and source obligation.
-5. Replace any unredistributable overlay with permitted instructions/patches,
-   or omit it; do not assume a NOTICE alone cures missing permission.
-6. Exclude private backups, radio factory sectors, credentials and raw private captures.
-
 GPL text is present, but this is **not a statement that all mixed-tree content
 or release binaries are cleared for redistribution**. Collected upstream notices
 are in [SDK_NOTICES](docs/licenses/SDK_NOTICES.txt); the standard
