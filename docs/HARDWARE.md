@@ -4,6 +4,10 @@ Target: newer Chouchin-899 / CH-899, **HDSC HC32L130J8TA + Taixin TXW813-320**.
 Older ESP8285/MM32 electronics use the [original project](https://github.com/maddenste/Chouchin-CH899-Firmware).
 A model label is not enough. Photograph both sides and inspect the chip markings.
 
+## Example movement listing
+
+[Heng-Rong CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) shows the type of movement used in this project. We cannot tell which PCB revision the seller currently supplies, so this is an example, not a confirmed compatible purchase link. Before ordering, ask for photographs confirming **HC32L130J8TA + TXW813-320**. Older MM32/ESP8285 boards require the older-board firmware linked above.
+
 ## Board photographs
 
 Photos supplied by Steve Madden. Published copies retain orientation and full

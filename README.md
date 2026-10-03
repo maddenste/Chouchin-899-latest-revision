@@ -10,6 +10,8 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 <img src="docs/photos/chouchin-899-newer-board-overview.jpg" alt="Newer Chouchin-899 board" width="350">
 
+[Example CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) — for identification only, not a confirmed compatible purchase. The listing does not identify the board revision; check for **HC32L130J8TA + TXW813-320** before buying for this project.
+
 ## Ready to install?
 
 **[Start here: equipment, software and flashing steps →](docs/GETTING_STARTED.md)**
