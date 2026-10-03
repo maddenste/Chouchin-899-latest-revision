@@ -30,6 +30,10 @@ Primary NTP defaults to **pool.ntp.org** and secondary to **time.cloudflare.com*
 After five seconds the second server is tried while the first remains eligible:
 the first valid reply wins. Hostnames and IPv4 addresses are supported.
 
+See the [NTP Pool guidance](https://www.ntppool.org/en/use.html) for server names
+and regional pools. After synchronisation, [Time.is](https://time.is/) provides
+a convenient visual reference for checking the displayed time.
+
 Choose timezone and Automatic, Disabled or Custom rule DST. The Custom POSIX
 rule box appears only in Custom rule mode. Fixed offsets and
 `Mmonth.week.weekday[/time]` transitions are supported; J/day-number transition

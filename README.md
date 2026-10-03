@@ -20,7 +20,7 @@ No compiling or firmware editing is required. Install the two prepared files, th
 
 - [Public release 1 — firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0)
 - [Three-page user manual](docs/WiFi-Clock-User-Manual-v2.0.pdf)
-- [Flashing help](docs/TROUBLESHOOTING.md)
+- [Help / report a problem](docs/TROUBLESHOOTING.md)
 
 We used Windows. Other systems may work with suitable tools, but are untested; the supplied flashing script is Windows-specific.
 

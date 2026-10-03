@@ -36,6 +36,10 @@ The TXW read tool remains in tools/Read-TXW813-OnPower.ps1 for experienced users
 
 Investigation used Keil, pyOCD, PulseView UART captures and OPNsense DNS/NTP captures. These are not upload requirements. Vendor SDKs/tools, original firmware and private captures are not bundled.
 
+For optional UART investigation: [PulseView downloads](https://www.sigrok.org/wiki/Downloads),
+[user manual](https://www.sigrok.org/doc/pulseview/0.4.2/manual.html) and
+[our capture guidance](TROUBLESHOOTING.md#optional-uart-diagnosis).
+
 ## TXW SDKs used — building versus uploading
 
 The Wi-Fi application was built using **TXW81x_IOT-v2.5.2.6-31320**.

@@ -19,6 +19,22 @@
 | Parking selection ignored | Confirm compatible HC32 V15 and the actual final selector digit on UART |
 | UI says saved but clock has no time | Saving settings is not an NTP-success assertion; check connection/time status |
 
-The documented scripts keep per-attempt server/GDB logs. Attach the successful
-or ambiguous attempt's logs, firmware hashes and wiring information when asking
-for help. Redact credentials, private addresses as appropriate and factory data.
+## Report a problem
+
+[Open a GitHub issue](https://github.com/maddenste/Chouchin-899-latest-revision/issues)
+and include:
+
+- Both chip markings and the firmware filenames used.
+- Programmer model, software version and pin connections.
+- What you expected, what happened and the exact error message.
+- The relevant attempt's server/GDB logs, if flashing failed or was ambiguous.
+
+The documented scripts keep per-attempt logs. Redact credentials, private
+addresses as appropriate and factory data before posting.
+
+## Optional UART diagnosis
+
+Experienced users can inspect clock messages with [PulseView](https://www.sigrok.org/wiki/Downloads);
+see its [user manual](https://www.sigrok.org/doc/pulseview/0.4.2/manual.html)
+for capture and decoder controls. Use the [confirmed wiring](HARDWARE.md#inter-chip-uart--passive-analyser)
+and decode **9600 baud, 8N1**. A logic analyser is not required for uploading.
