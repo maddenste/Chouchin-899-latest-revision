@@ -49,6 +49,16 @@ See [UART diagnosis and wiring](TROUBLESHOOTING.md#optional-uart-diagnosis).
 
 Vendor pages may require sign-in. Taixin lists **TXW81x_FPV-v2.5.4.7-45354.zip**. Extract it and find the two algorithm files under **sdk/chip/txw81x**. No SDK build is needed.
 
+Example path after extraction (the nested folders matched our setup):
+
+~~~text
+E:\TXW81x_FPV-v2.5.4.7-45354\TXW81x_FPV-v2.5.4.7-45354\TXW81x_FPV-v2.5.4.7-45354\sdk\chip\txw81x\TXW81X_FLASH_ALGORITHM.elf
+~~~
+
+Replace **E:** with your extraction drive and folder location. Some extraction
+methods produce fewer repeated folders. The matching
+**TXW81X_FLASH_ALGORITHM.init** is in the same folder.
+
 Install the CKLink driver supplied with DebugServer. Use **C-SKY** GDB, not RISC-V GDB. CDK may bundle a different DebugServer version: do not assume it matches our tested separate installation. Installer layouts/download availability can change; stop and ask for help if the listed tools cannot be obtained.
 
 Keil, compilers, Python and a logic analyser are **not required for uploading**.

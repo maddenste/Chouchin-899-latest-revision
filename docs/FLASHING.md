@@ -15,6 +15,7 @@ Includes **[Flash-WiFi.bat](../Flash-WiFi.bat)** and its required scripts.
 Install **C-SKY DebugServer/driver and CDK** from the
 [software download list](TOOLS.md#software-downloads).
 Keep the Taixin **TXW81X_FLASH_ALGORITHM.elf** and matching **.init** files.
+See [an example extracted folder path](TOOLS.md#software-downloads) if you cannot find them.
 The launcher uses Windows' built-in PowerShell; no PowerShell installation is needed.
 
 **[Download Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v2.0/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
