@@ -9,8 +9,10 @@ Prefer commands? Use the [manual CLI flashing guide](FLASHING_CLI.md).
 
 **[Download flashing launcher and scripts (ZIP)](https://github.com/maddenste/Chouchin-899-latest-revision/archive/refs/tags/v2.0.zip)**
 
-Includes **[Flash-WiFi.bat](../Flash-WiFi.bat)** and its required scripts.
-**Extract the ZIP**—do not download the BAT on its own.
+Includes **[Flash-WiFi.bat](../Flash-WiFi.bat)** and its supporting scripts for guided
+TXW813 Wi-Fi flashing, with file selection, automatic checks and power-on instructions.
+**Extract the ZIP and keep its folder structure intact**—do not download the BAT on its own.
+Download the flashing software and firmware separately in step 1 below.
 
 ## 1. Get the software and firmware
 
