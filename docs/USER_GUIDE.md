@@ -35,6 +35,16 @@ rule box appears only in Custom rule mode. Fixed offsets and
 `Mmonth.week.weekday[/time]` transitions are supported; J/day-number transition
 forms are rejected. POSIX offset signs differ from ordinary UTC notation.
 
+Need a custom rule? Use the [Techlogics POSIX timezone generator](https://techlogics.net/electronics/timezone-db.php).
+Select your city or timezone, choose **Copy POSIX string**, then select **Custom
+rule** in the clock's DST settings and paste it into the **Custom POSIX rule**
+box. Copy the POSIX string, not the IANA name (such as Europe/London) or a code
+snippet. Check the generated DST dates against your region's current rules;
+the generator describes its strings as indicative. Our firmware accepts fixed
+offsets and Mmonth.week.weekday transition rules, not J/day-number rules.
+
+For example, the UK rule is \`GMT0BST,M3.5.0/1,M10.5.0/2\`.
+
 **Next DST change** recalculates from current unsaved selections once the clock
 has synchronised time. Preview does not save settings. Disabled DST schedules
 no special DST wake. A transition wake is temporary and does not replace the
