@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 /* Execute the real NTP worker's query/DNS path with deterministic mock time. */
 #define CLOCK_NTP_TEST 1
 #include "../iot_sdk_work/clock_project/clock_ntp.c"

@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 [CmdletBinding()]
 param(
     [string]$Name = ('WiFi_Clock_v2_0_R16_' + (Get-Date -Format 'yyyyMMdd-HHmmss')),

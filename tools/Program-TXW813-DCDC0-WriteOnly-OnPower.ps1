@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 # One-shot full-chip clock program. The DebugServer flash command erases
 # the chip. CleanFullImage uses the public R16 image with all settings erased.
 # The legacy per-board route preserves configuration from a private backup.

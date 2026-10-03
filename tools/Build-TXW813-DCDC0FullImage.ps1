@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 # Package clock firmware with the user's own preserved configuration sectors.
 # Offline only: this script never opens a debugger or accesses the board.
 [CmdletBinding()]

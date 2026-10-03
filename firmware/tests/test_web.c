@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 /* Exercise actual HTTP handlers, not a duplicate protocol implementation. */
 #define CLOCK_WEB_TEST 1
 #include "../iot_sdk_work/clock_project/clock_web.c"

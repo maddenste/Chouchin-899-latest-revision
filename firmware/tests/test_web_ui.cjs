@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 /* Browser regression tests against mocked hardware responses, not the board. */
 const assert = require('node:assert/strict');
 const fs = require('node:fs');

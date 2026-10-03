@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Execute the actual portable C backend through a native test DLL."""
 import ctypes as C
 import datetime as dt

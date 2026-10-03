@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 # TXW813-320 flash-read catch. Normally backs up the full 2 MiB; with
 # -GdbInitAndDump -ProbeSlot2 it reads 4 KiB at 0x100000 through the same
 # DebugServer/GDB route as the successful backup. It never erases or programs.

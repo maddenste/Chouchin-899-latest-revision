@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 #ifdef CLOCK_WEB_TEST
 #include "web_test_hal.h"
 #else

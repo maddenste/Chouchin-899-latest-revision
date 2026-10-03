@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 # Copies your separately obtained SDK into ignored working directories.
 # Never overwrites application overlays or bundles the vendor SDK for release.
 [CmdletBinding()]

@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 # Offline release packaging only. Never copies personal configuration.
 [CmdletBinding()]
 param(

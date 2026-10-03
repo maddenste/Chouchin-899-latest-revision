@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 #ifndef CLOCK_UART_H
 #define CLOCK_UART_H
 

@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Embed the locally maintained ESP-derived page as a C string (no network assets)."""
 import json
 from pathlib import Path
@@ -10,7 +12,8 @@ if not source.exists():
     source.parent.mkdir(exist_ok=True)
     source.write_text(original.split('R"CH899_WEB(\n', 1)[1].split('\n)CH899_WEB";', 1)[0], encoding='utf-8')
 html = source.read_text(encoding='utf-8')
-header = '/* Generated from web/index.html; GPL-3.0-or-later. */\nstatic const char clock_web_ui[] =\n'
+header = '// Copyright (C) 2026 Steve Madden\n// SPDX-License-Identifier: GPL-3.0-or-later\n'
+header += '/* Generated from web/index.html; see NOTICE.md for webpage provenance. */\nstatic const char clock_web_ui[] =\n'
 header += '\n'.join(json.dumps(line + '\n', ensure_ascii=True) for line in html.splitlines()) + ';\n'
 # C does not accept JSON Unicode escapes outside identifiers. Encode UTF-8 bytes
 # as fixed-width octal so following digits cannot accidentally extend an escape.

@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "clock_psk.h"
 #include <stddef.h>
 #include <string.h>

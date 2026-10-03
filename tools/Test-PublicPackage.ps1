@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Steve Madden
+# SPDX-License-Identifier: GPL-3.0-or-later
 [CmdletBinding()]
 param([string]$Root = (Split-Path -Parent $PSScriptRoot))
 $ErrorActionPreference = 'Stop'
@@ -15,6 +17,10 @@ foreach ($file in $files) {
     }
     if ($file.Extension -in '.md','.ps1','.c','.h','.py','.cjs','.html' -or $file.Name -eq '.gitignore') {
         $body = [IO.File]::ReadAllText($file.FullName)
+        if ($file.Extension -in '.ps1','.py','.c','.h','.cjs' -and
+            $body -notmatch 'SPDX-License-Identifier: GPL-3\.0-or-later') {
+            $problems.Add("Missing project SPDX licence header: $($file.Name)")
+        }
         if ($body -match '(gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|-----BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY-----|AKIA[0-9A-Z]{16})') {
             $problems.Add("Possible secret: $($file.Name)")
         }
@@ -31,5 +37,5 @@ foreach ($file in $files) {
     }
 }
 if ($problems.Count) { $problems | ForEach-Object { Write-Output $_ }; throw 'Public package checks failed.' }
-Write-Output "PASS: $($files.Count) files; exclusion policy, high-confidence secret patterns, PowerShell syntax and local Markdown links."
+Write-Output "PASS: $($files.Count) files; exclusion policy, project SPDX headers, high-confidence secret patterns, PowerShell syntax and local Markdown links."
 Write-Output 'Pattern scanning is not a complete credential or copyright audit; inspect the approved inventory and screenshots.'

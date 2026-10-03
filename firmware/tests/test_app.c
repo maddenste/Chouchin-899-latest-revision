@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 /* Exercise the firmware app itself; mock only the hardware/network boundary. */
 #define CLOCK_BACKEND_TEST 1
 #include "../iot_sdk_work/clock_project/clock_app.c"

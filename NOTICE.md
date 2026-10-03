@@ -6,6 +6,12 @@ Steve Madden 2026. The full license text is in [LICENSE](LICENSE). Preserve
 upstream headers and provenance rather than replacing every file's notice
 with a blanket project copyright.
 
+Project-authored scripts, backend modules and tests carry consistent
+GPL-3.0-or-later SPDX identifiers. Generated webpage source carries the same
+identifier, and its generator preserves it. These headers describe the
+project's licensing intent; they do not grant rights over vendor SDK files
+or establish clearance for the combined firmware binaries.
+
 The webpage derives from the
 [older Chouchin-CH899 project](https://github.com/maddenste/Chouchin-CH899-Firmware).
 The public display is **WiFi Clock · v2.0 — Modified by Steve Madden · 2026**.

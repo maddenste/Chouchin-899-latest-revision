@@ -1,4 +1,6 @@
-/* Generated from web/index.html; GPL-3.0-or-later. */
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
+/* Generated from web/index.html; see NOTICE.md for webpage provenance. */
 static const char clock_web_ui[] =
 "<!-- Copyright (C) 2026 Steve Madden | SPDX-License-Identifier: GPL-3.0-or-later -->\n"
 "<!doctype html>\n"

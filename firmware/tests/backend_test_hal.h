@@ -1,3 +1,5 @@
+// Copyright (C) 2026 Steve Madden
+// SPDX-License-Identifier: GPL-3.0-or-later
 #ifndef BACKEND_TEST_HAL_H
 #define BACKEND_TEST_HAL_H
 #include "typesdef.h"

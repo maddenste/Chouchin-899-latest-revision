@@ -1,3 +1,4 @@
+# Copyright (C) 2026 Steve Madden
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Verify/assemble a 64 KiB HC32 backup from Intel HEX exports; no board access."""
 import argparse
