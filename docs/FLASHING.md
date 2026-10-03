@@ -4,6 +4,22 @@
 
 Our **CKLink Lite V2 power-on catch procedure** writes the complete 2 MiB FULL at **0x000000**. No building or settings-copy helper is needed.
 
+## Why do we need to catch it at power-on?
+
+With the original firmware, **PA10 starts out as the debug clock pin but is
+quickly repurposed for UART debug output**. We observed boot messages on this
+line during the investigation. This leaves only a short window at startup to
+connect before normal firmware takes over the pin.
+
+The script repeatedly tries to connect while you power-cycle the board. Not
+every attempt lands inside that window, so **many attempts can be needed**;
+on our setup, some successful connections took hundreds of attempts.
+
+**Our replacement firmware leaves PA10 available for debug**, rather than
+repurposing it for UART output. After it has been successfully installed, this
+particular boot-window problem goes away. Correct wiring, power and working
+debug tools are still required. The same script can be used for later uploads.
+
 ## 1. Prepare files
 
 Create these folders and copy the files:

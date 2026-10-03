@@ -52,6 +52,9 @@ catch workflow. Refer to the printed pad names, not a guessed connector orientat
 
 The owner explicitly confirmed PA9/PA10 on 1 October 2026.
 PA10 must remain reserved for debug. Verify continuity to your own TXW;
+The original firmware quickly repurposes PA10 for UART debug output, which is
+why the first upload uses a power-on catch. Our replacement firmware keeps
+PA10 available for debug and removes that particular timing restriction.
 the photographs above show the printed J1 pad labels. Do not infer left/right
 order from a programmer's connector layout; match signal names.
 
