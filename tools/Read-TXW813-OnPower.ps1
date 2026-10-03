@@ -25,6 +25,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'Test-TXW813-DumpResult.ps1')
 $serverExe = $ServerPath
 $gdbExe = $GdbPath
 $flashAlgorithm = $AlgorithmPath
@@ -183,6 +184,10 @@ while (-not $complete) {
     $server = Start-Process -FilePath $serverExe -ArgumentList $serverArgs -WorkingDirectory (Split-Path -Parent $serverExe) -WindowStyle Hidden -PassThru -RedirectStandardOutput $serverLog -RedirectStandardError $serverErr
 
     $caught = $false
+    $gdbExitCode = $null
+    $gdbTimedOut = $false
+    $gdbLog = $null
+    $gdbErr = $null
     try {
         $deadline = (Get-Date).AddSeconds($DumpTimeoutSeconds)
         $connectDeadline = (Get-Date).AddSeconds(15)
@@ -232,8 +237,13 @@ while (-not $complete) {
                     $gdb = Start-Process -FilePath $gdbExe -ArgumentList $gdbArgs -WindowStyle Hidden -PassThru -RedirectStandardOutput $gdbLog -RedirectStandardError $gdbErr
                     try {
                         if (-not $gdb.WaitForExit($DumpTimeoutSeconds * 1000)) {
+                            $gdbTimedOut = $true
                             Stop-Process -Id $gdb.Id -Force -ErrorAction SilentlyContinue
                             "Attempt $attempt GDB dump timed out after $DumpTimeoutSeconds seconds." | Add-Content -LiteralPath $summary
+                        }
+                        else {
+                            $gdb.WaitForExit()
+                            $gdbExitCode = $gdb.ExitCode
                         }
                     }
                     finally { $gdb.Dispose() }
@@ -287,8 +297,17 @@ while (-not $complete) {
     $serverErrorText = if (Test-Path -LiteralPath $serverErr -PathType Leaf) {
         Get-Content -LiteralPath $serverErr -Raw
     } else { '' }
-    $serverFailed = ($serverText + "`n" + $serverErrorText) -match '(?im)ERROR:|Dump failed|Failed to load algorithm'
-    if ($size -eq $readLength -and -not $serverFailed) {
+    $gdbText = ''
+    foreach ($gdbOutput in @($gdbLog, $gdbErr)) {
+        if ($gdbOutput -and (Test-Path -LiteralPath $gdbOutput -PathType Leaf)) {
+            $gdbText += "`n" + (Get-Content -LiteralPath $gdbOutput -Raw)
+        }
+    }
+    $usesGdbDump = [bool]($GdbAutoDump -or $GdbInitAndDump)
+    $dumpAccepted = Test-TXW813DumpResult -Size $size -ExpectedSize $readLength `
+        -ServerText ($serverText + "`n" + $serverErrorText) -GdbText $gdbText `
+        -UsesGdb $usesGdbDump -GdbExitCode $gdbExitCode -GdbTimedOut $gdbTimedOut
+    if ($dumpAccepted) {
         $bytes = [System.IO.File]::ReadAllBytes($dumpFile)
         if ($ProbeSlot2 -or $ProbeSlot2Region) {
             $nonBlank = -1
@@ -318,7 +337,7 @@ while (-not $complete) {
         }
     }
 
-    "Attempt $attempt ($($attemptStarted.ToString('HH:mm:ss.fff'))): $size of $readLength bytes; serverFailed=$serverFailed; logs: $serverLog" |
+    "Attempt $attempt ($($attemptStarted.ToString('HH:mm:ss.fff'))): $size of $readLength bytes; accepted=$dumpAccepted; GDB exit=$gdbExitCode; timedOut=$gdbTimedOut; logs: $serverLog" |
         Add-Content -LiteralPath $summary
     if (($GdbAutoDump -or $GdbInitAndDump) -and $caught) {
         Write-Host "The immediate GDB read produced $size bytes. Stopping to inspect this attempt's logs."

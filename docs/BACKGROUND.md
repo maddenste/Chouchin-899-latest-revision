@@ -19,6 +19,7 @@ The TXW read tool remains in tools/Read-TXW813-OnPower.ps1 for experienced users
 | --- | --- |
 | Program-TXW813-DCDC0-WriteOnly-OnPower.ps1 | Wi-Fi upload; the only script needed by the installation guide |
 | Read-TXW813-OnPower.ps1 | Advanced original-firmware backup and diagnosis |
+| Test-TXW813-DumpResult.ps1 / Test-TXW813-DumpResultTests.ps1 | Backup-result checks and synthetic offline regression tests |
 | verify_hc32_backup.py | Offline validation of exported HC32 backups |
 | Prepare-Sdk.ps1 | Development SDK preparation; does not restore omitted integration |
 | Build-TXW813-DCDC0FullImage.ps1 | Development image assembly retaining a private board's final sectors |
