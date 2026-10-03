@@ -56,6 +56,10 @@ starting. No commands or paths to edit.
 - The script automatically declines the CKLink update prompt. If it stays open, choose **No**.
 - **Once connected, stop cycling power and keep power steady.**
 
+To get out of a repeating firmware-update window loop **before writing starts**,
+unplug the CKLink probe from USB, then close the flashing window.
+**Do not unplug the probe while firmware is being written.**
+
 Wait for **WRITTEN: programmer reported Program success**—usually around
 90–100 seconds on our setup. There is no automatic write retry or flash readback.
 

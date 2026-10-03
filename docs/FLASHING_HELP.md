@@ -116,5 +116,10 @@ DebugServer process started by this script; other dialogs are left alone.
 Manual users can opt out with **-ManualIcePrompt**. Failed connections can
 restart promptly when DebugServer exits; the five-second per-attempt timeout
 is only a limit for a stalled attempt, not a delay between every retry.
+
+If the firmware-update window keeps reopening and you want to stop the loop
+before writing starts, **unplug the CKLink probe from USB**, then close the
+flashing window. Do not unplug it during an active firmware write. If a write
+was interrupted, retain the logs and do not immediately retry.
 Launcher tests and the real R17 firmware/algorithm preflight also passed under
 built-in Windows PowerShell 5.1. No PowerShell 7 installation is required.
