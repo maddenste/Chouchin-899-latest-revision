@@ -6,7 +6,7 @@
 #include "typesdef.h"
 #include "../../txw_hc32_protocol.h"
 
-// Receive-only until the Wi-Fi/time adapters can produce truthful replies.
+// Inter-chip UART: buffered command reception and complete-record transmission.
 int32 clock_uart_start(void);
 enum txw_hc32_command clock_uart_next_command(void);
 int clock_uart_send(const char *bytes, uint32 length);

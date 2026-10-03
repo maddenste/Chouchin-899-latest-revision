@@ -36,8 +36,8 @@ struct txw_hc32_time_stream {
     uint8_t started;
 };
 
-// Civil time and daily-update setting supplied by the future network/time
-// adapter. No assumed timezone or current time is baked into this module.
+// Civil time and daily-update setting supplied by the clock application.
+// No assumed timezone or current time is baked into this module.
 struct txw_hc32_time {
     uint16_t year;
     uint8_t month;                 // 1..12
@@ -58,7 +58,7 @@ enum txw_hc32_time_wire_format {
     TXW_HC32_TIME_V11_SELECTORS = 1 // two-digit suffix; selector 2 needs HC32 V14+
 };
 
-// Initialize application settings to Gradual / Continuous / parking On.
+// Initialize selectors to Gradual / Continuous / battery saver Off (suffix 00).
 // Date/time remains invalid until a fresh NTP result fills it in.
 void txw_hc32_time_init(struct txw_hc32_time *time);
 
@@ -79,8 +79,8 @@ int txw_hc32_time_due(struct txw_hc32_time_stream *stream,
                        uint32_t now_ms, int fresh_time);
 
 // Return bytes excluding NUL, or 0 on invalid date/selection or small buffer.
-// The V11 selector extension is absent from the older factory captures, but
-// Steve has confirmed that HC32 V11 is now installed on this board.
+// The V11 selector extension is absent from the older factory captures.
+// The public HC32 V15 firmware supports this extension and minute wake times.
 size_t txw_hc32_format_time(char *out, size_t capacity,
                             const struct txw_hc32_time *time,
                             enum txw_hc32_time_wire_format format);
@@ -91,9 +91,10 @@ size_t txw_hc32_format_time_for_clock(char *out, size_t capacity,
                                       const struct txw_hc32_time *time);
 
 // Literal wire records observed at 9600 8N1, each terminated by CRLF.
-// Events request actions; a future adapter must decide when acknowledgement
-// is valid. In particular, WIFIRESET is NOT wired to flash erasure here.
-// The exact triggers for EXIT/PAIRING/APPOK still need factory-firmware tracing.
+// This portable module defines records, not actions. clock_app.c handles
+// acknowledgements and settings reset; parsing alone never erases flash.
+// The application sends WIFIAPPING for active browser leases, WIFIEXIT for
+// inactive setup mode, and WIFIAPPOK after a saved-settings station switch.
 extern const char txw_hc32_wifi_id_ok[];
 extern const char txw_hc32_wifi_id_no_credentials[];
 extern const char txw_hc32_wifi_ap_ok[];

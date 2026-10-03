@@ -43,7 +43,7 @@ snippet. Check the generated DST dates against your region's current rules;
 the generator describes its strings as indicative. Our firmware accepts fixed
 offsets and Mmonth.week.weekday transition rules, not J/day-number rules.
 
-For example, the UK rule is \`GMT0BST,M3.5.0/1,M10.5.0/2\`.
+For example, the UK rule is `GMT0BST,M3.5.0/1,M10.5.0/2`.
 
 **Next DST change** recalculates from current unsaved selections once the clock
 has synchronised time. Preview does not save settings. Disabled DST schedules
@@ -84,7 +84,7 @@ HC32 controls the eventual power-off. +TIME begins after NTP and repeats while
 powered and connected.
 
 Reset clears application settings, not factory radio data. The reset control
-is under the expandable Reset clock section.
+is under the expandable **Reset settings** section.
 
 ## Security limits
 

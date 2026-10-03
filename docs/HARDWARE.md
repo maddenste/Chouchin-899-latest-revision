@@ -117,7 +117,7 @@ The owner held BOOT high before powering on the board and kept it high
 throughout UART programming.
 The DAPLink USB was initially unplugged and connected **after the clock board
 was powered**. The owner reported that this order was necessary.
-After programming, switch power off, disconnect BOOT from the 3.3 V bench
+After programming, switch power off, disconnect BOOT from the external 3.3 V
 supply, then power on normally, as confirmed by the owner.
 Do not treat the SWD table as UART boot-programming wiring.
 
