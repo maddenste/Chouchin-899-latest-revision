@@ -59,9 +59,58 @@ function Select-ClockEndpoint {
     throw 'No active IPv4 network with a gateway found. Connect your PC to Ethernet or Wi-Fi, then restart the launcher.'
 }
 
+function Assert-ClockWorkspacePath {
+    param([string]$Workspace)
+    if ($Workspace -notmatch '^[A-Za-z]:\\' -or $Workspace -match '[\s";&]') { throw 'The working folder must be an absolute local-drive path without spaces, quotes, semicolons or ampersands.' }
+}
+
+function Test-ClockWorkspace {
+    param([string]$Workspace)
+    Assert-ClockWorkspacePath $Workspace
+    [void](New-Item -ItemType Directory -Path $Workspace -Force)
+    # Test creation and writing inside a new subfolder, as staging requires.
+    $probe = Join-Path $Workspace ('write-check-' + [Guid]::NewGuid().ToString('N'))
+    [void](New-Item -ItemType Directory -Path $probe -ErrorAction Stop)
+    $stream = $null
+    try {
+        $stream = [IO.FileStream]::new((Join-Path $probe 'probe.tmp'),
+            [IO.FileMode]::CreateNew, [IO.FileAccess]::Write, [IO.FileShare]::None,
+            4096, [IO.FileOptions]::DeleteOnClose)
+        $stream.WriteByte(0)
+        $stream.Flush()
+    } finally {
+        if ($stream) { $stream.Dispose() }
+        # Only remove the exact, empty probe directory created above.
+        Remove-Item -LiteralPath $probe -ErrorAction Stop
+    }
+}
+
+function Select-ClockFolder {
+    $folder = [Windows.Forms.FolderBrowserDialog]::new()
+    try {
+        $folder.Description = 'Choose a writable local folder with no spaces in its path.'
+        if ($folder.ShowDialog() -ne [Windows.Forms.DialogResult]::OK) { throw 'Cancelled. No write started.' }
+        return $folder.SelectedPath
+    } finally { $folder.Dispose() }
+}
+
+function Select-ClockWorkspace {
+    param([string]$Workspace)
+    while ($true) {
+        try {
+            Test-ClockWorkspace $Workspace
+            return $Workspace
+        } catch {
+            Write-Host "Working folder unavailable: $($_.Exception.Message)"
+            Write-Host 'Choose another writable local folder with no spaces, quotes, semicolons or ampersands in its path, or cancel.'
+        }
+        $Workspace = Select-ClockFolder
+    }
+}
+
 function New-ClockFlashStage {
     param([string]$Workspace, [string]$Image, [string]$Algorithm, [string]$Init)
-    if ($Workspace -notmatch '^[A-Za-z]:\\' -or $Workspace -match '[\s";&]') { throw 'The working folder must be an absolute local-drive path without spaces, quotes, semicolons or ampersands.' }
+    Assert-ClockWorkspacePath $Workspace
     $stage = Join-Path $Workspace ('run-' + [Guid]::NewGuid().ToString('N'))
     [void](New-Item -ItemType Directory -Path $stage -Force)
     $result = @{}
@@ -118,14 +167,7 @@ function Invoke-ClockFlashWizard {
     $gdb = Resolve-ClockFile 'C-SKY csky-elfabiv2-gdb.exe (not RISC-V GDB)' 'C-SKY GDB|csky-elfabiv2-gdb.exe' $gdbCandidates 'csky-elfabiv2-gdb.exe'
     $endpoint = Select-ClockEndpoint
     $workspace = if ($saved.Workspace) { [string]$saved.Workspace } else { Join-Path $env:SystemDrive 'ClockFlash' }
-    try { [void](New-Item -ItemType Directory -Path $workspace -Force) } catch {
-        Write-Host 'Cannot create the working folder. Choose a writable folder with no spaces in its path.'
-        $folder = [Windows.Forms.FolderBrowserDialog]::new()
-        try {
-            if ($folder.ShowDialog() -ne [Windows.Forms.DialogResult]::OK) { throw 'Cancelled. No write started.' }
-            $workspace = $folder.SelectedPath
-        } finally { $folder.Dispose() }
-    }
+    $workspace = Select-ClockWorkspace $workspace
     $flashArgs = New-ClockFlashStage $workspace $image $algorithm $init
     $flashArgs.CleanFullImage = $true
     $flashArgs.ManualIcePrompt = $false

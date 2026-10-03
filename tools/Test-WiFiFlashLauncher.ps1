@@ -18,6 +18,34 @@ foreach ($name in 'sample.bin','TXW81X_FLASH_ALGORITHM.elf','TXW81X_FLASH_ALGORI
 }
 $simpleRoot = Join-Path $env:SystemDrive ('ClockLauncherTest-' + [Guid]::NewGuid().ToString('N'))
 try {
+    Test-ClockWorkspace $simpleRoot
+    Assert-ClockTest (@(Get-ChildItem -LiteralPath $simpleRoot -Force).Count -eq 0) 'Workspace probe left temporary files behind.'
+    $blockedWorkspace = Join-Path $simpleRoot 'not-a-folder'
+    Set-Content -LiteralPath $blockedWorkspace -Value 'existing file must be preserved'
+    $rejected = $false
+    try { Test-ClockWorkspace $blockedWorkspace } catch { $rejected = $true }
+    Assert-ClockTest ($rejected -and (Get-Content -LiteralPath $blockedWorkspace) -eq 'existing file must be preserved') 'Workspace check accepted or altered an existing file.'
+    $originalWorkspaceProbe = ${function:Test-ClockWorkspace}
+    $script:folderChoices = [Collections.Generic.Queue[string]]::new()
+    $script:folderPicks = 0
+    function Select-ClockFolder {
+        $script:folderPicks++
+        if ($script:folderChoices.Count -eq 0) { throw 'Cancelled. No write started.' }
+        return $script:folderChoices.Dequeue()
+    }
+    function Test-ClockWorkspace {
+        param([string]$Workspace)
+        if ($Workspace -eq 'C:\RestrictedClockFlash') { throw [UnauthorizedAccessException]::new('Test: existing folder is not writable.') }
+        & $originalWorkspaceProbe $Workspace
+    }
+    Assert-ClockTest ((Select-ClockWorkspace $simpleRoot) -eq $simpleRoot -and $script:folderPicks -eq 0) 'Writable folder unnecessarily prompted.'
+    $script:folderChoices.Enqueue('C:\has spaces')
+    $script:folderChoices.Enqueue($simpleRoot)
+    Assert-ClockTest ((Select-ClockWorkspace 'C:\RestrictedClockFlash') -eq $simpleRoot -and $script:folderPicks -eq 2) 'Restricted folder / invalid alternate did not offer another choice.'
+    $rejected = $false
+    try { Select-ClockWorkspace 'C:\RestrictedClockFlash' | Out-Null } catch { $rejected = $_.Exception.Message -like 'Cancelled*' }
+    Assert-ClockTest $rejected 'Workspace cancellation did not stop safely.'
+    Set-Item -Path Function:Test-ClockWorkspace -Value $originalWorkspaceProbe
     $stage = New-ClockFlashStage $simpleRoot (Join-Path $source 'sample.bin') (Join-Path $source 'TXW81X_FLASH_ALGORITHM.elf') (Join-Path $source 'TXW81X_FLASH_ALGORITHM.init')
     Assert-ClockTest ($stage.ImagePath -notmatch '\s') 'Staged paths contain spaces.'
     Assert-ClockTest ((Get-FileHash $stage.ImagePath).Hash -eq (Get-FileHash (Join-Path $source 'sample.bin')).Hash) 'Staging altered image.'
@@ -155,7 +183,7 @@ try {
     Assert-ClockTest ($null -eq $manualParameter.DefaultValue) 'Writer must not default to manual prompt handling.'
     $polls = @($writerAst.FindAll({ param($node) $node -is [Management.Automation.Language.CommandAst] -and $node.GetCommandName() -eq 'Start-Sleep' }, $true))
     Assert-ClockTest ($polls.Count -eq 1 -and $polls[0].Extent.Text -eq 'Start-Sleep -Milliseconds 25') 'Catch-loop fast polling regressed.'
-    Write-Host 'PASS: file/staging/network checks, BAT ! paths with inherited delayed expansion, missing PowerShell, exit codes and mocked complete wizard: cancellation, failed preflight, failed write, one-write success and remembered paths. No hardware accessed.'
+    Write-Host 'PASS: workspace write checks, restricted-folder fallback/cancellation, file/staging/network checks, BAT ! paths with inherited delayed expansion, missing PowerShell, exit codes and mocked complete wizard: cancellation, failed preflight, failed write, one-write success and remembered paths. No hardware accessed.'
 } finally {
     # Only delete the exact UUID fixture directories this test created.
     foreach ($fixture in @($testRoot, $simpleRoot)) {

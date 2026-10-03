@@ -100,8 +100,9 @@ drivers before retrying. Connection attempts time out after five minutes.
 The window stays open after completion or failure. Each run has its own files
 and logs under **C:\ClockFlash\run-…** by default; the launcher prints the exact
 location. File selections are remembered under **%LOCALAPPDATA%\WiFiClockFlasher\paths.json**;
-no passwords are stored. If the working folder cannot be created, select a
-writable local folder with **no spaces in its path**. Run folders are retained
+no passwords are stored. The launcher checks that the working folder can be
+created and written to. If it cannot, select another writable local folder with
+**no spaces in its path**, or cancel. Unsuitable choices prompt again. Run folders are retained
 for diagnosis; no existing files are deleted.
 
 ## 5. Restart and set up
