@@ -1,4 +1,4 @@
-# Release-candidate test ledger
+# Test record
 
 Current pair: **HC32 V15 + Wi-Fi v2.0 R16**. The human-facing v2.0 footer is not a
 complete binary identity: retain build ID and SHA-256. Programmer-reported

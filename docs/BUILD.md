@@ -1,10 +1,11 @@
-# Build from source (Windows)
+# Development and build notes (Windows)
 
-**Scope:** this records the working local build. The source-only review package
-deliberately withholds vendor-derived project/startup overlays and project
-metadata pending permission. Prepare-Sdk alone does not restore those modified
-files. A reproducible public cross-build is not yet offered; see
-[PUBLICATION_STATUS.md](PUBLICATION_STATUS.md).
+**Scope:** this records the working local build, not a complete buildable public
+SDK project. Vendor-derived startup/integration overlays and project metadata
+are not included. Prepare-Sdk alone does not restore those modified files.
+A reproducible public cross-build is not yet offered. For installation, use
+the prepared images and [the upload walkthrough](GETTING_STARTED.md).
+See [the project notices](../NOTICE.md) for source and binary licensing scope.
 
 ## Dependencies
 

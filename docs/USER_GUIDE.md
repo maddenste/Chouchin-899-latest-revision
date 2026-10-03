@@ -60,7 +60,6 @@ minute-resolution special DST wake, including transitions off the full hour.
 | Sweep | Gradual minute-hand steps |
 | Burst | Minute-hand jump |
 | Hold&Start | Swiss railway station-clock-style movement: seconds pause at 12, then restart as the minute hand jumps forward |
-
 | Second hand battery saver: Off | Normal selected movement, no scheduled parking |
 | Night parking | Seconds parked between 00:00 and 06:00 |
 | On | Seconds reach 12 and remain parked indefinitely; useful if no second hand is fitted |

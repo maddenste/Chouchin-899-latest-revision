@@ -18,9 +18,6 @@ The TXW read tool remains in tools/Read-TXW813-OnPower.ps1 for experienced users
 - [Build notes and source scope](BUILD.md)
 - [Tests and outstanding checks](TESTING.md)
 - [Release identities](RELEASE_IDENTITY.md)
-- [Package contents](PACKAGE_CONTENTS.md)
-- [Publication status](PUBLICATION_STATUS.md)
-- [Release checklist](RELEASE_CHECKLIST.md)
 - [Project notices](../NOTICE.md)
 
 Investigation used Keil, pyOCD, PulseView UART captures and OPNsense DNS/NTP captures. These are not upload requirements. Vendor SDKs/tools, original firmware and private captures are not bundled.

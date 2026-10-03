@@ -1,4 +1,7 @@
-# Current local release identifiers
+# Firmware reference
+
+The first public download is **WiFi Clock v2.0 — Public release 1**.
+The V15/R16 names below are internal build identifiers retained in filenames.
 
 WiFi Clock **v2.0 R16** and **HC32 V15**, 1 October 2026.
 V1.0 refers to the older MM32/ESP board project, not this hardware revision.
