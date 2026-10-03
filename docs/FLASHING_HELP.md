@@ -75,6 +75,12 @@ security restrictions may still prevent it running—do not disable them.
    prompt, polling every 25 ms. If it remains open, choose **No** manually.
 4. **Once connected, stop power cycling and keep power steady.**
 
+**Be careful: the red LED is controlled by the HC32 movement controller, not
+the TXW813 Wi-Fi chip.** It may continue flashing both during programming and
+after a missed boot-time connection. It does not tell you whether the TXW813
+was caught or whether a write is in progress. Use the script's connection,
+writing and **WRITTEN** messages; never interrupt a write based on LED activity.
+
 With the original firmware, PA10 quickly changes from debug clock to UART
 debug output. The script must catch that short boot window. On our setup it
 took **about five power cycles on average**; the connection-attempt counter

@@ -56,6 +56,11 @@ starting. No commands or paths to edit.
 - The script automatically declines the CKLink update prompt. If it stays open, choose **No**.
 - **Once connected, stop cycling power and keep power steady.**
 
+**Be careful: the clock's red LED is controlled by the HC32, not the Wi-Fi chip.**
+It can keep flashing while firmware is being written or when the boot window
+has been missed. **Follow the script's messages, not the LED.** Never cycle
+power during writing just because the LED is still flashing.
+
 To get out of a repeating firmware-update window loop **before writing starts**,
 unplug the CKLink probe from USB, then close the flashing window.
 **Do not unplug the probe while firmware is being written.**
