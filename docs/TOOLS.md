@@ -57,8 +57,8 @@ Keil, compilers, Python and a logic analyser are **not required for uploading**.
 
 1. [Release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0): HC32 V15 HEX, Wi-Fi R17 FULL BIN, SHA256SUMS.txt and user manual.
 2. On [the repository main page](https://github.com/maddenste/Chouchin-899-latest-revision), select **Code → Download ZIP**. Extract the complete project; keep **Flash-WiFi.bat** beside the **tools** folder.
-   The v2.0 release's “Source code” ZIP contains the tools as they were at that tag;
-   use the main-page ZIP for the latest script fixes.
+   Alternatively, use **“Source code (zip)”** on the v2.0 release page; it also
+   includes the guided launcher. Download the firmware images separately.
 3. Follow [the guided Wi-Fi upload](FLASHING.md). The launcher handles input-file paths for you; no PowerShell commands need editing.
 
 Check downloaded firmware with PowerShell 7 if desired:

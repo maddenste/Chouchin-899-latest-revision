@@ -18,7 +18,8 @@ This installs Wi-Fi R17 on the **TXW813-320** only. Flash the
   **sdk/chip/txw81x**. No SDK build is required.
 - Download the [current project ZIP](https://github.com/maddenste/Chouchin-899-latest-revision/archive/refs/heads/main.zip)
   and **extract it**. Keep **Flash-WiFi.bat** beside its **tools** folder.
-  Do not use the release's older “Source code” ZIP for the launcher.
+  The v2.0 release's **“Source code (zip)”** download also includes the launcher
+  and can be used instead. The firmware BIN is a separate release download.
 
 The downloads can remain in their usual folders, including folders with spaces.
 The launcher copies the three flash inputs into a separate working folder with
