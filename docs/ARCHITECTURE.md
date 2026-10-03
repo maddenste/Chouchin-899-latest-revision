@@ -70,8 +70,8 @@ precedes the next normal daily wake.
 Following the transition, the original saved wake time is sent again. Fixed
 offset rules (including Disabled) never create extra DST wakes. No flash write
 or DST-specific WIFIAPPING is used. Forward/backward transitions have owner
-confirmation, including a non-hourly backward transition at 18:30 → 17:30.
-A non-hourly forward transition has not been separately confirmed.
+confirmation, including non-hourly transitions in both directions. The backward
+transition at 18:30 → 17:30 and a non-hourly forward transition are owner-confirmed.
 Status exposes the next saved-rule DST transition once UTC is synchronized.
 POST `/api/v1/dst-preview` calculates from unsaved timezone selections without
 saving configuration, resetting the chip or extending the browser lease.

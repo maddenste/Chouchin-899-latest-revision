@@ -25,7 +25,7 @@ the actual revision on which they were reported.
 | R14 live preview / branded page | Owner reports “works lovely” after upload |
 | Backward DST 18:30 → 17:30 | Explicitly confirmed after R14 installation |
 | Non-hourly backward DST transition | Confirmed: 18:30 → 17:30 after R14 installation |
-| Non-hourly forward DST transition | Not separately confirmed |
+| Non-hourly forward DST transition | Owner-confirmed, 3 October 2026 |
 | Disabled DST boundary test | Pending |
 | 48-hour continuous run | Owner confirmed no issues after 48 hours, 3 October 2026 |
 | Genuine low-battery threshold/recovery | Not established by external 3.3 V supply tests |
