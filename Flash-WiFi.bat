@@ -1,7 +1,7 @@
 @echo off
 rem Copyright (C) 2026 Steve Madden
 rem SPDX-License-Identifier: GPL-3.0-or-later
-setlocal
+setlocal DisableDelayedExpansion
 set "CLOCK_POWERSHELL=%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe"
 if exist "%SystemRoot%\Sysnative\WindowsPowerShell\v1.0\powershell.exe" set "CLOCK_POWERSHELL=%SystemRoot%\Sysnative\WindowsPowerShell\v1.0\powershell.exe"
 if not exist "%~dp0tools\Start-WiFiFlash.ps1" (
