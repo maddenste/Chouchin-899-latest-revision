@@ -2,7 +2,6 @@
 
 ![Chouchin-CH899 WiFi Clock v2.0 — HC32L130 and TXW813](docs/assets/social-preview.jpg)
 
-<sub>Illustrative artwork with a digitally restyled dial and hands.</sub>
 
 Wi-Fi time synchronisation, configurable hand movement and a simple local settings page.
 
