@@ -13,6 +13,10 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 ## Ready to install?
 
+**Extended testing:** One clock running HC32 V15 stopped after approximately three days. The cause is still under investigation, and further testing is underway using two movements. V20 remains a private test build.
+
+If you experience any bugs or unexpected behaviour, please [let me know through GitHub Issues](https://github.com/maddenste/Chouchin-899-latest-revision/issues). Include your firmware versions, settings and a description of what happened; for a stopped clock, note the hand positions and LED behaviour.
+
 **[Start here: equipment, software and flashing steps →](docs/GETTING_STARTED.md)**
 
 No compiling or firmware editing is required. Install the two prepared files, then enter your Wi-Fi settings.
