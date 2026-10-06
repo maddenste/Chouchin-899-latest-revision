@@ -47,7 +47,11 @@ See [UART diagnosis and wiring](TROUBLESHOOTING.md#optional-uart-diagnosis).
 | C-SKY / XuanTie DebugServer | [Official DebugServer page](https://www.xrvm.cn/community/download?id=4453644425750450176) | User layer 5.18.10 and CKLink Windows driver |
 | TXW flash algorithm | [Taixin FPV 2.5.4.7 V45354](https://taixin-semi.com/zh/downloads/TXW81x_FPV-v2.5.4.7) | TXW81X_FLASH_ALGORITHM.elf and matching .init |
 
-Vendor pages may require sign-in. Taixin lists **TXW81x_FPV-v2.5.4.7-45354.zip**. Extract it and find the two algorithm files under **sdk/chip/txw81x**. No SDK build is needed.
+Vendor pages may require sign-in. Taixin lists **TXW81x_FPV-v2.5.4.7-45354.zip**.
+Download and extract it to obtain **TXW81X_FLASH_ALGORITHM.elf** and its matching
+**TXW81X_FLASH_ALGORITHM.init** under **sdk/chip/txw81x**. These are the only
+files needed from the Taixin package for uploading; **no SDK installation,
+configuration or compilation is required**.
 
 Example path after extraction (the nested folders matched our setup):
 
