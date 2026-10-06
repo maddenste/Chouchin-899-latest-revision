@@ -16,12 +16,12 @@ Download the flashing software and firmware separately in step 1 below.
 
 ## 1. Get the software and firmware
 
-Install **C-SKY DebugServer/driver and CDK** from the
-[software downloads and algorithm-location guide](TOOLS.md#software-downloads).
-Download and extract the Taixin package to obtain **TXW81X_FLASH_ALGORITHM.elf**
-and its matching **.init** file. These are the only files needed from that package
-for uploading; **no SDK installation, configuration or compilation is required**.
-The launcher uses Windows 11's built-in Windows PowerShell; no PowerShell installation is needed.
+1. Install **C-SKY DebugServer with the CKLink driver**, and **CDK**, which supplies the debugger used by the launcher.
+2. Download and extract the **Taixin package**. You only need `TXW81X_FLASH_ALGORITHM.elf` and `TXW81X_FLASH_ALGORITHM.init` from its `sdk/chip/txw81x` folder. Nothing needs compiling.
+3. Download the **Wi-Fi firmware BIN** linked below.
+
+Get the tools from the [software downloads guide](TOOLS.md#software-downloads).
+PowerShell is already included with Windows 11.
 
 **[Download Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v2.0/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
 
