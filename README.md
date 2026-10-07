@@ -13,7 +13,9 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 ## Ready to install?
 
-**Extended testing:** One clock running HC32 V15 stopped after approximately three days. The cause is still under investigation, and further testing is underway using two movements. V20 remains a private test build.
+**HC32 V15 — known issues, not recommended:** Physical testing showed unwanted full-turn calibration, missed Wi-Fi wake-ups and hands remaining parked at 1:50. The cause has not been conclusively established.
+
+**[HC32 V21 R3 — experimental nightly build](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007):** Initial physical testing is promising, but repeated overnight reference checks and daily wakes are still being validated. Use on a spare/test clock; this is **not a stable release** and is not yet a proven fix for every V15 symptom. Wi-Fi R17 is unchanged. V15 remains available for historical reference only.
 
 If you experience any bugs or unexpected behaviour, please [let me know through GitHub Issues](https://github.com/maddenste/Chouchin-899-latest-revision/issues). Include your firmware versions, settings and a description of what happened; for a stopped clock, note the hand positions and LED behaviour.
 
@@ -26,7 +28,8 @@ and [Wi-Fi flashing guide](docs/FLASHING.md). The Wi-Fi guide includes a double-
 launcher that guides you through file selection and catching the chip at power-on—no
 commands to edit.
 
-- [Public release 1 — firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0)
+- [Experimental nightly — V21 R3 firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007)
+- [Historical V15 release — known issues, not recommended](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0)
 - [Three-page user manual](docs/WiFi-Clock-User-Manual-v2.0.pdf)
 - [Help / report a problem](docs/TROUBLESHOOTING.md)
 

@@ -2,6 +2,8 @@
 
 This guide installs the prepared firmware. No reading firmware from the chip, editing or compiling is required.
 
+**Experimental nightly:** HC32 V15 showed faults in physical testing and is no longer recommended. The current HC32 download is **V21 R3**, still under testing. Use a spare/test clock and read the [nightly release warning](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007) before installing. Wi-Fi R17 is unchanged.
+
 ## 1. Identify your board
 
 Check both markings: **HC32L130J8TA** and **TXW813-320**.
@@ -17,11 +19,11 @@ We used a **TENSTAR ROBOT TSP-03 fixed 3.3 V supply connected to the battery ter
 
 Programming replaces existing firmware. Keep any original backups you already have. Optional backup procedures are in [the background documents](BACKGROUND.md), outside this upload guide.
 
-## 3. Upload HC32 V15
+## 3. Upload HC32 V21 R3 nightly
 
 [Movement-controller upload steps →](HC32.md)
 
-Use **Chouchin-899-HC32-V15-20261001.hex**, DAPLink UART pins and XHSC MCU Programmer.
+Use **Chouchin-899-HC32-V21-R3-NIGHTLY-20261007.hex**, DAPLink UART pins and XHSC MCU Programmer.
 
 ## 4. Upload Wi-Fi R17
 
@@ -45,7 +47,7 @@ The clean Wi-Fi image starts with no saved settings. See [the user manual](WiFi-
 
 ### Validation note
 
-The published pair is **HC32 V15 + Wi-Fi R17**. Earlier Wi-Fi builds passed
+The experimental nightly pair is **HC32 V21 R3 + Wi-Fi R17**. V21 R3 has promising initial physical results, but long-term testing is ongoing; do not treat it as a stable or fully validated fix. Earlier Wi-Fi builds passed
 owner tests including a 48-hour run; R17 passed the full offline test/build
 pipeline but has not yet been tested on the clock. The clean Wi-Fi image starts
 with no saved settings. [Test record](TESTING.md).
