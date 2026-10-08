@@ -1,6 +1,6 @@
 # HC32 / TXW UART protocol
 
-Current download target: HC32 V21 R3 + Wi-Fi v2.0 R17. V21 retains the existing UART protocol. TXW UART0 PA13 RX / PA14 TX, **9600 8N1**, CRLF.
+Current download target: HC32 V21 + Wi-Fi v2.0 R17. V21 retains the existing UART protocol. TXW UART0 PA13 RX / PA14 TX, **9600 8N1**, CRLF.
 The real C formatter/parser and tests are authoritative.
 
 | HC32 request | TXW response / action |

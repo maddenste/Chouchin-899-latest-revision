@@ -1,114 +1,20 @@
-# Test record
+# Validation
 
-Current download pair: **HC32 V21 R3 + Wi-Fi v2.0 R17**. V21 R3 is physically tested for the daily-wake behaviour below. V15 is retired and its release/downloads have been removed. The human-facing v2.0 footer is not a
-complete binary identity: retain build ID and SHA-256. Programmer-reported
-success is not independent flash readback; R13–R16 writes were write-only.
-V15 installation was reconfirmed by the owner. R16 completed the full test/build
-pipeline and the programmer reported success on 1 October 2026. The original
-R16 changes from R14 were presentation/build identity only. Hardware observations below retain
-the actual revision on which they were reported. These historical V15 results do not override its retirement.
+## HC32 V21
 
-## Owner-reported physical test, 8 October 2026
+Physical daily-wake check, 8 October 2026:
 
-| Firmware | Observation |
-| --- | --- |
-| HC32 V21 R3 | Woke at the scheduled 10:00; red LED flashed a few times, then blue. No noticeable hand jumping and no calibration turn. Clock continued displaying the correct time. Owner considers this behaviour tested and working as intended. |
-| HC32 V15 (retired) | Repeated a full calibration turn and appeared in UniFi OS late at 10:04. Eventually resumed displaying the correct time, but the repeated calibration/late wake was unacceptable. |
+- Woke at the scheduled 10:00.
+- Red LED flashes followed by blue.
+- No noticeable hand jump or calibration turn.
+- Continued displaying the correct time.
 
-The V21 release image is **Chouchin-899-HC32-V21-R3-NIGHTLY-20261007.hex**;
-its filename is unchanged from publication. This report validates the observed
-daily-wake behaviour on the owner's HC32/TXW813 clock, not all movement modes,
-all settings, battery endurance or indefinite fault-free operation. The Wi-Fi
-image installed during this observation was not newly identified; the report
-does not establish physical validation of the separately published R17 image.
+This records the observed daily-wake behaviour on the owner's clock.
 
-## Current R17 offline checks, 3 October 2026
+## Wi-Fi R17
 
-The R17 build passes the full C-Sky build, backend, UART,
-NTP, HTTP and desktop/mobile browser pipeline. New regression checks cover
-signed/extended custom DST transitions across year boundaries, rejection of
-daylight offsets outside the +TIME range, and intact 121–127 character NTP
-hostnames. UART tests retain actual receive timestamps through queueing and
-tick rollover, check buffer overflow recovery, and exercise 40,000 bounded
-command/event sequences plus 10,002 reset timing/rollover cases. Injected
-interface-start failures test retry and acknowledgment behavior; reset/save,
-mode-switch, AP lease and stale-NTP overlaps have explicit regressions.
-The clean FULL layout and upload-script preflight are checked offline.
-R17 is published for download only; it has not been flashed or bench-tested.
+Passed the target build and offline UART, NTP, settings, DST, reset and web
+regression checks. Separate hardware validation of R17 remains outstanding.
 
-## Owner-reported hardware tests, 1 October 2026
-
-| Check | Result / context |
-| --- | --- |
-| AP/page, station, NTP and +TIME | Working tested baseline |
-| Sweep/Burst/Hold&Start and live setting changes | Working |
-| Night parking and continuously On parking | Working on HC32 V15 |
-| 17:10 daily wake | Woke/synchronised on V15/R13 |
-| Cold-start settings persistence | Confirmed in owner's grouped tests 1–5 on V15/R13 |
-| Primary unavailable, secondary fallback | Confirmed in grouped tests 1–5 |
-| Wi-Fi unavailable and later recovery | Confirmed in grouped tests 1–5 |
-| Page keep-alive / closing-page power-down | Confirmed in grouped tests 1–5 |
-| Parking entry/restart/release | Confirmed in grouped tests 1–5 |
-| Forward DST 17:00 → 18:00; normal daily time still 23:00 | Explicitly confirmed on V15/R13 |
-| R14 live preview / branded page | Owner reports “works lovely” after upload |
-| Backward DST 18:30 → 17:30 | Explicitly confirmed after R14 installation |
-| Non-hourly backward DST transition | Confirmed: 18:30 → 17:30 after R14 installation |
-| Non-hourly forward DST transition | Owner-confirmed, 3 October 2026 |
-| Disabled DST boundary test | Pending |
-| 48-hour continuous run | Owner confirmed no issues after 48 hours, 3 October 2026 |
-| Genuine low-battery threshold/recovery | Not established by external 3.3 V supply tests |
-
-Grouped reports are recorded as such; no unprovided waveform, timing measurement
-or battery-current result is invented. Outstanding checks remain outstanding
-despite the public release. One board's results do not establish compatibility
-with every production revision.
-
-## Offline checks completed on R14
-
-Real C tests cover protocol, all 12 selectors, WPA key vectors, grouped settings/
-corruption, application state, DNS/NTP concurrency/redirection/deadlines, HTTP
-fragmentation/validation/privacy, and read-only DST preview. Browser tests exercise
-desktop/mobile, unsaved edits, invalid rules, Disabled, saved/manual SSID and
-save/reset behavior. Calendar testing includes 40 presets/80 rules and 1,081,280
-IANA comparisons through 2035.
-
-Private HC32 machine-code tests include all 144 ten-minute daily choices through
-the C formatter, V15 receiver and wake scheduler. Original/vendor-containing
-controller dumps are not distributed to make those tests run publicly.
-C-Sky compilation, packaging and full-image layout checks pass.
-
-On 1 October 2026 the reorganised E: development copy passed the full pipeline
-and reproduced the installed R14 image hash. A clean source-staging copy prepared
-with the external SDK also passed. Its raw code differed only in five characters
-of the SDK build timestamp; neither validation build was flashed.
-
-These tests mock hardware boundaries: they are not RF, motor, battery-life or
-post-program readback verification.
-
-## DST test method
-
-Use normal NTP and a temporary Custom POSIX rule. Pick today's month/week/weekday
-and a future transition, verify the preview, set daily update after it, save and
-allow sync. **Close the webpage** so WIFIAPPING cannot mask the scheduled wake.
-Record real UTC, local pre/post time, requested wake and restored daily setting.
-Forward transitions are expressed on standard time; backward on daylight time.
-
-For non-hourly testing, choose a minute such as :15. HC32 accepts this temporary
-DST minute even though normal webpage daily choices are multiples of ten.
-For Disabled, verify no DST override is sent and ordinary daily waking continues.
-Restore normal rules/NTP/daily time after each test; old dated examples cannot
-be reused unchanged on another date.
-
-## Soak
-
-On **3 October 2026**, Steve reported that the clock had run for **48 hours
-with no issues**. This is an owner-reported run on his installed firmware,
-not an independent installation test or evidence of measured battery lifetime.
-
-For repeat testing:
-
-Leave the unchanged firmware running for 48 hours. Check daily wakes, hand
-alignment, unexpected resets, Wi-Fi power-down/session expiry and recovery.
-An external supply does not establish battery lifetime or low-battery behavior.
-Retain original battery checks and document a separate appropriate battery test.
-Redact credentials and factory/MAC data before sharing evidence.
+Tests are supplied under **firmware/tests/** and **tools/**.
+Private HC32 binary emulation is not redistributed.

@@ -25,12 +25,12 @@ all those files. A successful compile does not establish either source or
 combined-binary redistribution rights. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Integration overlays are excluded from the repository. Compiled Wi-Fi R17
-and patched HC32 V21 R3 images are supplied separately as release assets at the
+and patched HC32 V21 images are supplied separately as release assets at the
 owner's decision while underlying redistribution rights remain unresolved.
 The owner sent Taixin a permission request; a reply is pending. This decision
 is not vendor permission or a claim that the combined binaries are GPL-licensed.
 
-HC32 V21 R3 patches an original vendor binary. Our patch logic does not turn the
+HC32 V21 patches an original vendor binary. Our patch logic does not turn the
 underlying proprietary firmware into GPL code. Its binary distribution requires
 separate review. Original flash dumps, Wi-Fi secrets and per-board factory data
 remain private regardless of copyright clearance.

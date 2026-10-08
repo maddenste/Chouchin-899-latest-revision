@@ -12,14 +12,13 @@ This installs Wi-Fi R17 on the **TXW813-320** only. Flash the
 - Install **C-SKY DebugServer with the CKLink driver** and
   **C-SKY CDK/toolchain**, using [these software links](TOOLS.md#software-downloads).
 - Download **WiFi-Clock-v2.0-R17-20261003_FULL.bin** from
-  [the V21 R3 release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007).
+  [the V21 release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21).
 - Extract the Taixin package linked in the software list. You need
   **TXW81X_FLASH_ALGORITHM.elf** and its matching **.init** file under
   **sdk/chip/txw81x**. No SDK build is required.
 - Download the [current project ZIP](https://github.com/maddenste/Chouchin-899-latest-revision/archive/refs/heads/main.zip)
   and **extract it**. Keep **Flash-WiFi.bat** beside its **tools** folder.
-  Use this main-branch ZIP for current instructions; release source archives
-  are older snapshots. The firmware BIN is a separate release download.
+  The firmware BIN is a separate release download.
 
 The downloads can remain in their usual folders, including folders with spaces.
 The launcher copies the three flash inputs into a separate working folder with
@@ -113,7 +112,7 @@ enter your Wi-Fi and clock settings. The clean installation clears old settings.
 
 [Current user guide](USER_GUIDE.md) ·
 [Manual PowerShell alternative](FLASHING_CLI.md) ·
-[Validation status](GETTING_STARTED.md#validation-note)
+[Installation guide](GETTING_STARTED.md)
 
 The launcher has automated offline tests; its interactive file dialogs and
 end-to-end hardware flashing have not yet been tested by another owner.

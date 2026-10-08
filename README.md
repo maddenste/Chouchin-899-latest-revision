@@ -13,9 +13,8 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 ## Ready to install?
 
-**[HC32 V21 R3 — physically tested, current release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007):** On 8 October 2026, the owner's clock woke at the scheduled **10:00**, flashed red then blue, and continued displaying the correct time with no noticeable hand jump or full-turn calibration. This observed daily-wake behaviour passed physical testing; other settings and long-term reliability are not claimed as fully validated. Wi-Fi R17 is unchanged.
-
-Install **Chouchin-899-HC32-V21-R3-NIGHTLY-20261007.hex**. The original filename and release tag are retained to identify the exact tested image; the release is no longer an experimental prerelease. V15 is retired and its release/downloads have been removed following repeated unwanted calibration and late Wi-Fi wake observations.
+Download **[HC32 V21](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21)** and **Wi-Fi R17**.
+Use **Chouchin-899-HC32-V21.hex** for the movement controller.
 
 If you experience any bugs or unexpected behaviour, please [let me know through GitHub Issues](https://github.com/maddenste/Chouchin-899-latest-revision/issues). Include your firmware versions, settings and a description of what happened; for a stopped clock, note the hand positions and LED behaviour.
 
@@ -28,7 +27,7 @@ and [Wi-Fi flashing guide](docs/FLASHING.md). The Wi-Fi guide includes a double-
 launcher that guides you through file selection and catching the chip at power-on—no
 commands to edit.
 
-- [V21 R3 — tested firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007)
+- [Firmware downloads and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21)
 - [Current user guide](docs/USER_GUIDE.md)
 - [Help / report a problem](docs/TROUBLESHOOTING.md)
 

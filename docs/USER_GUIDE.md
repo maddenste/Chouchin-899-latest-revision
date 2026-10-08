@@ -62,7 +62,7 @@ has synchronised time. Preview does not save settings. Disabled DST schedules
 no special DST wake. A transition wake is temporary and does not replace the
 saved daily update time.
 
-Daily update minutes are **00, 10, 20, 30, 40, 50**. HC32 V21 R3 retains support for
+Daily update minutes are **00, 10, 20, 30, 40, 50**. HC32 V21 retains support for
 minute-resolution special DST wake, including transitions off the full hour.
 
 ## Hand movement and battery saving

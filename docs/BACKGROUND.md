@@ -39,7 +39,7 @@ Except for the root BAT, the tools listed above are in the **tools/** folder.
 ## Development and validation
 
 - [Build notes and source scope](BUILD.md)
-- [Tests and outstanding checks](TESTING.md)
+- [Validation](TESTING.md)
 - [Release identities](RELEASE_IDENTITY.md)
 - [Project notices](../NOTICE.md)
 

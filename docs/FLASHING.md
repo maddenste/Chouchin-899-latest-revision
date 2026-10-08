@@ -23,7 +23,7 @@ Download the flashing software and firmware separately in step 1 below.
 Get the tools from the [software downloads guide](TOOLS.md#software-downloads).
 PowerShell is already included with Windows 11.
 
-**[Download unchanged Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/nightly-hc32-v21-r3-20261007/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
+**[Download unchanged Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
 
 ## 2. Connect with power off
 
