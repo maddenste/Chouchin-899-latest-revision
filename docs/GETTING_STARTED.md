@@ -2,7 +2,7 @@
 
 This guide installs the prepared firmware. No reading firmware from the chip, editing or compiling is required.
 
-**Experimental nightly:** HC32 V15 showed faults in physical testing and is no longer recommended. The current HC32 download is **V21 R3**, still under testing. Use a spare/test clock and read the [nightly release warning](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007) before installing. Wi-Fi R17 is unchanged.
+**Current release: HC32 V21 R3**, physically tested for scheduled daily wake on 8 October 2026. Read the [release notes and test scope](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007). V15 is retired and its release/downloads have been removed. Wi-Fi R17 is unchanged.
 
 ## 1. Identify your board
 
@@ -19,7 +19,7 @@ We used a **TENSTAR ROBOT TSP-03 fixed 3.3 V supply connected to the battery ter
 
 Programming replaces existing firmware. Keep any original backups you already have. Optional backup procedures are in [the background documents](BACKGROUND.md), outside this upload guide.
 
-## 3. Upload HC32 V21 R3 nightly
+## 3. Upload HC32 V21 R3
 
 [Movement-controller upload steps →](HC32.md)
 
@@ -43,11 +43,11 @@ After successful flashing, power off, remove programming connections and restart
 3. Enter your Wi-Fi password and clock preferences.
 4. Select **Save settings**. Once Wi-Fi and NTP synchronise, the clock receives the time.
 
-The clean Wi-Fi image starts with no saved settings. See [the user manual](WiFi-Clock-User-Manual-v2.0.pdf) for calibration and everyday use.
+The clean Wi-Fi image starts with no saved settings. See [the current user guide](USER_GUIDE.md) for calibration and everyday use.
 
 ### Validation note
 
-The experimental nightly pair is **HC32 V21 R3 + Wi-Fi R17**. V21 R3 has promising initial physical results, but long-term testing is ongoing; do not treat it as a stable or fully validated fix. Earlier Wi-Fi builds passed
+The current download pair is **HC32 V21 R3 + Wi-Fi R17**. V21 R3 passed the owner's scheduled 10:00 daily-wake test: red then blue LEDs, no noticeable hand jump or full-turn calibration, and correct time continued. This is physical validation of that observed behaviour, not every setting or long-term reliability. The unchanged NIGHTLY filename identifies the tested binary. Earlier Wi-Fi builds passed
 owner tests including a 48-hour run; R17 passed the full offline test/build
 pipeline but has not yet been tested on the clock. The clean Wi-Fi image starts
 with no saved settings. [Test record](TESTING.md).

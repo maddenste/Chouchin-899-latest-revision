@@ -37,7 +37,7 @@ C:\ClockTools\
   TXW81X_FLASH_ALGORITHM.init
 ~~~
 
-Get the BIN from [the release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0), algorithms from [the matching Taixin package](TOOLS.md).
+Get the BIN from [the V21 R3 release](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007), algorithms from [the matching Taixin package](TOOLS.md).
 **Paths must not contain spaces.**
 
 Locate your installed DebugServer and C-SKY GDB. Our paths were:
@@ -122,4 +122,4 @@ After WRITTEN, power off, unplug CKLink and remove its board connections. Restar
 
 Join **WiFi-Clock-Setup**, open **http://192.168.4.1/** and enter your Wi-Fi and clock settings. Old settings are cleared.
 
-[User manual](WiFi-Clock-User-Manual-v2.0.pdf) · [Validation status](GETTING_STARTED.md#validation-note)
+[Current user guide](USER_GUIDE.md) · [Validation status](GETTING_STARTED.md#validation-note)

@@ -1,12 +1,26 @@
 # Test record
 
-Current pair: **HC32 V15 + Wi-Fi v2.0 R17**. The human-facing v2.0 footer is not a
+Current download pair: **HC32 V21 R3 + Wi-Fi v2.0 R17**. V21 R3 is physically tested for the daily-wake behaviour below. V15 is retired and its release/downloads have been removed. The human-facing v2.0 footer is not a
 complete binary identity: retain build ID and SHA-256. Programmer-reported
 success is not independent flash readback; R13–R16 writes were write-only.
 V15 installation was reconfirmed by the owner. R16 completed the full test/build
 pipeline and the programmer reported success on 1 October 2026. The original
 R16 changes from R14 were presentation/build identity only. Hardware observations below retain
-the actual revision on which they were reported.
+the actual revision on which they were reported. These historical V15 results do not override its retirement.
+
+## Owner-reported physical test, 8 October 2026
+
+| Firmware | Observation |
+| --- | --- |
+| HC32 V21 R3 | Woke at the scheduled 10:00; red LED flashed a few times, then blue. No noticeable hand jumping and no calibration turn. Clock continued displaying the correct time. Owner considers this behaviour tested and working as intended. |
+| HC32 V15 (retired) | Repeated a full calibration turn and appeared in UniFi OS late at 10:04. Eventually resumed displaying the correct time, but the repeated calibration/late wake was unacceptable. |
+
+The V21 release image is **Chouchin-899-HC32-V21-R3-NIGHTLY-20261007.hex**;
+its filename is unchanged from publication. This report validates the observed
+daily-wake behaviour on the owner's HC32/TXW813 clock, not all movement modes,
+all settings, battery endurance or indefinite fault-free operation. The Wi-Fi
+image installed during this observation was not newly identified; the report
+does not establish physical validation of the separately published R17 image.
 
 ## Current R17 offline checks, 3 October 2026
 

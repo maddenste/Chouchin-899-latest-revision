@@ -10,7 +10,7 @@ components. It does not grant rights to original vendor firmware.
 | SDK libraries | Vendor libraries incorporated in APP; redistribution rights unconfirmed |
 | lwIP, C-SKY CSI and Rhino source components | Collected upstream headers preserved in SDK_NOTICES; individual terms apply |
 | Runtime archives | Linked libgcc.a, libc.a and libm.a from C-SKY toolchain; toolchain not supplied; notice completeness still requires review |
-| HC32 V15 | Patch of original board vendor firmware; underlying redistribution rights unconfirmed |
+| HC32 V21 R3 | Patch of original board vendor firmware; underlying redistribution rights unconfirmed |
 | Bootloader / parameters / packaging tools | Obtained separately; no personal FULL supplied |
 | Flash algorithm, DebugServer, compiler, Keil, XHSC | External dependencies, not bundled |
 | CKLink reference | wuxx/CKLink-lite linked, not copied |

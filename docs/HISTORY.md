@@ -1,5 +1,20 @@
 # The journey
 
+## 8 October 2026 — V21 tested; V15 retired
+
+HC32 V21 R3 passed the owner's scheduled 10:00 daily-wake observation: red
+flashes followed by blue, no noticeable hand jump or full calibration turn,
+and continued correct displayed time. It is now the current, physically
+tested release, no longer a prerelease. Its original NIGHTLY filenames and
+tag are retained for exact image identity; the binaries are unchanged.
+
+V15 repeated a full calibration turn, checked in on UniFi OS late at 10:04,
+then recovered correct time. The owner retired it; the historical v2.0
+release and its download assets were removed. The historical notes below
+remain a record of development, not installation recommendations.
+This test does not establish every mode or long-term reliability, or newly
+identify the installed Wi-Fi version. See [TESTING.md](TESTING.md).
+
 ## Why a second project?
 
 The older Chouchin-CH899 project targets MM32 + ESP hardware. This newer unit

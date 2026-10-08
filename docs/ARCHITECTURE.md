@@ -63,7 +63,7 @@ validation rather than adding an unauthenticated write endpoint.
 
 ## DST scheduling
 
-The current V15/R17 DST wake planner changes only outgoing +TIME schedule fields.
+The current V21 R3/R17 combination retains the DST wake planner, which changes only outgoing +TIME schedule fields.
 On the last normal sync before a transition, it requests the needed
 pre-change-clock minute (rounded up if seconds are present), only if it
 precedes the next normal daily wake.

@@ -7,7 +7,7 @@ Prefer commands? Use the [manual CLI flashing guide](FLASHING_CLI.md).
 
 ## Download the launcher
 
-**[Download flashing launcher and scripts (ZIP)](https://github.com/maddenste/Chouchin-899-latest-revision/archive/refs/tags/v2.0.zip)**
+**[Download current flashing launcher and scripts (ZIP)](https://github.com/maddenste/Chouchin-899-latest-revision/archive/refs/heads/main.zip)**
 
 Includes **[Flash-WiFi.bat](../Flash-WiFi.bat)** and its supporting scripts for guided
 TXW813 Wi-Fi flashing, with file selection, automatic checks and power-on instructions.
@@ -23,7 +23,7 @@ Download the flashing software and firmware separately in step 1 below.
 Get the tools from the [software downloads guide](TOOLS.md#software-downloads).
 PowerShell is already included with Windows 11.
 
-**[Download Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v2.0/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
+**[Download unchanged Wi-Fi R17 firmware (BIN)](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/nightly-hc32-v21-r3-20261007/WiFi-Clock-v2.0-R17-20261003_FULL.bin)**
 
 ## 2. Connect with power off
 
@@ -71,4 +71,4 @@ Join **WiFi-Clock-Setup**, open **http://192.168.4.1/** and save your settings.
 Old settings are cleared by this installation.
 
 [Detailed help](FLASHING_HELP.md) · [Manual command-line alternative](FLASHING_CLI.md) ·
-[User manual](WiFi-Clock-User-Manual-v2.0.pdf)
+[Current user guide](USER_GUIDE.md)

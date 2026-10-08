@@ -28,7 +28,7 @@ retry.
 | Page works, but time does not synchronise | Check Wi-Fi, DNS and NTP access. An IPv4 NTP address can help distinguish a DNS problem from a time-server problem. |
 | Local NTP hostname works, but an external hostname fails | Check router DNS, redirection and Internet NTP access. For packet-capture checks, see the advanced section below. |
 | Wi-Fi powers off while the page is open | Keep the page active. If it still happens, use the optional UART checks below to confirm the keep-alive messages. |
-| Seconds hand stays at 12 | Check **Second hand battery saver** and **Hold&Start** first. If changing the setting has no effect, confirm HC32 V15 is installed; advanced UART checks are below. |
+| Seconds hand stays at 12 | Check **Second hand battery saver** and **Hold&Start** first. If changing the setting has no effect, confirm current HC32 V21 R3 is installed; advanced UART checks are below. |
 
 ## Report a problem
 
@@ -56,7 +56,7 @@ These checks are optional and are not part of the normal flashing procedure.
 | No AP and no UART after flashing | Check the exact image/package, board configuration and flash result first; do not assume low voltage or erase again. |
 | DNS or NTP behaviour is unclear | Capture router UDP traffic without filtering out DNS replies. Check Wi-Fi association, DHCP, DNS and the NTP response. |
 | Wi-Fi powers off with the page open | Confirm **WIFIAPPING** on TXW PA14 at **9600 baud**, with the browser page active. |
-| Parking selection is ignored | Confirm compatible HC32 V15 and the actual final selector digit in **+TIME** on UART. |
+| Parking selection is ignored | Confirm compatible HC32 V21 R3 and the actual final selector digit in **+TIME** on UART. |
 
 ## Optional UART diagnosis
 

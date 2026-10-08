@@ -69,16 +69,16 @@ Keil, compilers, Python and a logic analyser are **not required for uploading**.
 
 ## Project files
 
-1. [Release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v2.0): HC32 V15 HEX, Wi-Fi R17 FULL BIN, SHA256SUMS.txt and user manual.
+1. [V21 R3 release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/nightly-hc32-v21-r3-20261007): HC32 V21 R3 HEX/BIN, Wi-Fi R17 FULL BIN and SHA256SUMS.txt. Use the [current user guide](USER_GUIDE.md).
 2. On [the repository main page](https://github.com/maddenste/Chouchin-899-latest-revision), select **Code → Download ZIP**. Extract the complete project; keep **Flash-WiFi.bat** beside the **tools** folder.
-   Alternatively, use **“Source code (zip)”** on the v2.0 release page; it also
-   includes the guided launcher. Download the firmware images separately.
+   Use the main-branch ZIP for current documentation. The release's source
+   archive is an older snapshot. Download the firmware images separately.
 3. Follow [the guided Wi-Fi upload](FLASHING.md). The launcher handles input-file paths for you; no PowerShell commands need editing.
 
 Check downloaded firmware with PowerShell if desired:
 
 ~~~powershell
-Get-FileHash 'C:\ClockFlash\Chouchin-899-HC32-V15-20261001.hex' -Algorithm SHA256
+Get-FileHash 'C:\ClockFlash\Chouchin-899-HC32-V21-R3-NIGHTLY-20261007.hex' -Algorithm SHA256
 Get-FileHash 'C:\ClockFlash\WiFi-Clock-v2.0-R17-20261003_FULL.bin' -Algorithm SHA256
 ~~~
 
