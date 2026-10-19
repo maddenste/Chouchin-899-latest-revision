@@ -12,15 +12,10 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 ## Ready to install?
 
-Download **[Chouchin-899-HC32-V21.hex](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/Chouchin-899-HC32-V21.hex)** for the **HC32 movement controller** and **[Wi-Fi R17](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/WiFi-Clock-v2.0-R17-20261003_FULL.bin)** (`WiFi-Clock-v2.0-R17-20261003_FULL.bin`) for the **TXW813 Wi-Fi chip**.
+Download **[Chouchin-899-HC32-V21.hex](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/Chouchin-899-HC32-V21.hex)** for the **HC32 movement controller** and **[WiFi-Clock-v2.0-R17-20261003_FULL.bin](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/WiFi-Clock-v2.0-R17-20261003_FULL.bin)** for the **TXW813 Wi-Fi chip**.
 
 These are the only two firmware files needed for installation: **HC32 HEX**
 and **Wi-Fi FULL BIN**. No separate raw HC32 BIN is needed.
-
-The V21 download now includes the owner-tested **R3 branch repair**, correcting
-an unsupported instruction without changing hand movement or battery thresholds.
-Its filename is unchanged; check the [current checksum and revision](docs/RELEASE_IDENTITY.md).
-Wi-Fi R17 is unchanged and does not need reflashing for this repair.
 
 If you experience any bugs or unexpected behaviour, please [let me know through GitHub Issues](https://github.com/maddenste/Chouchin-899-latest-revision/issues). Include your firmware versions, settings and a description of what happened; for a stopped clock, note the hand positions and LED behaviour.
 
