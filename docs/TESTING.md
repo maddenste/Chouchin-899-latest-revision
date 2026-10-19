@@ -44,7 +44,10 @@ also uses an explicit instruction guard rather than relying on that model alone.
 ## Wi-Fi R17
 
 Passed the target build and offline UART, NTP, settings, DST, reset and web
-regression checks. Separate hardware validation of R17 remains outstanding.
+regression checks. The owner also relayed a user's email confirming successful
+flashing and operation of the GitHub Wi-Fi release. That report covers the
+Wi-Fi firmware only; it is not independent validation of HC32 V21 or every
+Wi-Fi feature.
 
 Tests are supplied under **firmware/tests/** and **tools/**.
 Private HC32 binary emulation is not redistributed.
@@ -64,3 +67,21 @@ python .\firmware\tools\embed_web.py --check
 The original HC32 HEX decoded to the exact original BIN; release checksums and the clean
 Wi-Fi image layout match. This does not establish hardware correctness,
 redistribution rights or a complete reproducible public cross-build.
+
+## Final repository checks — 19 October 2026
+
+Rebuilt and reran the portable C, app, UART, HTTP, NTP, settings and calendar
+tests, including 40,000 event sequences, 10,002 timing/rollover cases and
+1,081,280 timezone comparisons. Desktop/mobile browser tests and the embedded
+webpage consistency check passed. Guided-launcher, direct-launch log defaults,
+backup-result and image-layout tests passed without accessing hardware.
+
+Checked the current V21 release's three assets and checksums against the
+downloaded files. The controller and Wi-Fi images were not changed during
+this review. These are offline regression checks, not a guarantee against
+hardware, mechanical, power-supply or network faults.
+
+All checked local documentation/image references and heading anchors resolved.
+The project, release and vendor download URLs responded; the optional Time.is
+reference blocked automated access. The three-page PDF manual was rendered
+and visually checked.

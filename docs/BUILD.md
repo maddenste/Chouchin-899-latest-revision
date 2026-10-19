@@ -101,6 +101,7 @@ reported programming success without flash readback.
 A clean source-staging copy was prepared with the separately obtained original
 SDK and completed the same full test/build pipeline. Its raw code differs
 only in five build-timestamp characters; packaged checksum differences follow.
-No firmware from that check was flashed. Another user's machine/board and an
-independent-user hardware validation remain outstanding.
+No firmware from that check was flashed. That check did not establish
+reproducibility on another user's machine or board. See the
+[current validation record](TESTING.md) for subsequent user reports.
 The full R16 local build passed again before programming on 1 October 2026.

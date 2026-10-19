@@ -16,8 +16,8 @@ The probes look similar but serve different chips. A SWD-only probe without UART
 
 These are the programmer listings Steve supplied for the hardware used, not
 endorsements of other variants. Check the selected model and signal labels before
-ordering; seller stock/listings can change. The eBay listing was accessible when
-checked on 3 October 2026; the AliExpress page could not be independently reopened.
+ordering; seller stock/listings can change. Both listing URLs responded when
+checked on 19 October 2026; this does not verify current stock or every variant.
 Steve used a **TENSTAR ROBOT TSP-03**, not an adjustable bench supply.
 Its label states **100–240 V AC input** and **3.3 V DC / 3 W output**.
 No exact purchase link has been supplied.
@@ -69,7 +69,7 @@ Keil, compilers, Python and a logic analyser are **not required for uploading**.
 
 ## Project files
 
-1. [V21 release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21): repaired HC32 V21 **HEX**, unchanged Wi-Fi R17 **FULL BIN** and SHA256SUMS.txt. No separate HC32 BIN is needed. Use the [current user guide](USER_GUIDE.md).
+1. [V21 release downloads](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21): HC32 V21 **HEX**, Wi-Fi R17 **FULL BIN** and SHA256SUMS.txt. No separate HC32 BIN is needed. Use the [current user guide](USER_GUIDE.md).
 2. On [the repository main page](https://github.com/maddenste/Chouchin-899-latest-revision), select **Code → Download ZIP**. Extract the complete project; keep **Flash-WiFi.bat** beside the **tools** folder.
    Download the firmware images separately from the release.
 3. Follow [the guided Wi-Fi upload](FLASHING.md). The launcher handles input-file paths for you; no PowerShell commands need editing.
