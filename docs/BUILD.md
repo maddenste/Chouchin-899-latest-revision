@@ -29,12 +29,14 @@ python -m pip install tzdata
 npm install --prefix 'D:\Tools\node-project' playwright
 ```
 
-Prepare-Sdk refuses existing dependency destinations. It copies the vendor
-trees, vendor project support directories, packaging dependencies and unchanged
-vendor parameter files, leaving the tracked application
-overlays intact. Do not overwrite the application with the vendor demo.
+Prepare-Sdk refuses existing dependency destinations. It copies vendor trees,
+support directories, packaging dependencies and unchanged parameter files;
+tracked application modules are left intact. It does **not** supply the omitted
+modified integration files or project metadata. Do not substitute the vendor demo.
 
-Build example; substitute your actual tool/module/backup paths:
+The following build example applies only to a complete private development tree
+with those integration files restored. It cannot cross-build a fresh public
+checkout. Substitute your actual tool/module/backup paths:
 
 ```powershell
 $backup = 'D:\PrivateBackups\my-txw-original.bin'
@@ -71,6 +73,11 @@ The full image has application code at zero, FF elsewhere, and your original
 final two factory sectors at `0x1FE000` and `0x1FF000`. Size is 2,097,152 bytes.
 Settings sectors `0x1FC000/0x1FD000` start erased. Packaging refuses overwrite.
 Building does not access the hardware and does not flash.
+
+This private FULL is **not** the clean public release image: it retains your
+board's final sectors. The separate `tools/New-TXW813-PublicFullImage.ps1`
+accepts only the released R17 APP and blanks all bytes after it, including
+factory sectors. Never publish a private per-board FULL or backup.
 
 Configuration fixes which must be retained: DCDC disabled for this board, no
 external PSRAM assumptions, UART0 PA13/PA14 at 9600, no debug output on PA14,

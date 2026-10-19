@@ -11,5 +11,8 @@ The TXW813 upload procedure catches its boot-time debug window using CKLink
 and the matching flash algorithm. Original recovery backups and investigation
 captures are kept privately.
 
-Current firmware: **HC32 V21 + Wi-Fi R17**. See [downloads](RELEASE_IDENTITY.md),
+Current firmware: **HC32 V21 with the R3 branch repair + Wi-Fi R17**. The existing
+V21 release was updated in place with the owner-tested eight-byte controller
+repair; no smoothing changes were added and Wi-Fi R17 is unchanged.
+See [downloads and revision checksums](RELEASE_IDENTITY.md),
 [architecture](ARCHITECTURE.md) and [source scope](BUILD.md).

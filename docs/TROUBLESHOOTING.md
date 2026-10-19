@@ -29,6 +29,7 @@ retry.
 | Local NTP hostname works, but an external hostname fails | Check router DNS, redirection and Internet NTP access. For packet-capture checks, see the advanced section below. |
 | Wi-Fi powers off while the page is open | Keep the page active. If it still happens, use the optional UART checks below to confirm the keep-alive messages. |
 | Seconds hand stays at 12 | Check **Second hand battery saver** and **Hold&Start** first. If changing the setting has no effect, confirm current HC32 V21 is installed; advanced UART checks are below. |
+| Unexpected stop or repeated startup/homing | Check power and record hand positions and LEDs before resetting. Earlier V21 downloads had a [controller instruction fault, now repaired](TESTING.md#hc32-v21-branch-repair); compare the [current checksum](RELEASE_IDENTITY.md). Do not assume every stop is a battery or sensor fault. |
 
 ## Report a problem
 

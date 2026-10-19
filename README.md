@@ -2,7 +2,6 @@
 
 ![Chouchin-CH899 WiFi Clock v2.0 — HC32L130 and TXW813](docs/assets/social-preview.jpg)
 
-
 Wi-Fi time synchronisation, configurable hand movement and a simple local settings page.
 
 **Check your board first:** this project is for **HC32L130J8TA + TXW813-320** only. For **MM32 + ESP8285**, use [the older-board project](https://github.com/maddenste/Chouchin-CH899-Firmware). The firmware is not interchangeable.
@@ -14,6 +13,14 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 ## Ready to install?
 
 Download **[Chouchin-899-HC32-V21.hex](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/Chouchin-899-HC32-V21.hex)** for the **HC32 movement controller** and **[Wi-Fi R17](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/WiFi-Clock-v2.0-R17-20261003_FULL.bin)** (`WiFi-Clock-v2.0-R17-20261003_FULL.bin`) for the **TXW813 Wi-Fi chip**.
+
+These are the only two firmware files needed for installation: **HC32 HEX**
+and **Wi-Fi FULL BIN**. No separate raw HC32 BIN is needed.
+
+The V21 download now includes the owner-tested **R3 branch repair**, correcting
+an unsupported instruction without changing hand movement or battery thresholds.
+Its filename is unchanged; check the [current checksum and revision](docs/RELEASE_IDENTITY.md).
+Wi-Fi R17 is unchanged and does not need reflashing for this repair.
 
 If you experience any bugs or unexpected behaviour, please [let me know through GitHub Issues](https://github.com/maddenste/Chouchin-899-latest-revision/issues). Include your firmware versions, settings and a description of what happened; for a stopped clock, note the hand positions and LED behaviour.
 
@@ -28,6 +35,7 @@ commands to edit.
 
 - [Firmware downloads, full changelog and checksums](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21)
 - [Current user guide](docs/USER_GUIDE.md)
+- [Printable user manual (PDF)](docs/WiFi-Clock-User-Manual-v2.0.pdf)
 - [Help / report a problem](docs/TROUBLESHOOTING.md)
 
 We used **Windows 11**. These instructions cover Windows 11; other systems may work with suitable tools, but have not been verified.
