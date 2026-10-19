@@ -116,6 +116,10 @@ If the script stops without ever connecting, no write was started. Check wiring,
 power and drivers, then start the catch command again. Connection attempts time
 out after five minutes. Logs are saved under **C:\ClockFlash\logs**.
 
+If the project is extracted elsewhere, logs default to its **logs** folder,
+regardless of the folder from which you launch the script. Advanced users can
+set **-OutputRoot** explicitly; an empty value is rejected before hardware access.
+
 ## 5. Restart and set up
 
 After WRITTEN, power off, unplug CKLink and remove its board connections. Restart normally.

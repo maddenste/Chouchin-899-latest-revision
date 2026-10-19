@@ -6,7 +6,7 @@
 # A saved PulseView .sr file is not a live trigger; start this before power-up.
 [CmdletBinding()]
 param(
-    [string]$OutputRoot = (Join-Path $PSScriptRoot '..\logs'),
+    [string]$OutputRoot,
     [string]$ServerPath = 'C:\C-Sky\DebugServer\bin\DebugServerConsole.exe',
     [string]$GdbPath = 'C:\C-Sky\CDKRepo\Toolchain\CKV2ElfMinilib\V3.10.29\R\bin\csky-elfabiv2-gdb.exe',
     [Parameter(Mandatory)][string]$AlgorithmPath,
@@ -25,6 +25,14 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+if (-not $PSBoundParameters.ContainsKey('OutputRoot')) {
+    # Resolve after binding for Windows PowerShell 5.1, as in the write helper.
+    $OutputRoot = Join-Path $PSScriptRoot '..\logs'
+}
+if ([string]::IsNullOrWhiteSpace($OutputRoot)) {
+    throw 'OutputRoot must be a non-empty filesystem folder.'
+}
+$OutputRoot = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputRoot)
 . (Join-Path $PSScriptRoot 'Test-TXW813-DumpResult.ps1')
 $serverExe = $ServerPath
 $gdbExe = $GdbPath

@@ -21,13 +21,22 @@ param(
     [string]$ServerPath = 'C:\C-Sky\DebugServer\bin\DebugServerConsole.exe',
     [string]$GdbPath = 'C:\C-Sky\CDKRepo\Toolchain\CKV2ElfMinilib\V3.10.29\R\bin\csky-elfabiv2-gdb.exe',
     [Parameter(Mandatory)][string]$DebuggerEndpoint,
-    [string]$OutputRoot = (Join-Path $PSScriptRoot '..\logs'),
+    [string]$OutputRoot,
     [string]$IceClock = '1200k',
     [int]$CatchTimeoutSeconds = 300,
     [int]$OperationTimeoutSeconds = 900
 )
 
 $ErrorActionPreference = 'Stop'
+if (-not $PSBoundParameters.ContainsKey('OutputRoot')) {
+    # Windows PowerShell 5.1 can leave PSScriptRoot empty in parameter defaults.
+    # Resolve it only after parameter binding, independent of the caller's folder.
+    $OutputRoot = Join-Path $PSScriptRoot '..\logs'
+}
+if ([string]::IsNullOrWhiteSpace($OutputRoot)) {
+    throw 'OutputRoot must be a non-empty filesystem folder.'
+}
+$OutputRoot = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputRoot)
 $serverExe = $ServerPath
 $gdbExe = $GdbPath
 $algorithm = $AlgorithmPath
