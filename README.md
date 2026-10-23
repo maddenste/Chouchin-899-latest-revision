@@ -10,6 +10,14 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 [Example Chouchin-CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) — for identification only, not a confirmed compatible purchase. The listing does not identify the board revision; check for **HC32L130J8TA + TXW813-320** before buying for this project.
 
+## Related projects
+
+- **[MM32 + ESP8285 — WiFi Clock v1.5](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285):** replacement firmware for both the MM32 movement controller and ESP8285 Wi-Fi chip, with selectable movement and battery-saving modes. Currently pre-release.
+- **[HC32L130 + TXW813 — WiFi Clock v2.0](https://github.com/maddenste/Chouchin-899-latest-revision):** the separate project for the newer HC32L130J8TA / TXW813-320 board.
+- **[Original ESP8285-only project](https://github.com/maddenste/Chouchin-CH899-Firmware):** replaces only the ESP8285 Wi-Fi application on the older board, retaining the original MM32 movement firmware.
+
+Check both chip markings before choosing a project. Firmware and flashing tools are not interchangeable between board revisions; install a matched pair where both controllers are replaced.
+
 ## Ready to install?
 
 Download **[Chouchin-899-HC32-V21.hex](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/Chouchin-899-HC32-V21.hex)** for the **HC32 movement controller** and **[WiFi-Clock-v2.0-R17-20261003_FULL.bin](https://github.com/maddenste/Chouchin-899-latest-revision/releases/download/v21/WiFi-Clock-v2.0-R17-20261003_FULL.bin)** for the **TXW813 Wi-Fi chip**.
