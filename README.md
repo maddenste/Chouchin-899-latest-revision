@@ -1,27 +1,37 @@
-# Chouchin-CH899 · WiFi Clock v2.0
+# CH899 · HC32 clock upgrade · v2.0
 
-**For the newer HC32 revision of the Chouchin CH899 clock.** This upgrade replaces its hand-movement and Wi-Fi firmware, giving you a choice of movement styles and a local settings page.
+**For the newer clock board with “HC32” printed on its main chip.** This project adds movement styles, seconds-hand battery saving and a local settings page. It replaces the clock's movement and Wi-Fi software.
 
 ## Other clock projects
 
-| Repository | Who it is for |
+| Other repository | Choose it if… |
 | --- | --- |
-| [**Wi-Fi-only upgrade**](https://github.com/maddenste/Chouchin-CH899-Firmware) | Older MM32 clocks — better Wi-Fi setup, keeping the original hand movement |
-| [**MM32 clock upgrade**](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285) | Older MM32 clocks — adds movement styles and seconds-hand parking |
+| [**MM32 — Wi-Fi only**](https://github.com/maddenste/Chouchin-CH899-Firmware) | Your chip says MM32 and you want to keep the factory hand movement |
+| [**MM32 — clock upgrade**](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285) | Your chip says MM32 and you want movement styles and seconds-hand parking |
 
-![Chouchin-CH899 WiFi Clock v2.0 — HC32L130 and TXW813](docs/assets/social-preview.jpg)
+## Check your board
 
-## Check your clock
+Open the clock's movement cover and look for **HC32** on the large square chip, as shown below. [More board photos and identification help →](docs/HARDWARE.md#board-photographs)
 
-Your circuit board should match the photo below. CH899 clocks can share the same casing but have different electronics. [See close-ups and identification help →](docs/HARDWARE.md#board-photographs)
+<a href="docs/photos/hc32l130-controller-and-programming-pads.jpg"><img src="docs/photos/hc32l130-controller-and-programming-pads.jpg" alt="Newer clock board: HC32 is printed on the large square chip" height="260"></a>
 
-<img src="docs/photos/chouchin-899-newer-board-overview.jpg" alt="The newer HC32 clock board supported by WiFi Clock v2.0" width="450">
+Click the photo to enlarge it. If your board differs, check the identification guide before installing.
 
-## Choose how it runs
+## What this upgrade adds
 
-- **Sweep, Burst or Hold&Start** — including the station-clock pause at 12. [Watch it in action](https://youtube.com/shorts/2L59QxfKAD8).
-- **Seconds-hand battery saving** — keep it running, park it overnight or leave it parked all day.
-- **Internet time updates** — choose your timezone and daily update time in ten-minute steps, with automatic summer/winter time changes.
+- **Three movement styles:** Sweep, Burst and the station-clock pause at 12. [Watch an example](https://youtube.com/shorts/2L59QxfKAD8).
+- **Seconds-hand battery saving:** park it overnight or all day.
+- **Phone-friendly settings:** Wi-Fi, timezone, automatic summer/winter time changes and daily time updates in ten-minute steps.
+
+## Install
+
+**[Start installation →](docs/GETTING_STARTED.md)**
+
+Follow the Windows 11 guide in order. It covers the equipment, downloads and programming both chips, including a guided launcher for the Wi-Fi chip. No compiling is required.
+
+**Already installed?** [Change settings](docs/USER_GUIDE.md) · [Get help](docs/TROUBLESHOOTING.md) · [Printable manual](docs/WiFi-Clock-User-Manual-v2.0.pdf)
+
+If you find a bug, please [let me know](https://github.com/maddenste/Chouchin-899-latest-revision/issues).
 
 <details>
 <summary>See the settings page</summary>
@@ -30,18 +40,10 @@ Your circuit board should match the photo below. CH899 clocks can share the same
 
 </details>
 
-## Install
-
-**[Download WiFi Clock v2.0](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21)** · **[Follow the installation guide →](docs/GETTING_STARTED.md)**
-
-Install both firmware files using the Windows 11 guide. It explains the equipment and connections, with a guided launcher for the Wi-Fi chip. No compiling or firmware editing is required.
-
-[Settings and everyday use](docs/USER_GUIDE.md) · [Printable manual](docs/WiFi-Clock-User-Manual-v2.0.pdf) · [Help](docs/TROUBLESHOOTING.md)
-
-If you find a bug, please [let me know](https://github.com/maddenste/Chouchin-899-latest-revision/issues).
+<img src="docs/assets/social-preview.jpg" alt="Chouchin-CH899 WiFi Clock v2.0" width="600">
 
 ---
 
-Unofficial project · WiFi Clock v2.0 — Modified by Steve Madden · 2026.
+Unofficial project · Modified by Steve Madden · 2026.
 
-[Project background and technical notes](docs/BACKGROUND.md) · [License and credits](NOTICE.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
+[Downloads and release notes](https://github.com/maddenste/Chouchin-899-latest-revision/releases/tag/v21) · [Background and technical notes](docs/BACKGROUND.md) · [License and credits](NOTICE.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
