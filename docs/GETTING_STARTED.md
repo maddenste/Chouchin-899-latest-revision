@@ -6,10 +6,9 @@ Downloads: **[HC32 V21 + Wi-Fi R17](https://github.com/maddenste/Chouchin-899-la
 
 ## 1. Identify your board
 
-Check both markings: **HC32L130J8TA** and **TXW813-320**.
-[Chip photographs](HARDWARE.md#board-photographs).
+This guide is for the **HC32 board**. Look for **HC32L130J8TA** on the movement-control chip and **TXW813-320** on the Wi-Fi chip. [Compare with the photographs](HARDWARE.md#board-photographs).
 
-**MM32/ESP boards require [the older project](https://github.com/maddenste/Chouchin-CH899-Firmware), not these files.**
+If your clock has the **MM32 board**, use [WiFi Clock v1.5 for movement styles and battery saving](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285), or [the Wi-Fi-only upgrade to keep the factory hand movement](https://github.com/maddenste/Chouchin-CH899-Firmware). Each has its own installation guide; these HC32 files will not work on that board.
 
 ## 2. Prepare
 

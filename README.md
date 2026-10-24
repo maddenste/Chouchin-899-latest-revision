@@ -4,20 +4,20 @@
 
 Wi-Fi time synchronisation, configurable hand movement and a simple local settings page.
 
-**Check your board first:** this project is for **HC32L130J8TA + TXW813-320** only. For **MM32 + ESP8285**, use [the older-board project](https://github.com/maddenste/Chouchin-CH899-Firmware). The firmware is not interchangeable.
+**Check inside your clock first:** this upgrade is for the **HC32 board**. CH899 clocks can look identical outside but have different electronics. [Compare your board with the identification photos](docs/HARDWARE.md#board-photographs) before installing.
 
 <img src="docs/photos/chouchin-899-newer-board-overview.jpg" alt="Newer Chouchin-CH899 board" width="350">
 
 [Example Chouchin-CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) — for identification only, not a confirmed compatible purchase. The listing does not identify the board revision; check for **HC32L130J8TA + TXW813-320** before buying for this project.
 
-## Have the older MM32 board?
+## Is your clock the MM32 version?
 
-This WiFi Clock v2.0 project is for **HC32L130J8TA + TXW813-320**. If your movement instead has **MM32SPIN05PF + ESP8285**, there are two separate options:
+If your board has an MM32 chip and an ESP-01F Wi-Fi module, choose one of these projects instead. [See the MM32 identification photos](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md) if you are unsure.
 
-- **[WiFi Clock v1.5 — full MM32 + ESP8285 replacement](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** adds configurable movement and seconds-hand parking by replacing both applications. [WiFi Clock v1.5 downloads are available](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/releases/tag/v1.5).
-- **[Original ESP8285-only firmware](https://github.com/maddenste/Chouchin-CH899-Firmware)** updates Wi-Fi setup and time synchronisation while leaving the manufacturer's MM32 movement firmware in place.
+- **[Want movement styles and seconds-hand parking? Choose WiFi Clock v1.5](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** — replaces both the hand-movement and Wi-Fi firmware on the MM32 board.
+- **[Want to keep the factory hand movement? Choose the Wi-Fi-only upgrade](https://github.com/maddenste/Chouchin-CH899-Firmware)** — changes the Wi-Fi setup and internet time synchronisation, leaving the movement firmware untouched.
 
-Neither option uses this repository's HC32/TXW813 firmware or flashing procedure. Check the chip markings before downloading.
+**v1.5 and v2.0 are for different boards.** The version number does not make v2.0 suitable for an MM32 clock. Follow your chosen project's installation guide and use its firmware files together.
 
 ## Ready to install?
 

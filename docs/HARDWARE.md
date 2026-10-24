@@ -1,12 +1,12 @@
 # Board identification and wiring
 
-Target: newer Chouchin-CH899, **HDSC HC32L130J8TA + Taixin TXW813-320**.
-Older ESP8285/MM32 electronics use the [original project](https://github.com/maddenste/Chouchin-CH899-Firmware).
-A model label is not enough. Photograph both sides and inspect the chip markings.
+This project supports the **HC32 board**: look for **HC32L130J8TA** on the chip that controls the hands and **TXW813-320** on the Wi-Fi chip. CH899 clocks can share the same housing while using different boards, so compare the markings and photographs below.
+
+**Found an MM32 chip and ESP-01F module instead?** [Check the MM32 board photos](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md). That board has two upgrade choices: [WiFi Clock v1.5 for movement styles and seconds-hand parking](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285), or [Wi-Fi-only firmware that keeps the factory hand movement](https://github.com/maddenste/Chouchin-CH899-Firmware).
 
 ## Example movement listing
 
-[Heng-Rong CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) shows the type of movement used in this project. We cannot tell which PCB revision the seller currently supplies, so this is an example, not a confirmed compatible purchase link. Before ordering, ask for photographs confirming **HC32L130J8TA + TXW813-320**. Older MM32/ESP8285 boards require the older-board firmware linked above.
+[Heng-Rong CH899 Wi-Fi clock movement](https://www.hr-clockparts.com/clock-movement/wifi-clock-movement.html) shows the type of movement used in this project. We cannot tell which PCB revision the seller currently supplies, so this is an example, not a confirmed compatible purchase link. Before ordering, ask for photographs confirming **HC32L130J8TA + TXW813-320**. MM32 boards need one of the separate projects linked above.
 
 ## Board photographs
 
