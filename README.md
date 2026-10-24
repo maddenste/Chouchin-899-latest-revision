@@ -14,7 +14,7 @@ Wi-Fi time synchronisation, configurable hand movement and a simple local settin
 
 This WiFi Clock v2.0 project is for **HC32L130J8TA + TXW813-320**. If your movement instead has **MM32SPIN05PF + ESP8285**, there are two separate options:
 
-- **[WiFi Clock v1.5 — full MM32 + ESP8285 replacement](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** adds configurable movement and seconds-hand parking by replacing both applications. Currently pre-release.
+- **[WiFi Clock v1.5 — full MM32 + ESP8285 replacement](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** adds configurable movement and seconds-hand parking by replacing both applications. [WiFi Clock v1.5 downloads are available](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/releases/tag/v1.5).
 - **[Original ESP8285-only firmware](https://github.com/maddenste/Chouchin-CH899-Firmware)** updates Wi-Fi setup and time synchronisation while leaving the manufacturer's MM32 movement firmware in place.
 
 Neither option uses this repository's HC32/TXW813 firmware or flashing procedure. Check the chip markings before downloading.
