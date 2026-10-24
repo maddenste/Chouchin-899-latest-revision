@@ -2,6 +2,16 @@
 
 **For the newer HC32 revision of the Chouchin CH899 clock.** This upgrade replaces its hand-movement and Wi-Fi firmware, giving you a choice of movement styles and a local settings page.
 
+## Choose your firmware
+
+| Firmware | Your clock (photos) | What it changes |
+| --- | --- | --- |
+| [**v1.0 — Wi-Fi only**](https://github.com/maddenste/Chouchin-CH899-Firmware) | [Older revision (MM32)](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md) | Improves Wi-Fi setup; keeps the factory hand movement |
+| [**v1.5 — full upgrade**](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285) | [Older revision (MM32)](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md) | Adds movement styles and seconds-hand parking; replaces movement and Wi-Fi software |
+| [**v2.0 — full upgrade**](https://github.com/maddenste/Chouchin-899-latest-revision) | [Newer revision (HC32)](https://github.com/maddenste/Chouchin-899-latest-revision/blob/main/docs/HARDWARE.md#board-photographs) | Adds movement styles and seconds-hand parking; replaces movement and Wi-Fi software |
+
+Choose by the board inside your clock, not by the highest version number. Follow that project's installation guide and use its files together.
+
 ![Chouchin-CH899 WiFi Clock v2.0 — HC32L130 and TXW813](docs/assets/social-preview.jpg)
 
 ## Check your clock
@@ -32,15 +42,6 @@ Install both firmware files using the Windows 11 guide. It explains the equipmen
 [Settings and everyday use](docs/USER_GUIDE.md) · [Printable manual](docs/WiFi-Clock-User-Manual-v2.0.pdf) · [Help](docs/TROUBLESHOOTING.md)
 
 If you find a bug, please [let me know](https://github.com/maddenste/Chouchin-899-latest-revision/issues).
-
-## Have the older MM32 revision instead?
-
-Use one of these projects for the older board. [Compare with its photos](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md) if you are unsure.
-
-- **[WiFi Clock v1.5](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** — adds movement styles and seconds-hand parking by replacing both firmwares.
-- **[Wi-Fi-only upgrade](https://github.com/maddenste/Chouchin-CH899-Firmware)** — improves setup and internet timekeeping while keeping the factory hand movement.
-
-v2.0 is for a different board, not an update to install on an MM32 clock.
 
 ---
 
