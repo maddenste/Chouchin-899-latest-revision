@@ -1,5 +1,7 @@
 # CH899 · HC32 clock upgrade · v2.0
 
+<img src="docs/assets/social-preview.jpg" alt="Chouchin-CH899 WiFi Clock v2.0" width="600">
+
 **For the newer clock board with “HC32” printed on its main chip.** This project adds movement styles, seconds-hand battery saving and a local settings page. It replaces the clock's movement and Wi-Fi software.
 
 ## Other clock projects
@@ -39,8 +41,6 @@ If you find a bug, please [let me know](https://github.com/maddenste/Chouchin-89
 <img src="docs/screenshots/setup-desktop.png" alt="WiFi Clock v2.0 settings page" width="700">
 
 </details>
-
-<img src="docs/assets/social-preview.jpg" alt="Chouchin-CH899 WiFi Clock v2.0" width="600">
 
 ---
 
